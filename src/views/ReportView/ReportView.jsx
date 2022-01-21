@@ -3,6 +3,8 @@ import { useMediaQuery } from 'react-responsive';
 import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../components';
 // import {Balance} from '../../components'
 
+import { Chart } from '../../components/Chart'
+
 import {getAllTransactionsDATA} from '../../api/reportApi';
 
 import 'moment/locale/ru';
@@ -99,6 +101,7 @@ export const ReportView = () => {
                 />
                 
                 <ReportGraph>29. График</ReportGraph>
+                <Chart />
             </ReportContainer>
         </>
     );
