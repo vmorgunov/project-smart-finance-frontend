@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 import { register, logIn } from '../../redux/auth/authOperations.js';
 
@@ -18,6 +19,8 @@ import {
 
 export const AuthForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegister, setIsRegister] = useState(false);
@@ -46,6 +49,7 @@ export const AuthForm = () => {
         e.preventDefault();
         const user = { email, password };
         userSubmit(user);
+        navigate('/transaction');
         resetForm();
     }
 

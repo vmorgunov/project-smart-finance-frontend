@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'http://localhost:5050/api/v1';
+axios.defaults.baseURL = 'https://project-smart-finance.herokuapp.com/api/v1';
 
 const token = {
   set(token) {
@@ -17,7 +17,7 @@ const register = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post('/users/register', credentials);
-      token.set(data.user.shortToken);
+      token.set(data.tokenShort);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -28,7 +28,9 @@ const register = createAsyncThunk(
 const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
   try {
     const { data } = await axios.post('/users/login', credentials);
-    token.set(data.user.shortToken);
+    console.log(data);
+    console.log(data.tokenShort);
+    token.set(data.tokenShort);
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
