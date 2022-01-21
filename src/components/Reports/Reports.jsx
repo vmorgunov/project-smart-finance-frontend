@@ -16,8 +16,11 @@ export const Reports = ({ switchData, clickOnSwitch }) => {
                     <ArrowIcon src={prevArrowIcon} alt="prevArrowIcon" />
                 </ButtonSwitch>
                 
-                <SwitchData>{switchData}</SwitchData>
-                
+                {switchData === 'costs' ?
+                    (<SwitchData>Расходы</SwitchData>)
+                    :
+                    (<SwitchData>Доходы</SwitchData>)
+                }
                 <ButtonSwitch type="button" onClick={clickOnSwitch}>
                     <ArrowIcon src={nextArrowIcon} alt="nextArrowIcon" />
                 </ButtonSwitch>

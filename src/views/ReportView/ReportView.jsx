@@ -1,7 +1,9 @@
-import {React, useState } from 'react';
+import {React, useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../components';
 // import {Balance} from '../../components'
+
+import {getAllTransactionsDATA} from '../../api/reportApi';
 
 import 'moment/locale/ru';
 import moment from 'moment';
@@ -19,7 +21,18 @@ export const ReportView = () => {
     const [newDate, setNewDate] = useState(moment(new Date()));
     const [dateMonth, setDateMonth] = useState(moment(new Date()).format('MM'));
     const [dateYears, setDateYears] = useState(moment(new Date()).format('YYYY'));
-    const [switchData, setSwitchData] = useState('Расходы');
+    const [switchData, setSwitchData] = useState('costs');
+    const [categoriesCosts, setCategoriesCosts] = useState([]);
+
+
+    useEffect(() => {
+        async function getAllTransactions() {
+            const transactionsDATA = await getAllTransactionsDATA( dateYears, dateMonth, switchData);
+            setCategoriesCosts(transactionsDATA);
+            console.log(transactionsDATA.data);
+        }
+        getAllTransactions();
+    }, [switchData, dateMonth, dateYears]);
 
     const switchMonthLeft = () => {
         setDateMonth(newDate.add(-1, 'month').format('MM'));
@@ -36,11 +49,11 @@ export const ReportView = () => {
     };
 
     const clickOnSwitch = () => {
-        if (switchData === 'Расходы') {
-            setSwitchData('Доходы');
+        if (switchData === 'costs') {
+            setSwitchData('income');
         }
-        if (switchData !== 'Расходы') {
-            setSwitchData('Расходы');
+        if (switchData !== 'costs') {
+            setSwitchData('costs');
         }
     };
     
@@ -90,4 +103,3 @@ export const ReportView = () => {
         </>
     );
 }
-
