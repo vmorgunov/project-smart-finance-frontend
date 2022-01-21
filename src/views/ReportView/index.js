@@ -1,1 +1,1 @@
-// export { ReportView } from './ReportView';
+export { default } from './ReportView';

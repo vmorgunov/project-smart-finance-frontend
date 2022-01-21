@@ -1,1 +1,1 @@
-export { default } from "./TransactionsView.jsx"
+export { default } from './TransactionsView.jsx';

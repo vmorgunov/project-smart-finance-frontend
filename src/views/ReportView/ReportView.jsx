@@ -1,4 +1,4 @@
-import {React, useState } from 'react';
+import { React, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../components';
 // import {Balance} from '../../components'
@@ -12,10 +12,10 @@ import {
     ReportGraph
 } from './ReportView.styled'
 
-export const ReportView = () => {
+const ReportView = () => {
     const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
     const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
-    
+
     const [newDate, setNewDate] = useState(moment(new Date()));
     const [dateMonth, setDateMonth] = useState(moment(new Date()).format('MM'));
     const [dateYears, setDateYears] = useState(moment(new Date()).format('YYYY'));
@@ -43,21 +43,21 @@ export const ReportView = () => {
             setSwitchData('Расходы');
         }
     };
-    
+
     return (
         <>
-            <ReportContainer> 
+            <ReportContainer>
                 {isMobile &&
-                <>
-                    <ReportButton /> 
-                    
-                    <MonthPicker
-                        switchMonthLeft={switchMonthLeft}
-                        switchMonthRight={switchMonthRight}
-                        dateMonth={dateMonth}
-                        dateYears={dateYears}
-                    />
-                </>
+                    <>
+                        <ReportButton />
+
+                        <MonthPicker
+                            switchMonthLeft={switchMonthLeft}
+                            switchMonthRight={switchMonthRight}
+                            dateMonth={dateMonth}
+                            dateYears={dateYears}
+                        />
+                    </>
                 }
                 {isTabletOrDesktop &&
                     <ReportHeader>
@@ -75,7 +75,7 @@ export const ReportView = () => {
 
                     </ReportHeader>
                 }
-                      {/* {isTabletOrDesktop && <ModalOut />}
+                {/* {isTabletOrDesktop && <ModalOut />}
                       {isMobile && <ModalOutMobile/>} */}
                 <ReportStatistic>
                 </ReportStatistic>
@@ -84,10 +84,11 @@ export const ReportView = () => {
                     switchData={switchData}
                     clickOnSwitch={clickOnSwitch}
                 />
-                
+
                 <ReportGraph>29. График</ReportGraph>
             </ReportContainer>
         </>
     );
 }
 
+export default ReportView;
