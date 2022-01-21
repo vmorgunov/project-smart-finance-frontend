@@ -114,5 +114,4 @@ const ReportView = () => {
 
 export default ReportView;
 
-}
 
