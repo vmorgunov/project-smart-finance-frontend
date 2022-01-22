@@ -6,7 +6,12 @@ import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../compo
 // import {Balance} from '../../components'
 
 import { Chart } from '../../components/Chart'
-import { getCategoriesByCosts, getCategoriesByIncome } from '../../api/reportApi';
+import {
+    getCategoriesByCosts,
+    getCategoriesByIncome,
+    getTransactionsByCosts,
+    getTransactionsByIncome
+} from '../../api/reportApi';
 
 import 'moment/locale/ru';
 import moment from 'moment';
@@ -83,21 +88,30 @@ const ReportView = () => {
     const [newDate, setNewDate] = useState(moment(new Date()));
     const [dateMonth, setDateMonth] = useState(moment(new Date()).format('MM'));
     const [dateYears, setDateYears] = useState(moment(new Date()).format('YYYY'));
+
     const [switchData, setSwitchData] = useState('costs');
+
     const [allCategories, setAllCategories] = useState([]);
+// Расход и доход 
     const [categoriesCosts, setCategoriesCosts] = useState([]);
     const [categoriesIncome, setCategoriesIncome] = useState([]);
-
+// ------------------------------
+// MISHA
+    const [costs, setCosts] = useState([]);
+    const [income, setIncome] = useState([]);
+    
+// MISHA
     useEffect(() => {
         setAllCategories(transactions);
-        // async function getAllTransactions() {
-        //     const transactionsDATA = await getAllTransactionsDATA( dateYears, dateMonth, switchData);
-        //     setAllCategories(transactionsDATA);
-        //     console.log(transactionsDATA.data);
-        // }
-        // getAllTransactions();
+        async function getAllTransactions() {
+            const transactionsByCosts = await getTransactionsByCosts( dateYears, dateMonth);
+            const TransactionsByIncome = await getTransactionsByIncome( dateYears, dateMonth);
+            setCosts(transactionsByCosts);
+            setIncome(TransactionsByIncome)
+        }
+        getAllTransactions();
     }, [switchData, dateMonth, dateYears]);
-
+// ----------------------------------------------------------------------
 // Расход и доход 
     useEffect(() => {
         async function getCategories() {
@@ -174,6 +188,9 @@ const ReportView = () => {
                     allCategories={allCategories}
                     switchData={switchData}
                     clickOnSwitch={clickOnSwitch}
+
+                    costs={costs}
+                    income={income}
                 />
 
                 <ReportGraph>29. График</ReportGraph>

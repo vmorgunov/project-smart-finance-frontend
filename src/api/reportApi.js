@@ -34,3 +34,20 @@ export async function getCategoriesByIncome(YYYY, MM) {
   );
   return data.total;
 }
+
+// transactions
+export async function getTransactionsByCosts(YYYY, MM) {
+  const { data } = await axios.get(
+    `/transactions/:year=${YYYY}/:month=${MM}/costs`,
+  );
+  token.set(data.token);
+  return data.transactions;
+}
+
+export async function getTransactionsByIncome(YYYY, MM) {
+  const { data } = await axios.get(
+    `/transactions/:year=${YYYY}/:month=${MM}/income`,
+  );
+  token.set(data.token);
+  return data.transactions;
+}

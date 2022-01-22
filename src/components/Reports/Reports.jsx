@@ -7,7 +7,7 @@ import nextArrowIcon from '../../images/next-arrow.svg';
 import { ArrowIcon, ButtonSwitch, Switch, SwitchData } from '../MonthPicker/MonthPicker.styled';
 import { ReportsContainer } from './Reports.styled'
 
-export const Reports = ({ allCategories, switchData, clickOnSwitch }) => {
+export const Reports = ({ allCategories, switchData, clickOnSwitch, income, costs }) => {
 
     const costsType = allCategories.filter(item => item.type === "costs");
     const incomeType = allCategories.filter(item=> item.type === "income")
@@ -30,9 +30,9 @@ export const Reports = ({ allCategories, switchData, clickOnSwitch }) => {
             </Switch>
 
             {switchData === 'costs' ?
-                (<ReportList category={switchData} transactions={ costsType }/>)
+                (<ReportList category={costs} transactions={ costsType } />)
                 :
-                (<ReportList category={switchData} transactions={ incomeType }/>)
+                (<ReportList category={income} transactions={ incomeType }/>)
             }
             
         </ReportsContainer>
