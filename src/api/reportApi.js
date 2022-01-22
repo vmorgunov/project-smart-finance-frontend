@@ -34,3 +34,9 @@ export async function getCategoriesByIncome(YYYY, MM) {
   );
   return data.total;
 }
+
+export async function setBalance(balance) {
+  const { data } = await axios.patch('/users/:balance', { balance });
+  token.set(data.acces_token);
+  return data;
+}
