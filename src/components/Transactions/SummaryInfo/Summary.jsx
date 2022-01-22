@@ -5,7 +5,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { NewTable, NewTabCell, TableText } from './Summary.styled.jsx';
+import {
+  NewTable,
+  NewTabCell,
+  TableText,
+  SummaryText,
+} from './Summary.styled.jsx';
 
 const priceRow = (qty, unit) => {
   return qty * unit;
@@ -32,7 +37,7 @@ const SpanningTable = () => {
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3}>
-              <TableText>Сводка</TableText>
+              <SummaryText>Сводка</SummaryText>
             </TableCell>
           </TableRow>
         </TableHead>
