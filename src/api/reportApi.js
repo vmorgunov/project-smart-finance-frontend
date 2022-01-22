@@ -8,15 +8,14 @@ export const token = {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
-    axios.defaults.headers.common.Authorization = "";
+    axios.defaults.headers.common.Authorization = '';
   },
 };
 
-
-export async function getAllTransactionsDATA({ YYYY, MM, type }) {
-  const {data} = await axios.get(
-    `/transactions/:year=${YYYY}/:month=${MM}/:type=${type}/data`,
+export async function getAllTransactionsDATA({ year, month, type, userToken }) {
+  const { data } = await axios.get(
+    `/transactions/:year=${year}/:month=${month}/:type=${type}/data`,
   );
-  token.set(data.token);
+  token.set(userToken);
   return data;
 }
