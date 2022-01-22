@@ -6,8 +6,7 @@ import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../compo
 // import {Balance} from '../../components'
 
 import { Chart } from '../../components/Chart'
-
-// import {getAllTransactionsDATA} from '../../api/reportApi';
+import { getCategoriesByCosts, getCategoriesByIncome } from '../../api/reportApi';
 
 import 'moment/locale/ru';
 import moment from 'moment';
@@ -86,7 +85,8 @@ const ReportView = () => {
     const [dateYears, setDateYears] = useState(moment(new Date()).format('YYYY'));
     const [switchData, setSwitchData] = useState('costs');
     const [allCategories, setAllCategories] = useState([]);
-
+    const [categoriesCosts, setCategoriesCosts] = useState([]);
+    const [categoriesIncome, setCategoriesIncome] = useState([]);
 
     useEffect(() => {
         setAllCategories(transactions);
@@ -97,6 +97,18 @@ const ReportView = () => {
         // }
         // getAllTransactions();
     }, [switchData, dateMonth, dateYears]);
+
+// Расход и доход 
+    useEffect(() => {
+        async function getCategories() {
+            const costs = await getCategoriesByCosts(dateMonth, dateYears);
+            setCategoriesCosts(costs);
+            const income = await getCategoriesByIncome(dateMonth, dateYears);
+            setCategoriesIncome(income);
+        }
+        getCategories();
+    }, [dateMonth, dateYears]);
+
 
     const switchMonthLeft = () => {
         setDateMonth(newDate.add(-1, 'month').format('MM'));
@@ -152,9 +164,10 @@ const ReportView = () => {
 
                     </ReportHeader>
                 }
-                {/* {isTabletOrDesktop && <ModalOut />}
-                      {isMobile && <ModalOutMobile/>} */}
+                 {/* {isTabletOrDesktop && <ModalOut />} */}
                 <ReportStatistic>
+                    costs={categoriesCosts}
+                    income={categoriesIncome}
                 </ReportStatistic>
 
                 <Reports

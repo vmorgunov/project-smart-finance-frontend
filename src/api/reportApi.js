@@ -8,15 +8,29 @@ export const token = {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
-    axios.defaults.headers.common.Authorization = "";
+    axios.defaults.headers.common.Authorization = '';
   },
 };
 
-
 export async function getAllTransactionsDATA({ YYYY, MM, type }) {
-  const {data} = await axios.get(
+  const { data } = await axios.get(
     `/transactions/:year=${YYYY}/:month=${MM}/:type=${type}/data`,
   );
   token.set(data.token);
   return data;
+}
+
+// Доход и расход
+export async function getCategoriesByCosts(YYYY, MM) {
+  const { data } = await axios.get(
+    `/transactions/:year=${YYYY}/:month=${MM}/costs`,
+  );
+  return data.total;
+}
+
+export async function getCategoriesByIncome(YYYY, MM) {
+  const { data } = await axios.get(
+    `/transactions/:year=${YYYY}/:month=${MM}/income`,
+  );
+  return data.total;
 }
