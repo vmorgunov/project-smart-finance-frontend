@@ -2,22 +2,23 @@ import React from 'react';
 
 import {List, Item} from './ReportList.styled'
 import repAlcohol from '../../images/rep-alcohol.svg'
-import salary from '../../images/salary.svg'
+// import salary from '../../images/salary.svg'
 
-const ReportList = ({category}) => {
+const ReportList = ({ category, transactions }) => {
+   
     return (
 
         <List>
-            <Item>
-                <p>summa</p>
-                {category === 'Расходы' ?
-                   (<img width="58" height="58" src={repAlcohol} alt="repAlcohol" />)
-                    :
-                    (<img width="58" height="58" src={salary} alt="salary" />)
+            
+            {transactions.length === 0 ? (<Item>Транзакций нет</Item>) :
+            
+                (transactions.map(item =>
+                (<Item>
+                    <p>{item.sum}</p>
+                    <img width="58" height="58" src={repAlcohol} alt="repAlcohol" />
+                    <p>{item.category}</p>
+                </Item>)))
                 }
-                <p>{category}</p>
-                
-            </Item>
         </List>
     )
 }
