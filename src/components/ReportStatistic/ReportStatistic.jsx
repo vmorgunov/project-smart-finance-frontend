@@ -16,7 +16,7 @@ import {
   Line
 } from './ReportStatistic.styled';
 
-export const ReportStatistic = () => {
+export const ReportStatistic = ({costs, income}) => {
 
   const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
   const isTabletOrDesktop = useMediaQuery({ minWidth: 768 }); 
@@ -26,16 +26,16 @@ export const ReportStatistic = () => {
        
        {isMobile && 
          <ContainerMobile>
-         <Title>Расходы:{<SpanRedMobile>-{} грн</SpanRedMobile>} </Title>
+         <Title>Расходы:{<SpanRedMobile>-{costs} грн</SpanRedMobile>} </Title>
              <LineMobile />
-         <Title>Доходы:{<SpanMobile>+ {} грн</SpanMobile>} </Title>
+         <Title>Доходы:{<SpanMobile>+ {income} грн</SpanMobile>} </Title>
          </ContainerMobile>}
        
        {isTabletOrDesktop && 
          <ContainerDesktop>
-         <Title>Расходы:{<SpanRed>-{} грн</SpanRed>} </Title>
+         <Title>Расходы:{<SpanRed>-{costs} грн</SpanRed>} </Title>
             <Line />
-        <Title>Доходы:{<Span>+ {} грн</Span>} </Title>
+        <Title>Доходы:{<Span>+ {income} грн</Span>} </Title>
         </ContainerDesktop> 
         }   
     </Container>   
