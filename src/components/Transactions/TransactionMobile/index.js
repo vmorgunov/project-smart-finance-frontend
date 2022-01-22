@@ -1,1 +1,1 @@
-export { default } from "./TransactionMobile"
+export { default } from './TransactionMobile.jsx';

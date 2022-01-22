@@ -17,7 +17,7 @@ const register = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post('/users/register', credentials);
-      token.set(data.tokenShort);
+      token.set(data.acces_token);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -29,8 +29,7 @@ const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
   try {
     const { data } = await axios.post('/users/login', credentials);
     console.log(data);
-    console.log(data.tokenShort);
-    token.set(data.tokenShort);
+    token.set(data.acces_token);
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
