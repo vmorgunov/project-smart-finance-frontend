@@ -12,11 +12,11 @@ export const token = {
   },
 };
 
-export async function getAllTransactionsDATA({ YYYY, MM, type }) {
+export async function getAllTransactionsDATA({ year, month, type, userToken }) {
   const { data } = await axios.get(
-    `/transactions/:year=${YYYY}/:month=${MM}/:type=${type}/data`,
+    `/transactions/:year=${year}/:month=${month}/:type=${type}/data`,
   );
-  token.set(data.token);
+  token.set(userToken);
   return data;
 }
 
