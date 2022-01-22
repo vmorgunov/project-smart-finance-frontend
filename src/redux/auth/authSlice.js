@@ -22,7 +22,6 @@ const authSlice = createSlice({
       state.error = action.payload;
     },
     [logIn.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.user = action.payload.data.user;
       state.token = action.payload.data.headers.acces_token;
       state.isLoggedIn = true;
@@ -44,7 +43,7 @@ const authSlice = createSlice({
       state.isFetchingCurrent = true;
     },
     [fetchCurrentUser.fulfilled](state, action) {
-      state.user = action.payload;
+      state.user = action.payload.data;
       state.isLoggedIn = true;
       state.isFetchingCurrent = false;
     },
