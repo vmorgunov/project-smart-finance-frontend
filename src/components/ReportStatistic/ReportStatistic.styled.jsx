@@ -58,8 +58,6 @@ export const SpanMobile = styled.span`
   margin-top: 5px;
   color: var(--accent-color-4);
   display: block;
-  margin-top: 5px;
-  
 `;
 export const SpanRed = styled.span`
   display: block;
@@ -74,9 +72,7 @@ export const SpanRed = styled.span`
 export const SpanRedMobile = styled.span`
   display: block;
   margin-top: 5px;
-  display: block;
   margin-left: 15px;
-  margin-top: 0;
   color: var(--accent-color-3);
 `;
 

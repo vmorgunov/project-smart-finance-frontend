@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import {
   ReportButton,
@@ -9,9 +8,8 @@ import {
   ReportStatistic,
 } from '../../components';
 // import {Balance} from '../../components'
-
+import { getCategoriesByCosts, getCategoriesByIncome } from '../../api/reportApi';
 import { Chart } from '../../components/Chart';
-
 import { getUserToken } from '../../redux/selectors/tokenSelector';
 import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart/transactionOperations';
 
@@ -23,7 +21,7 @@ import {
   ReportHeader,
   ReportGraph,
 } from './ReportView.styled';
-import { useDispatch } from 'react-redux';
+
 
 const ReportView = () => {
   const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
@@ -35,7 +33,8 @@ const ReportView = () => {
   const [switchData, setSwitchData] = useState('costs');
   const [allCategories, setAllCategories] = useState([]);
   const [data, setData] = useState([]);
-
+  const [categoriesCosts, setCategoriesCosts] = useState([]);
+  const [categoriesIncome, setCategoriesIncome] = useState([]);
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
@@ -46,8 +45,16 @@ const ReportView = () => {
       );
       setData(transactionsData);
     }
+    async function getCategories() {
+      const costs = await getCategoriesByCosts(month, year);
+      setCategoriesCosts(costs);
+      const income = await getCategoriesByIncome(month, year);
+      setCategoriesIncome(income);
+      }
+        getCategories();
   }, [year, dispatch, month, userToken, switchData]);
 
+  
   //   const switchMonthLeft = () => {
   //     setMonth(newDate.add(-1, 'month').format('MM'));
   //     if (month === '01') {
@@ -74,24 +81,9 @@ const ReportView = () => {
   return (
     <>
       <ReportContainer>
-        {isMobile && (
-          <>
-            <ReportButton />
-
-            <MonthPicker
-              switchMonthLeft={null}
-              switchMonthRight={null}
-              dateMonth={month}
-              dateYears={year}
-            />
-          </>
-        )}
-        {isTabletOrDesktop && (
           <ReportHeader>
             <ReportButton />
-
             {/* <Balance/> */}
-
             <MonthPicker
               switchMonthLeft={null}
               switchMonthRight={null}
@@ -99,17 +91,16 @@ const ReportView = () => {
               dateYears={year}
             />
           </ReportHeader>
-        )}
-        {/* {isTabletOrDesktop && <ModalOut />}
-                      {isMobile && <ModalOutMobile/>} */}
-        <ReportStatistic></ReportStatistic>
-
+        {/* {isTabletOrDesktop && <ModalOut />} */}                   
+        <ReportStatistic>
+          costs={categoriesCosts}
+          income={categoriesIncome}
+        </ReportStatistic>
         <Reports
           allCategories={allCategories}
           switchData={switchData}
           clickOnSwitch={null}
         />
-
         <ReportGraph>29. График</ReportGraph>
         <Chart />
       </ReportContainer>

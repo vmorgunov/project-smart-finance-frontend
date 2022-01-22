@@ -20,41 +20,25 @@ export const MonthPicker = ({ switchMonthLeft, switchMonthRight, dateMonth, date
     const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
     const isTabletOrDesktop = useMediaQuery({ minWidth: 768 })
     
-return (
-<>
-    {isMobile &&
-        <Container>
-            <TitleMobile>Текущий период:</TitleMobile>
-            <Switch>
-                <ButtonSwitch type="button" onClick={switchMonthLeft}>
-                    <ArrowIcon src={prevArrowIcon} alt="prevArrowIcon" />
-                </ButtonSwitch>
+    return (
+        <>
+    
+            <Container>
+                {isMobile && <TitleMobile>Текущий период:</TitleMobile>}
+                {isTabletOrDesktop && <Title>Текущий период:</Title>}
+                <Switch>
+                    <ButtonSwitch type="button" onClick={switchMonthLeft}>
+                        <ArrowIcon src={prevArrowIcon} alt="prevArrowIcon" />
+                    </ButtonSwitch>
                     
                     <SwitchData>{moment(dateMonth).format("MMMM")} {dateYears}</SwitchData>
                     
-                <ButtonSwitch type="button" onClick={switchMonthRight}>
-                    <ArrowIcon src={nextArrowIcon} alt="nextArrowIcon" />
-                </ButtonSwitch>
-            </Switch>
-        </Container>
-    }
-    {isTabletOrDesktop &&
-        <Container>
-            <Title>Текущий период:</Title>
-            <Switch>
-                <ButtonSwitch type="button" onClick={switchMonthLeft}>
-                    <ArrowIcon src={prevArrowIcon} alt="prevArrowIcon" />
-                </ButtonSwitch>
-                    
-                    <SwitchData>{moment(dateMonth).format("MMMM")} {dateYears}</SwitchData>
-                    
-                <ButtonSwitch type="button" onClick={switchMonthRight}>
-                    <ArrowIcon src={nextArrowIcon} alt="nextArrowIcon" />
-                </ButtonSwitch>
-            </Switch>
-        </Container>
-    }
-</>
-)
+                    <ButtonSwitch type="button" onClick={switchMonthRight}>
+                        <ArrowIcon src={nextArrowIcon} alt="nextArrowIcon" />
+                    </ButtonSwitch>
+                </Switch>
+            </Container>
+        </>
+    );
 }
 
