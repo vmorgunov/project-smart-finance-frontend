@@ -42,15 +42,24 @@ export const BalanceInput = styled.input`
   border: 2px solid #ffffff;
   border-radius: 16px;
   padding: 15px 30px 15px 10px;
-  font-family: 'Roboto';
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-color);
   cursor: pointer;
+  &::placeholder {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: var(--text-color);
+  }
+  &:focus::placeholder {
+    color: transparent;
+    transition: text-indent 0.3s ease;
+  }
   @media (max-width: 468px) {
     margin: 0;
     border-radius: 22px 0px 0px 22px;

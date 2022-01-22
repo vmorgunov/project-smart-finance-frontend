@@ -1,18 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit';
+import * as actions from './transactionActions';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
 
-const initialState = {
-  transaction: 0,
-};
-
-const transactionSlice = createSlice({
-  name: 'transaction',
-  initialState,
-  reducers: {
-    incrementByAmount(state, action) {
-      state.transaction = action.payload;
-    },
-  },
+const totalBalance = createReducer(0, {
+  [actions.setTotalBalanceSuccess]: (_, { payload }) => payload,
 });
 
-export const { incrementByAmount } = transactionSlice.actions;
-export default transactionSlice.reducer;
+const transaction = combineReducers({
+  totalBalance,
+});
+
+export default transaction;
+
+// const initialState = {
+//   transaction: 0,
+// };
+
+// const transactionSlice = createSlice({
+//   name: 'transaction',
+//   initialState,
+//   reducers: {
+//     incrementByAmount(state, action) {
+//       state.transaction = action.payload;
+//     },
+//   },
+//   extraReducers: builder => {
+//     builder.addCase(changeBalance.fulfilled, (state, action) => {
+//       state.transaction = action.payload;
+//     });
+//   },
+// });
+
+// export const { incrementByAmount } = transactionSlice.actions;
+// export const transactionReducer = transactionSlice.reducer;

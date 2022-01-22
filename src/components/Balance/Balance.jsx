@@ -12,17 +12,19 @@ import {
 } from './Balance.styled';
 import report from '../../images/report.svg';
 import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
-import { incrementByAmount } from '../../redux/transactions/transactionSlice';
+// import { incrementByAmount } from '../../redux/transactions/transactionSlice';
 import ModalWelcome from '../ModalWelcome/ModalWelcome';
+import transactionsOperations from '../../redux/transactions/transactionOperations';
+// import { changeBalance } from '../../redux/transactions/transactionSlice';
 
 export const Balance = () => {
   const [value, setValue] = useState('00.00');
-  const [defaultValue, setDefaultValue] = useState('00.00');
+  const [defaultValue, setDefaultValue] = useState('');
   const dispatch = useDispatch();
   const balance = useSelector(getAllTransaction);
   const onClick = e => {
     e.preventDefault();
-    dispatch(incrementByAmount(defaultValue));
+    dispatch(transactionsOperations.setBalance(defaultValue));
   };
 
   useEffect(() => {
@@ -57,6 +59,7 @@ export const Balance = () => {
                 type="text"
                 value={defaultValue}
                 onChange={handleInputChange}
+                placeholder="00.00"
                 maxLength="20"
                 autoComplete="off"
               />

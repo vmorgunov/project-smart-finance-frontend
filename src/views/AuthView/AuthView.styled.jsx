@@ -20,8 +20,8 @@ export const TitlesContainer = styled.div`
                 matches.isDesktop && '0'};
 `;
 
-
 export const Title = styled.h1`
+    position: relative;
     font-weight: 900;
     font-size: ${({ matches }) =>
         matches.isMobile ? '39.5px' :
@@ -36,26 +36,50 @@ export const Title = styled.h1`
         matches.isMobile ? '0 0 5px 0' :
             matches.isTablet ? '0 0 4px 0' :
                 matches.isDesktop && '191px 0 0 0'};
-    /* &::before {
+    &::before {
         content: "";
         display: block;
         background-color: #000;
-        height: 13px;
-        width: 8px;
+        height:  ${({ matches }) =>
+        matches.isMobile ? '6.5px' :
+            matches.isTablet ? '11px' :
+                matches.isDesktop && '13px'};
+        width:  ${({ matches }) =>
+        matches.isMobile ? '4px' :
+            matches.isTablet ? '7px' :
+                matches.isDesktop && '8px'};
         position: absolute;
-        top: 35px;
-        right: 112px;
+        top:  ${({ matches }) =>
+        matches.isMobile ? '12px' :
+            matches.isTablet ? '20px' :
+                matches.isDesktop && '27px'};
+        right:  ${({ matches }) =>
+        matches.isMobile ? '55px' :
+            matches.isTablet ? '94px' :
+                matches.isDesktop && '110px'};
     }
     &::after {
         content: "";
         display: block;
         background-color: #000;
-        height: 13px;
-        width: 8px;
+        height: ${({ matches }) =>
+        matches.isMobile ? '6.5px' :
+            matches.isTablet ? '11px' :
+                matches.isDesktop && '13px'};
+        width: ${({ matches }) =>
+        matches.isMobile ? '4px' :
+            matches.isTablet ? '7px' :
+                matches.isDesktop && '8px'};
         position: absolute;
-        bottom: 14px;
-        right: 112px;
-    } */
+        bottom:  ${({ matches }) =>
+        matches.isMobile ? '3px' :
+            matches.isTablet ? '4px' :
+                matches.isDesktop && '8px'};
+        right:  ${({ matches }) =>
+        matches.isMobile ? '55px' :
+            matches.isTablet ? '94px' :
+                matches.isDesktop && '110px'};
+    }
 `;
 
 export const UnderTitle = styled.h2`

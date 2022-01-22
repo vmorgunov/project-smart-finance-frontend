@@ -98,44 +98,80 @@ const ReportView = () => {
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(userToken);
-    const transactionsData = dispatch(
-      getTransactionsPreMonthForChart({ year, month, switchData, userToken }),
+
+// Расход и доход
+
+    const switchMonthLeft = () => {
+        setDateMonth(newDate.add(-1, 'month').format('MM'));
+        if (dateMonth === '01') {
+            setDateYears(newDate.add('year').format('YYYY'));
+        }
+    };
+
+    const switchMonthRight = () => {
+        setDateMonth(newDate.add(1, 'month').format('MM'));
+        if (dateMonth === '12') {
+            setDateYears(newDate.add('year').format('YYYY'));
+        }
+    };
+
+    const clickOnSwitch = () => {
+        if (switchData === 'costs') {
+            setSwitchData('income');
+        }
+        if (switchData !== 'costs') {
+            setSwitchData('costs');
+        }
+    };
+
+    return (
+        <>
+            <ReportContainer>
+                {isMobile &&
+                    <>
+                        <ReportButton />
+
+                        <MonthPicker
+                            switchMonthLeft={switchMonthLeft}
+                            switchMonthRight={switchMonthRight}
+                            dateMonth={dateMonth}
+                            dateYears={dateYears}
+                        />
+                    </>
+                }
+                {isTabletOrDesktop &&
+                    <ReportHeader>
+
+                        <ReportButton />
+
+                        {/* <Balance/> */}
+
+                        <MonthPicker
+                            switchMonthLeft={switchMonthLeft}
+                            switchMonthRight={switchMonthRight}
+                            dateMonth={dateMonth}
+                            dateYears={dateYears}
+                        />
+
+                    </ReportHeader>
+                }
+                 {/* {isTabletOrDesktop && <ModalOut />} */}
+                <ReportStatistic>
+                    costs={categoriesCosts}
+                    income={categoriesIncome}
+                </ReportStatistic>
+
+                <Reports
+                    allCategories={allCategories}
+                    switchData={switchData}
+                    clickOnSwitch={clickOnSwitch}
+                />
+
+                <ReportGraph>29. График</ReportGraph>
+                <Chart />
+            </ReportContainer>
+        </>
     );
-
-    // setData(transactionsData);
-    console.log(transactionsData);
-    // async function getAllTransactions() {
-    //     const transactionsDATA = await getAllTransactionsDATA( dateYears, dateMonth, switchData);
-    //     setAllCategories(transactionsDATA);
-    //     console.log(transactionsDATA.data);
-    // }
-    // getAllTransactions();
-  }, [data, year, dispatch, month, userToken, switchData]);
-
-  //   const switchMonthLeft = () => {
-  //     setMonth(newDate.add(-1, 'month').format('MM'));
-  //     if (month === '01') {
-  //       setYear(newDate.add('year').format('YYYY'));
-  //     }
-  //   };
-
-  //   const switchMonthRight = () => {
-  //     setMonth(newDate.add(1, 'month').format('MM'));
-  //     if (month === '12') {
-  //       setYear(newDate.add('year').format('YYYY'));
-  //     }
-  //   };
-
-  //   const clickOnSwitch = () => {
-  //     if (switchData === 'costs') {
-  //       setSwitchData('income');
-  //     }
-  //     if (switchData !== 'costs') {
-  //       setSwitchData('costs');
-  //     }
-  //   };
 
   return (
     <>

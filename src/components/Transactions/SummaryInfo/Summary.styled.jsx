@@ -10,19 +10,26 @@ export const NewTable = styled(Table)`
 export const NewTabCell = styled(TableCell)`
   display: flex;
   padding: 12px 20px;
+  border: 2px solid #ffffff;
   align-items: center;
   justify-content: space-between;
-  border: 2px solid #ffffff;
   box-shadow: none;
   color: var(--text-color-3);
 `;
 
 export const TableText = styled.span`
-  font-family: 'Roboto';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 12px;
   line-height: 14px;
-  letter-spacing: 0.04em;
   text-transform: uppercase;
+`;
+
+export const SummaryText = styled.span`
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text-color);
 `;
