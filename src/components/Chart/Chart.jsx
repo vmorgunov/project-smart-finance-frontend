@@ -25,9 +25,29 @@ ChartJS.register(
 export const Chart = () => {
   const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = useMediaQuery({minWidth: 320, maxWidth: 767 })
- const options = {
-  responsive: true,
+  const optionsMobile = {
+    indexAxis: 'y',
+      elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+   responsive: true,
+   maintainAspectRatio : false,
   plugins: {
+    legend: {
+      position: 'right',
+    },
+    title: {
+      display: false,
+      text: 'График',
+    },
+  },
+  };
+  
+  const optionsDesktop = {
+   responsive: true,
+   plugins: {
     legend: {
       position: 'top',
     },
@@ -46,7 +66,7 @@ export const Chart = () => {
       {
         label: 'Транзакции',
         data: labels.map(() => Math.floor(Math.random() * 10)),
-        backgroundColor: "var(--acent-color)",
+        backgroundColor: 'var(--acent-color)',
     },
   ],
 };
@@ -54,37 +74,14 @@ export const Chart = () => {
  return (
    <Container>
      {isMobile &&
-       <Bar options={options} data={data} />
+       <Bar options={optionsMobile} data={data} />
      }
-        {isTabletOrDesktop &&
-<Bar options={options} data={data} />
-}
-          </Container >
- 
-    );
+     {isTabletOrDesktop &&
+       <Bar options={optionsDesktop} data={data} />
+     }
+   </Container >
+  );
 };
+  
     
 
-// import { Bar } from "react-chartjs-2";
-
-// export const Chart = ({ chartData }) => {
-//   return (
-//     <div>
-//       <Bar
-//         data={chartData}
-//         options={{
-//           plugins: {
-//             title: {
-//               display: true,
-//               text: "Cryptocurrency prices"
-//             },
-//             legend: {
-//               display: true,
-//               position: "bottom"
-//             }
-//           }
-//         }}
-//       />
-//     </div>
-//   );
-// };
