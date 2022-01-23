@@ -358,7 +358,6 @@ const ExpenseIncome = () => {
       ).then(d => {
         setTransaction(d.payload.data.transactions);
       });
-      console.log('ExpenseIncome1', transactionType);
     }
   }, [year, dispatch, month, userToken, transactionType]);
 
@@ -374,7 +373,7 @@ const ExpenseIncome = () => {
   };
   return (
     <>
-      {!isMobile && transaction.length && !isLoading && (
+      {!isMobile && !isLoading && (
         <Tabs>
           <TabList className={cx(tabList)}>
             <Tab

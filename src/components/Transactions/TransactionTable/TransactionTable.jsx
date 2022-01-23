@@ -229,7 +229,7 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
+  transactions = transactions ? transactions : [];
   console.log('TransactionTable', transactions, type);
 
   const matches = { isMobile, isTablet, isDesctop };
@@ -238,6 +238,7 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
   //если строки не заполняют всю таблицу, добавляем их
   const emptyRowTable = () => {
     let trans = transactions;
+
     if (transactions.length < 8) {
       const arr = Array(8);
       for (let i = 0; i < arr.length; i++) {
