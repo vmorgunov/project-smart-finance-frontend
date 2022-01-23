@@ -12,20 +12,25 @@ import {
 } from './Balance.styled';
 import report from '../../images/report.svg';
 import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
-// import { incrementByAmount } from '../../redux/transactions/transactionSlice';
+import { getUserToken } from '../../redux/selectors/tokenSelector';
 import ModalWelcome from '../ModalWelcome/ModalWelcome';
-import transactionsOperations from '../../redux/transactions/transactionOperations';
-// import { changeBalance } from '../../redux/transactions/transactionSlice';
+import pushBalance from '../../redux/transactions/transactionOperations';
+import * as authOperations from '../../redux/auth/authOperations';
 
 export const Balance = () => {
-  const [value, setValue] = useState('00.00');
+  const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
   const dispatch = useDispatch();
   const balance = useSelector(getAllTransaction);
+  const userToken = useSelector(getUserToken);
   const onClick = e => {
     e.preventDefault();
-    dispatch(transactionsOperations.setBalance(defaultValue));
+    dispatch(pushBalance({ defaultValue, userToken }));
   };
+
+  // useEffect(() => {
+  //   dispatch(authOperations.fetchCurrentUser());
+  // }, []);
 
   useEffect(() => {
     setValue(balance);
@@ -44,7 +49,7 @@ export const Balance = () => {
           {balance > 0 ? (
             <>
               <BalanceInput
-                type="text"
+                type="number"
                 readOnly
                 value={value}
                 onChange={handleInputChange}
@@ -56,7 +61,7 @@ export const Balance = () => {
           ) : (
             <>
               <BalanceInput
-                type="text"
+                type="number"
                 value={defaultValue}
                 onChange={handleInputChange}
                 placeholder="00.00"

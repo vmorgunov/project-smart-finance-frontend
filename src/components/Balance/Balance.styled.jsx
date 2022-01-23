@@ -60,6 +60,12 @@ export const BalanceInput = styled.input`
     color: transparent;
     transition: text-indent 0.3s ease;
   }
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   @media (max-width: 468px) {
     margin: 0;
     border-radius: 22px 0px 0px 22px;
