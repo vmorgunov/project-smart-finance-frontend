@@ -52,7 +52,7 @@ export const Note = styled.p`
     }
 `;
 
-export const GoogleButton = styled.button`
+export const GoogleButton = styled.a`
     height: 40px;
     width: 122px;
     padding: 10px 19px 10px 20px;
