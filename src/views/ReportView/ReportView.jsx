@@ -38,6 +38,9 @@ const ReportView = () => {
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
+  // useState for Chart 
+  const [chartsCategoryId, setChartsCategoryId] = useState('');
+
 // MISHA Reports
   useEffect(() => {
     if (!!userToken) {
@@ -82,7 +85,12 @@ const ReportView = () => {
       if (type !== 'costs') {
         setType('costs');
       }
-    };
+  };
+   // useState for Chart
+  const onClickGetChart = (id) => {
+    console.log(id);
+    setChartsCategoryId(id);
+  }
 
   return (
     <>
@@ -106,6 +114,7 @@ const ReportView = () => {
           data={data}
           type={type}
           onClickSwitchType={onClickSwitchType}
+          onClickGetChart={onClickGetChart}
         />
         <Chart />
       </ReportContainer>

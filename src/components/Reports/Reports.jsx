@@ -7,7 +7,7 @@ import nextArrowIcon from '../../images/next-arrow.svg';
 import { ArrowIcon, ButtonSwitch, Switch, SwitchData } from '../MonthPicker/MonthPicker.styled';
 import { ReportsContainer } from './Reports.styled'
 
-export const Reports = ({ data, type, onClickSwitchType }) => {
+export const Reports = ({ data, type, onClickSwitchType, onClickGetChart }) => {
 
     return (
         <ReportsContainer>
@@ -26,7 +26,7 @@ export const Reports = ({ data, type, onClickSwitchType }) => {
                 </ButtonSwitch>
             </Switch>
 
-            <ReportList data={data} />
+            <ReportList data={data} onClickGetChart={ onClickGetChart }/>
             
         </ReportsContainer>
     )
