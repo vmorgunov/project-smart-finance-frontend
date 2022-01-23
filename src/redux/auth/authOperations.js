@@ -12,7 +12,7 @@ const token = {
   },
 };
 
-const register = createAsyncThunk(
+const signup = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
@@ -65,4 +65,4 @@ const fetchCurrentUser = createAsyncThunk(
   },
 );
 
-export { register, logIn, logOut, fetchCurrentUser };
+export { signup, logIn, logOut, fetchCurrentUser };
