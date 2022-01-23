@@ -46,8 +46,7 @@ const ReportView = () => {
     if (!!userToken) {
       const transactionsData = dispatch(
         getTransactionsPreMonthForChart({ year, month, type, userToken }),
-      );
-      setData(transactionsData);
+      ).then((response) => {setData(response.payload.data)})
     }
   }, [year, dispatch, month, userToken, type]);
 

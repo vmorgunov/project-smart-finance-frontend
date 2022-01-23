@@ -20,7 +20,7 @@ const getTransactionsPreMonthForChart = createAsyncThunk(
     const AuthStr = 'Bearer '.concat(userToken);
     try {
       const { data } = await axios.get(
-        `/transactions/:year=${year}/:month=${month}/:type=${type}/data`,
+        `/transactions/${year}/${month}/${type}/data`,
         { headers: { Authorization: AuthStr } },
       );
       console.log(data);
