@@ -14,7 +14,7 @@ const TransactioInfo = ({ type, transactions, handleDelete }) => {
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesctop };
-  console.log(transactions);
+
   return (
     <TransactioInfoWrrap matches={matches}>
       <TransactioDetailsWrrap matches={matches}>
