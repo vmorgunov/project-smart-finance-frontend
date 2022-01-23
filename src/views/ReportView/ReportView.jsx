@@ -19,9 +19,7 @@ import moment from 'moment';
 import {
   ReportContainer,
   ReportHeader,
-  ReportGraph,
 } from './ReportView.styled';
-
 
 const ReportView = () => {
   const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
@@ -40,6 +38,7 @@ const ReportView = () => {
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
+// MISHA Reports
   useEffect(() => {
     if (!!userToken) {
       const transactionsData = dispatch(
@@ -47,39 +46,43 @@ const ReportView = () => {
       );
       setData(transactionsData);
     }
-    
-    async function getCategories() {
+  }, [year, dispatch, month, userToken, type]);
+
+// TANYA ReportStatistic
+  useEffect(() => {
+    if (!!userToken) {
+      async function getCategories() {
       const costs = await getCategoriesByCosts(month, year);
       setCategoriesCosts(costs);
       const income = await getCategoriesByIncome(month, year);
       setCategoriesIncome(income);
       }
         getCategories();
-  }, [year, dispatch, month, userToken, type]);
+    }
+  }, [year, dispatch, month, userToken]);
 
-  
-  //   const switchMonthLeft = () => {
-  //     setMonth(newDate.add(-1, 'month').format('MM'));
-  //     if (month === '01') {
-  //       setYear(newDate.add('year').format('YYYY'));
-  //     }
-  //   };
+    const switchMonthLeft = () => {
+      setMonth(newDate.add(-1, 'month').format('MM'));
+      if (month === '01') {
+        setYear(newDate.add('year').format('YYYY'));
+      }
+    };
 
-  //   const switchMonthRight = () => {
-  //     setMonth(newDate.add(1, 'month').format('MM'));
-  //     if (month === '12') {
-  //       setYear(newDate.add('year').format('YYYY'));
-  //     }
-  //   };
+    const switchMonthRight = () => {
+      setMonth(newDate.add(1, 'month').format('MM'));
+      if (month === '12') {
+        setYear(newDate.add('year').format('YYYY'));
+      }
+    };
 
-  //   const clickOnSwitch = () => {
-  //     if (type === 'costs') {
-  //       setType('income');
-  //     }
-  //     if (type !== 'costs') {
-  //       setType('costs');
-  //     }
-  //   };
+    const onClickSwitchType = () => {
+      if (type === 'costs') {
+        setType('income');
+      }
+      if (type !== 'costs') {
+        setType('costs');
+      }
+    };
 
   return (
     <>
@@ -88,8 +91,8 @@ const ReportView = () => {
             <ReportButton />
             {/* <Balance/> */}
             <MonthPicker
-              switchMonthLeft={null}
-              switchMonthRight={null}
+              switchMonthLeft={switchMonthLeft}
+              switchMonthRight={switchMonthRight}
               dateMonth={month}
               dateYears={year}
             />
@@ -102,9 +105,8 @@ const ReportView = () => {
         <Reports
           data={data}
           type={type}
-          clickOnSwitch={null}
+          onClickSwitchType={onClickSwitchType}
         />
-        <ReportGraph>29. График</ReportGraph>
         <Chart />
       </ReportContainer>
     </>

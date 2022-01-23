@@ -7,15 +7,12 @@ import nextArrowIcon from '../../images/next-arrow.svg';
 import { ArrowIcon, ButtonSwitch, Switch, SwitchData } from '../MonthPicker/MonthPicker.styled';
 import { ReportsContainer } from './Reports.styled'
 
-export const Reports = ({ data, type, clickOnSwitch }) => {
-
-    // const costsType = allCategories.filter(item => item.type === "costs");
-    // const incomeType = allCategories.filter(item=> item.type === "income")
+export const Reports = ({ data, type, onClickSwitchType }) => {
 
     return (
         <ReportsContainer>
             <Switch>
-                <ButtonSwitch type="button" onClick={clickOnSwitch}>
+                <ButtonSwitch type="button" onClick={onClickSwitchType}>
                     <ArrowIcon src={prevArrowIcon} alt="prevArrowIcon" />
                 </ButtonSwitch>
                 
@@ -24,21 +21,12 @@ export const Reports = ({ data, type, clickOnSwitch }) => {
                     :
                     (<SwitchData>Доходы</SwitchData>)
                 }
-                <ButtonSwitch type="button" onClick={clickOnSwitch}>
+                <ButtonSwitch type="button" onClick={onClickSwitchType}>
                     <ArrowIcon src={nextArrowIcon} alt="nextArrowIcon" />
                 </ButtonSwitch>
             </Switch>
 
-            {type === 'costs' ?
-                (<ReportList
-                    type={type}
-                    // transactions={costsType}
-                    data={data} />)
-                :
-                (<ReportList type={type}
-                    // transactions={incomeType}
-                    data={data} />)
-            }
+            <ReportList data={data} />
             
         </ReportsContainer>
     )
