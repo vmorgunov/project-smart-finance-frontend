@@ -238,8 +238,8 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
   //если строки не заполняют всю таблицу, добавляем их
   const emptyRowTable = () => {
     let trans = transactions;
-    console.log(trans, transactions);
-    if (transactions?.length < 8) {
+
+    if (transactions.length < 8) {
       const arr = Array(8);
       for (let i = 0; i < arr.length; i++) {
         if (i + 1 > transactions.length) {
