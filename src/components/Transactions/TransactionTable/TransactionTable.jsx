@@ -16,6 +16,8 @@ import {
   ImgDelWrrap,
 } from './TransactionTable.styled';
 import delSrc from '../../../images/delete.svg';
+import { getLoading } from '../../../redux/transactions/costIncomeSelector';
+import { useSelector } from 'react-redux';
 
 export const COLUMS = [
   {
@@ -229,16 +231,16 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  transactions = transactions ? transactions : [];
-  console.log('TransactionTable', transactions, type);
 
+  transactions = transactions ? transactions : [];
+  //console.log(transactions);
   const matches = { isMobile, isTablet, isDesctop };
+  const isLoading = useSelector(getLoading);
   //с юсмемо нужно разобратся что то не коректно перелистывает TAB
   const columns = COLUMS; //useMemo(() => COLUMS, [])
   //если строки не заполняют всю таблицу, добавляем их
   const emptyRowTable = () => {
     let trans = transactions;
-
     if (transactions.length < 8) {
       const arr = Array(8);
       for (let i = 0; i < arr.length; i++) {
@@ -262,7 +264,6 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
 
   return (
     <>
-      {console.log('TransactionTable', transactions, type)}
       <TableHeader {...getTableProps()} matches={matches}>
         <Thead>
           {headerGroups.map(headerGroup => (
@@ -280,44 +281,46 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
           ))}
         </Thead>
       </TableHeader>
-      <SimpleBar style={{ maxHeight: 345 }}>
-        <TableBody matches={matches}>
-          <Tbody {...getTableBodyProps()}>
-            {rows.map(row => {
-              prepareRow(row);
-              return (
-                <Tr key={v4()} {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    // {console.log(cell.row.original)}
-                    return (
-                      <Td
-                        key={v4()}
-                        {...cell.getCellProps}
-                        param={cell.column.param}
-                      >
-                        {cell.column.id === 'icon' &&
-                        Object.keys(cell.row.original).length ? (
-                          <ImgDelWrrap>
-                            <ImgDel
-                              src={delSrc}
-                              alt="Удалить"
-                              onClick={() =>
-                                handleDelete(cell.row.original, type)
-                              }
-                            />
-                          </ImgDelWrrap>
-                        ) : (
-                          cell.render('Cell')
-                        )}
-                      </Td>
-                    );
-                  })}
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </TableBody>
-      </SimpleBar>
+      {!isMobile && !isLoading && (
+        <SimpleBar style={{ maxHeight: 345 }}>
+          <TableBody matches={matches}>
+            <Tbody {...getTableBodyProps()}>
+              {rows.map(row => {
+                prepareRow(row);
+                return (
+                  <Tr key={v4()} {...row.getRowProps()}>
+                    {row.cells.map(cell => {
+                      // {console.log(cell.row.original)}
+                      return (
+                        <Td
+                          key={v4()}
+                          {...cell.getCellProps}
+                          param={cell.column.param}
+                        >
+                          {cell.column.id === 'icon' &&
+                          Object.keys(cell.row.original).length ? (
+                            <ImgDelWrrap>
+                              <ImgDel
+                                src={delSrc}
+                                alt="Удалить"
+                                onClick={() =>
+                                  handleDelete(cell.row.original, type)
+                                }
+                              />
+                            </ImgDelWrrap>
+                          ) : (
+                            cell.render('Cell')
+                          )}
+                        </Td>
+                      );
+                    })}
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </TableBody>
+        </SimpleBar>
+      )}
     </>
   );
 };

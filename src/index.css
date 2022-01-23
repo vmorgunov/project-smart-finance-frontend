@@ -46,10 +46,16 @@ button {
   cursor: pointer;
 }
 /* для скрола в таблице все трансакции */
-.simplebar-scrollbar::before {
+.simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
+  opacity: 1;
   background-color: var(--acent-color);
 }
 
+
 .simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
   opacity: 1;
+}
+.simplebar-track.simplebar-horizontal {
+  width: 0;
+
 }

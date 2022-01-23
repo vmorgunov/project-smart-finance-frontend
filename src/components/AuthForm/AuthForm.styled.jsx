@@ -52,7 +52,7 @@ export const Note = styled.p`
     }
 `;
 
-export const GoogleButton = styled.button`
+export const GoogleButton = styled.a`
     height: 40px;
     width: 122px;
     padding: 10px 19px 10px 20px;
@@ -95,8 +95,8 @@ export const FormLabel = styled.label`
         matches.isMobile ? '12px' :
             matches.isTablet ? '0' :
                 matches.isDesktop && '0'};
-    &:first-of-type{
-        margin-bottom: 30px;
+    & > span {
+        color: rgba(235, 87, 87, 1);
     }
 `;
 
@@ -160,5 +160,16 @@ export const FormSubmitBtn = styled.button`
     &:focus {
         background-color: #FF751D;
         color: #FFFFFF;
+    }
+`;
+
+export const ErrorValidation = styled.div`
+    height: 12px;
+    margin: 4px 0 14px 0;
+    & > p{
+        color: rgba(235, 87, 87, 1);
+        font-size: 10px;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
     }
 `;

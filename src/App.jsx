@@ -1,10 +1,10 @@
-import { useEffect, Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from './redux/auth/authOperations.js';
 import { getIsFetchingCurrent, getIsLoggedIn } from './redux/auth/authSelectors.js';
-import { AppBar } from './components/AppBar';
+import AppBar from './components/AppBar';
 
 import { Container } from './App.styled.jsx';
 
@@ -28,10 +28,9 @@ export const App = () => {
 
   return (
     <Container matches={matches}>
+      <AppBar />
       {!isFetchingCurrentUser && (
         <>
-          <AppBar />
-
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={isLoggedIn ? <Navigate to='/transaction' /> : <AuthView />} />

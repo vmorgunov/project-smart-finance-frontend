@@ -1,12 +1,13 @@
+import React from 'react';
 import { useSelector } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
 import { getIsLoggedIn } from "../../redux/auth/authSelectors";
-import { UserMenu } from '../UserMenu';
+import UserMenu from '../UserMenu';
 
 import logo from '../../images/logo.svg';
 import { Container, Logo } from './AppBar.styled.jsx';
 
-export const AppBar = () => {
+const AppBar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn);
 
     const isDesktop = useMediaQuery({ minWidth: 1280 });
@@ -23,3 +24,5 @@ export const AppBar = () => {
         </Container>
     )
 }
+
+export default AppBar;

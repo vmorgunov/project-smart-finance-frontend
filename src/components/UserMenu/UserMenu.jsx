@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
 import { logOut } from "../../redux/auth/authOperations"
 import { getUsermail } from "../../redux/auth/authSelectors";
@@ -8,7 +9,7 @@ import {
     Container, Avatar, Name, Button, LogoutIcon
 } from "./UserMenu.styled.jsx";
 
-export const UserMenu = () => {
+const UserMenu = () => {
     const dispatch = useDispatch();
     const email = useSelector(getUsermail);
 
@@ -30,3 +31,5 @@ export const UserMenu = () => {
         </Container>
     )
 }
+
+export default UserMenu;
