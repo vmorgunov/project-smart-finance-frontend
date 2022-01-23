@@ -1,1 +1,1 @@
-export const getAllTransaction = state => state.transaction.totalBalance;
+export const getAllTransaction = state => state.transaction.balance;

@@ -8,7 +8,10 @@ import {
   ReportStatistic,
 } from '../../components';
 // import {Balance} from '../../components'
-import { getCategoriesByCosts, getCategoriesByIncome } from '../../api/reportApi';
+import {
+  getCategoriesByCosts,
+  getCategoriesByIncome,
+} from '../../api/reportApi';
 import { Chart } from '../../components/Chart';
 import { getUserToken } from '../../redux/selectors/tokenSelector';
 import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart/transactionOperations';
@@ -16,10 +19,7 @@ import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart
 import 'moment/locale/ru';
 import moment from 'moment';
 
-import {
-  ReportContainer,
-  ReportHeader,
-} from './ReportView.styled';
+import { ReportContainer, ReportHeader } from './ReportView.styled';
 
 const ReportView = () => {
   const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
@@ -31,73 +31,80 @@ const ReportView = () => {
 
   const [type, setType] = useState('costs');
   const [data, setData] = useState([]);
-  
+
   const [categoriesCosts, setCategoriesCosts] = useState([]);
   const [categoriesIncome, setCategoriesIncome] = useState([]);
 
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
-// MISHA Reports
+  // useState for Chart
+  const [chartsCategoryId, setChartsCategoryId] = useState('');
+
+  // MISHA Reports
   useEffect(() => {
     if (!!userToken) {
       const transactionsData = dispatch(
         getTransactionsPreMonthForChart({ year, month, type, userToken }),
-      );
-      setData(transactionsData);
+      ).then((response) => {setData(response.payload.data)})
     }
   }, [year, dispatch, month, userToken, type]);
 
-// TANYA ReportStatistic
+  // TANYA ReportStatistic
   useEffect(() => {
     if (!!userToken) {
       async function getCategories() {
-      const costs = await getCategoriesByCosts(month, year);
-      setCategoriesCosts(costs);
-      const income = await getCategoriesByIncome(month, year);
-      setCategoriesIncome(income);
+        const costs = await getCategoriesByCosts(month, year);
+        setCategoriesCosts(costs);
+        const income = await getCategoriesByIncome(month, year);
+        setCategoriesIncome(income);
       }
-        getCategories();
+      getCategories();
     }
   }, [year, dispatch, month, userToken]);
 
-    const switchMonthLeft = () => {
-      setMonth(newDate.add(-1, 'month').format('MM'));
-      if (month === '01') {
-        setYear(newDate.add('year').format('YYYY'));
-      }
-    };
+  const switchMonthLeft = () => {
+    setMonth(newDate.add(-1, 'month').format('MM'));
+    if (month === '01') {
+      setYear(newDate.add('year').format('YYYY'));
+    }
+  };
 
-    const switchMonthRight = () => {
-      setMonth(newDate.add(1, 'month').format('MM'));
-      if (month === '12') {
-        setYear(newDate.add('year').format('YYYY'));
-      }
-    };
+  const switchMonthRight = () => {
+    setMonth(newDate.add(1, 'month').format('MM'));
+    if (month === '12') {
+      setYear(newDate.add('year').format('YYYY'));
+    }
+  };
 
-    const onClickSwitchType = () => {
-      if (type === 'costs') {
-        setType('income');
-      }
-      if (type !== 'costs') {
-        setType('costs');
-      }
-    };
+  const onClickSwitchType = () => {
+    if (type === 'costs') {
+      setType('income');
+    }
+    if (type !== 'costs') {
+      setType('costs');
+    }
+  };
+  // useState for Chart
+  const onClickGetChart = id => {
+    console.log(id);
+    setChartsCategoryId(id);
+  };
 
   return (
     <>
       <ReportContainer>
-          <ReportHeader>
-            <ReportButton />
-            {/* <Balance/> */}
-            <MonthPicker
-              switchMonthLeft={switchMonthLeft}
-              switchMonthRight={switchMonthRight}
-              dateMonth={month}
-              dateYears={year}
-            />
-          </ReportHeader>
-        {/* {isTabletOrDesktop && <ModalOut />} */}                   
+        <ReportHeader>
+          <ReportButton />
+          {/* <Balance/> */}
+          <MonthPicker
+            switchMonthLeft={switchMonthLeft}
+            switchMonthRight={switchMonthRight}
+            dateMonth={month}
+            dateYears={year}
+          />
+        </ReportHeader>
+        {/* {isTabletOrDesktop && <ModalOut />} */}
         <ReportStatistic>
           costs={categoriesCosts}
           income={categoriesIncome}
@@ -106,6 +113,7 @@ const ReportView = () => {
           data={data}
           type={type}
           onClickSwitchType={onClickSwitchType}
+          onClickGetChart={onClickGetChart}
         />
         <Chart />
       </ReportContainer>

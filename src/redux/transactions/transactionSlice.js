@@ -1,15 +1,45 @@
-import * as actions from './transactionActions';
-import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import pushBalance from './transactionOperations';
 
-const totalBalance = createReducer(0, {
-  [actions.setTotalBalanceSuccess]: (_, { payload }) => payload,
+const initialState = {
+  balance: 0,
+  error: null,
+  isLoading: false,
+};
+
+const totaBalanceSlice = createSlice({
+  name: 'balance',
+  initialState,
+  extraReducers: {
+    [pushBalance.pending]: (state, _) => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [pushBalance.fulfilled]: (state, { payload }) => {
+      state.balance = payload.data.balance;
+      state.isLoading = false;
+    },
+    [pushBalance.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    },
+  },
 });
 
-const transaction = combineReducers({
-  totalBalance,
-});
+export default totaBalanceSlice.reducer;
 
-export default transaction;
+// import * as actions from './transactionActions';
+// import { createReducer, combineReducers } from '@reduxjs/toolkit';
+
+// const totalBalance = createReducer(0, {
+//   [actions.setTotalBalanceSuccess]: (_, { payload }) => payload,
+// });
+
+// const transaction = combineReducers({
+//   totalBalance,
+// });
+
+// export default transaction;
 
 // const initialState = {
 //   transaction: 0,
