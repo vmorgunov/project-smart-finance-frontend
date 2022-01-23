@@ -15,7 +15,7 @@ const TransactionsView = () => {
             <Container>
                 <Background matches={matches}/>
             {/* {!isMobile && <Balance />} */}
-                <Balance />
+                {/* <Balance /> */}
                 <TransactionWrrap matches={matches}>
                     <ExpenseIncome />
                 </TransactionWrrap>

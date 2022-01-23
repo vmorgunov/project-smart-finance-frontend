@@ -10,7 +10,10 @@ const Input = ({
     paddingInput,
     textAlignInput,
     borderColor,
-    value, onChange }) => {
+
+    name,
+    value,
+    onChange }) => {
     return (
         <InputStyle
             type={type}
@@ -23,6 +26,7 @@ const Input = ({
             textAlignInput={textAlignInput}
             borderColor={borderColor}
 
+            name={name}
             value={value}
             onChange={onChange}
         />

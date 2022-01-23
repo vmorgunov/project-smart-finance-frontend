@@ -17,7 +17,7 @@ const CATEGORIES = [
     { value: 'Доп. доход', label: 'Доп. доход', type: true },
 ]
 
-const SelectCategory = () => {
+const SelectCategory = ({placeholder, name, selected, onChange}) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -26,7 +26,11 @@ const SelectCategory = () => {
     <Select
       styles={SelectStyles(matches)}
       options={CATEGORIES}
-      placeholder='Категория товара'
+
+      placeholder={placeholder}
+      name={name}
+      selected={selected}
+      onChange={onChange}
     />
   )
 };
