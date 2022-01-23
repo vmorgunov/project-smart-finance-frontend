@@ -9,6 +9,10 @@ export const getTransactionsList = createSelector(
   [getTransactions],
   transactions => {
     const transactionsSort = [...transactions];
-    return transactionsSort.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const result = transactionsSort.sort(
+      (a, b) => new Date(a.date) - new Date(b.date),
+    );
+    console.log(result);
+    return result;
   },
 );

@@ -23,8 +23,8 @@ const transactionsSlice = createSlice({
     },
 
     [getTransactionsByMonth.fulfilled]: (state, { payload }) => {
-      state.items = payload.data.transactions;
-      state.sums = payload.sums;
+      state.items = [payload?.data];
+      state.sums = payload?.sums;
       state.isLoading = false;
     },
 
@@ -54,6 +54,7 @@ const transactionsSlice = createSlice({
     },
 
     [removeTransaction.fulfilled]: (state, { payload }) => {
+      console.log(state.items, payload);
       state.items = state.items.filter(el => el._id !== payload);
       state.isLoading = false;
     },

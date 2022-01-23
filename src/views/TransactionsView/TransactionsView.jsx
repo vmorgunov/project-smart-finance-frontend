@@ -7,24 +7,23 @@ import { Balance } from '../../components/Balance';
 import { Background, TransactionWrrap } from './TransactionsView.styled';
 
 const TransactionsView = () => {
-    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
-    const isDesctop = useMediaQuery({ minWidth: 1280 });
-    const isMobile = useMediaQuery({ maxWidth: 767 });
-    const matches = {isMobile, isTablet, isDesctop}
-    return (
-            <Container>
-                <Background matches={matches}/>
-            {/* {!isMobile && <Balance />} */}
-                {/* <Balance /> */}
-                <TransactionWrrap matches={matches}>
-                    <ExpenseIncome />
-                </TransactionWrrap>
-            </Container>
-    );
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
+  const isDesctop = useMediaQuery({ minWidth: 1280 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const matches = { isMobile, isTablet, isDesctop };
+  return (
+    <Container>
+      <Background matches={matches} />
+      {/* {!isMobile && <Balance />} */}
+      <Balance />
+      <TransactionWrrap matches={matches}>
+        <ExpenseIncome />
+      </TransactionWrrap>
+    </Container>
+  );
 };
 
 export default TransactionsView;
-
 
 // import Media from 'react-media';
 
@@ -45,11 +44,11 @@ export default TransactionsView;
 //                 <Background  matches={matches}/>
 //                 {matches.small && <BtnBackspace />}
 //                 <TransactionWrrap>
-                   
+
 //                     {/* BALANSE COMPONENT */}
-                        
+
 //                     <ExpenseIncome/>
-                        
+
 //         </TransactionWrrap>
 //         </>
 //     );
