@@ -6,13 +6,13 @@ import {List, Item} from './ReportList.styled'
 import repAlcohol from '../../images/rep-alcohol.svg'
 // import salary from '../../images/salary.svg'
 
-const ReportList = ({ type,  data }) => {
+const ReportList = ({ data }) => {
     const isFulfilled = useSelector(getIsFulfilled);
     console.log(data);
-    return (
 
+    return (
         <List>
-            {!isFulfilled ? ( <Item>loading.........</Item> )
+            {!isFulfilled ? ( <Item>-L-O-A-D-I-N-G-</Item> )
                 :
                 (data ? (<Item>Транзакций нет</Item>)
                 :
@@ -24,7 +24,6 @@ const ReportList = ({ type,  data }) => {
                 </Item>)))
                 )
             }
-            
         </List>
     )
 }
