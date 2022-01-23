@@ -1,7 +1,6 @@
 import * as React from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -10,6 +9,7 @@ import {
   NewTabCell,
   TableText,
   SummaryText,
+  NewTableContainer,
 } from './Summary.styled.jsx';
 
 const priceRow = (qty, unit) => {
@@ -32,7 +32,7 @@ const rows = [
 
 const SpanningTable = () => {
   return (
-    <TableContainer component={Paper}>
+    <NewTableContainer component={Paper}>
       <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
         <TableHead>
           <TableRow>
@@ -52,7 +52,7 @@ const SpanningTable = () => {
           ))}
         </TableBody>
       </NewTable>
-    </TableContainer>
+    </NewTableContainer>
   );
 };
 

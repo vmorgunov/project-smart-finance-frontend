@@ -9,14 +9,14 @@ import {
   ImgReport,
   LabelWrapper,
   InputText,
+  BalanceSet,
 } from './Balance.styled';
 import report from '../../images/report.svg';
 import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
 import { getUserToken } from '../../redux/selectors/tokenSelector';
 import ModalWelcome from '../ModalWelcome/ModalWelcome';
 import pushBalance from '../../redux/transactions/transactionOperations';
-import * as authOperations from '../../redux/auth/authOperations';
-
+import { fetchBalance } from '../../redux/transactions/transactionOperations';
 export const Balance = () => {
   const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
@@ -28,9 +28,9 @@ export const Balance = () => {
     dispatch(pushBalance({ defaultValue, userToken }));
   };
 
-  // useEffect(() => {
-  //   dispatch(authOperations.fetchCurrentUser());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchBalance({ userToken }));
+  }, [dispatch, userToken]);
 
   useEffect(() => {
     setValue(balance);
@@ -72,7 +72,7 @@ export const Balance = () => {
             </>
           )}
           {balance > 0 ? (
-            <BalanceConfirm disabled="disabled">Подтвердить</BalanceConfirm>
+            <BalanceSet disabled="disabled">Подтвердить</BalanceSet>
           ) : (
             <BalanceConfirm onClick={onClick} type="submit">
               Подтвердить
@@ -88,4 +88,4 @@ export const Balance = () => {
   );
 };
 
-export default Balance;
+// export default Balance;

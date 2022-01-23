@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import pushBalance from './transactionOperations';
+import { fetchBalance } from './transactionOperations';
 
 const initialState = {
   balance: 0,
@@ -20,6 +21,18 @@ const totaBalanceSlice = createSlice({
       state.isLoading = false;
     },
     [pushBalance.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    },
+    [fetchBalance.pending]: (state, _) => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [fetchBalance.fulfilled]: (state, { payload }) => {
+      state.balance = payload;
+      state.isLoading = false;
+    },
+    [fetchBalance.rejected]: (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
     },
