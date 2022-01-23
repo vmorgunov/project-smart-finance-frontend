@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { useMediaQuery } from 'react-responsive';
@@ -45,14 +45,18 @@ const AuthForm = () => {
         }
     }
 
+    const handleLogin = () => {
+        setIsSignup(false);
+    }
+
     const handleSignup = () => {
-        setIsSignup(!isSignup);
+        setIsSignup(true);
     }
 
     return (
         <Container matches={matches}>
             <Note matches={matches}>Вы можете авторизоваться с помощью Google Account:</Note>
-            <GoogleButton>
+            <GoogleButton href='https://project-smart-finance.herokuapp.com/api/v1/auth/google'>
                 <GoogleIcon src={googleIcon} />Google
             </GoogleButton>
             <Note matches={matches}>Или зайти с помощью e-mail и пароля, предварительно зарегистрировавшись:</Note>
@@ -83,7 +87,7 @@ const AuthForm = () => {
                 <ErrorValidation>{errors?.password && <p>{errors?.password.message || 'Error'}</p>}</ErrorValidation>
 
                 <ButtonsContainer>
-                    <FormSubmitBtn type="submit" >Войти</FormSubmitBtn>
+                    <FormSubmitBtn type="submit" onClick={handleLogin}>Войти</FormSubmitBtn>
                     <FormSubmitBtn type="submit" onClick={handleSignup}>Регистрация</FormSubmitBtn>
                 </ButtonsContainer>
             </Form>

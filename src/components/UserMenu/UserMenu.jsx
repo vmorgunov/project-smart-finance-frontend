@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from 'react-responsive';
 import { logOut } from "../../redux/auth/authOperations"
 import { getUsermail } from "../../redux/auth/authSelectors";
