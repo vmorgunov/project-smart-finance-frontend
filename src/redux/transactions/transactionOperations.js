@@ -1,18 +1,24 @@
-import * as balanceAPI from '../../api/reportApi';
-import * as balanceActions from './transactionActions';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { setBalance } from '../../api/reportApi';
 
-const setBalance = value => async dispatch => {
-  dispatch(balanceActions.setTotalBalanceRequest());
-  try {
-    const res = await balanceAPI.setBalance(value);
-    dispatch(balanceActions.setTotalBalanceSuccess(res.data.balance));
-  } catch (error) {
-    dispatch(balanceActions.setTotalBalanceError(error));
-  }
-};
+import axios from 'axios';
 
-const transactionsOperations = {
-  setBalance,
-};
+axios.defaults.baseURL = 'https://project-smart-finance.herokuapp.com/api/v1';
 
-export default transactionsOperations;
+const pushBalance = createAsyncThunk(
+  'users/balance',
+  async ({ defaultValue, userToken }, thunkAPI) => {
+    const AuthStr = 'Bearer '.concat(userToken);
+    try {
+      const { data } = await axios.patch(`/users/${defaultValue}`, {
+        headers: { Authorization: AuthStr },
+        body: defaultValue,
+      });
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+console.log(pushBalance);
+export default pushBalance;
