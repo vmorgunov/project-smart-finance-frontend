@@ -8,7 +8,7 @@ import {
     Container, Avatar, Name, Button, LogoutIcon
 } from "./UserMenu.styled.jsx";
 
-export const UserMenu = () => {
+const UserMenu = () => {
     const dispatch = useDispatch();
     const email = useSelector(getUsermail);
 
@@ -30,3 +30,5 @@ export const UserMenu = () => {
         </Container>
     )
 }
+
+export default UserMenu;
