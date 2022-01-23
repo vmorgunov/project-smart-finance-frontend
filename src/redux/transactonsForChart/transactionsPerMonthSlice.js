@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTransactionsPreMonthForChart } from './transactionOperations';
 
-const initialState = {};
+const initialState = {
+  isFulfilled: false,
+};
 
 const chartSlice = createSlice({
   name: 'chart',
@@ -10,6 +12,7 @@ const chartSlice = createSlice({
     [getTransactionsPreMonthForChart.fulfilled]: (state, action) => {
       state.chart = { ...action.payload.data };
       state.error = null;
+      state.isFulfilled = true;
     },
   },
 });
