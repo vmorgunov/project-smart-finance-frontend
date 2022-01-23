@@ -30,21 +30,24 @@ const ReportView = () => {
   const [newDate, setNewDate] = useState(moment(new Date()));
   const [month, setMonth] = useState(moment(new Date()).format('MM'));
   const [year, setYear] = useState(moment(new Date()).format('YYYY'));
-  const [switchData, setSwitchData] = useState('costs');
-  const [allCategories, setAllCategories] = useState([]);
+
+  const [type, setType] = useState('costs');
   const [data, setData] = useState([]);
+  
   const [categoriesCosts, setCategoriesCosts] = useState([]);
   const [categoriesIncome, setCategoriesIncome] = useState([]);
+
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!!userToken) {
       const transactionsData = dispatch(
-        getTransactionsPreMonthForChart({ year, month, switchData, userToken }),
+        getTransactionsPreMonthForChart({ year, month, type, userToken }),
       );
       setData(transactionsData);
     }
+    
     async function getCategories() {
       const costs = await getCategoriesByCosts(month, year);
       setCategoriesCosts(costs);
@@ -52,7 +55,7 @@ const ReportView = () => {
       setCategoriesIncome(income);
       }
         getCategories();
-  }, [year, dispatch, month, userToken, switchData]);
+  }, [year, dispatch, month, userToken, type]);
 
   
   //   const switchMonthLeft = () => {
@@ -70,11 +73,11 @@ const ReportView = () => {
   //   };
 
   //   const clickOnSwitch = () => {
-  //     if (switchData === 'costs') {
-  //       setSwitchData('income');
+  //     if (type === 'costs') {
+  //       setType('income');
   //     }
-  //     if (switchData !== 'costs') {
-  //       setSwitchData('costs');
+  //     if (type !== 'costs') {
+  //       setType('costs');
   //     }
   //   };
 
@@ -97,8 +100,8 @@ const ReportView = () => {
           income={categoriesIncome}
         </ReportStatistic>
         <Reports
-          allCategories={allCategories}
-          switchData={switchData}
+          data={data}
+          type={type}
           clickOnSwitch={null}
         />
         <ReportGraph>29. График</ReportGraph>

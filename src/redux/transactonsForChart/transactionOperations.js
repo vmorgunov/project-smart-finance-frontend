@@ -16,11 +16,11 @@ axios.defaults.baseURL = 'https://project-smart-finance.herokuapp.com/api/v1/';
 
 const getTransactionsPreMonthForChart = createAsyncThunk(
   'user/transactionsForChart',
-  async ({ year, month, switchData, userToken }, thunkAPI) => {
+  async ({ year, month, type, userToken }, thunkAPI) => {
     const AuthStr = 'Bearer '.concat(userToken);
     try {
       const { data } = await axios.get(
-        `/transactions/:year=${year}/:month=${month}/:type=${switchData}/data`,
+        `/transactions/:year=${year}/:month=${month}/:type=${type}/data`,
         { headers: { Authorization: AuthStr } },
       );
       console.log(data);
