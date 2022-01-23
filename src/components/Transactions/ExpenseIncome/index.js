@@ -1,1 +1,1 @@
-export { default } from './ExpenseIncome.jsx';
+export { default } from "./ExpenseIncome"

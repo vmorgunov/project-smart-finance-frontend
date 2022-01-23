@@ -9,7 +9,7 @@ import {
 
 import SpanningTable from '../SummaryInfo/Summary';
 
-const TransactioInfo = ({ type }) => {
+const TransactioInfo = ({ type, transactions, handleDelete }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -17,10 +17,18 @@ const TransactioInfo = ({ type }) => {
   return (
     <TransactioInfoWrrap matches={matches}>
       <TransactioDetailsWrrap matches={matches}>
-        <TransactionTable />
+        <TransactionTable
+          type={type}
+          transactions={transactions}
+          handleDelete={handleDelete}
+        />
       </TransactioDetailsWrrap>
       <Summary matches={matches}>
-        <SpanningTable />
+        <SpanningTable
+          type={type}
+          transactions={transactions}
+          handleDelete={handleDelete}
+        />
       </Summary>
     </TransactioInfoWrrap>
   );

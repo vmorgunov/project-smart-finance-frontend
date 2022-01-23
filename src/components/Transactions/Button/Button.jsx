@@ -6,7 +6,9 @@ const Button = ({
     widthButton,
     heightButton,
     borderRadius,
-    backgroundColor
+    backgroundColor,
+
+    type
 }) => {
     return (
         <ButtonStyled 
@@ -15,6 +17,8 @@ const Button = ({
             heightButton={heightButton}
             borderRadius={borderRadius}
             backgroundColor={backgroundColor}
+
+            type={type}
         >
             {text}
         </ButtonStyled>

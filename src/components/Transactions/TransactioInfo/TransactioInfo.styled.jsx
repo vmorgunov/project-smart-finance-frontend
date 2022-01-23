@@ -21,7 +21,5 @@ export const Summary = styled.div`
     width: 230px;
     height: 270px;
 
-    border: 1px solid gray;
-
     margin: ${({ matches }) => matches.isTablet ? '40px 0 0 30px' : '0'};
 `
