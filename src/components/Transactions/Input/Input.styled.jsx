@@ -39,6 +39,8 @@ export const InputStyle = styled.input`
     }`};
   background: none;
 
+  color: var(--text-color-3);
+
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;

@@ -48,7 +48,7 @@ const ExpenseIncome = () => {
   const dispatch = useDispatch();
 
   const [calendar, setCalendar] = useState(new Date());
-  const [idTransaction, setIdTransaction] = useState(null);
+
   const balance = useSelector(getAllTransaction);
 
   let month = calendar.getUTCMonth() + 1;
@@ -56,16 +56,24 @@ const ExpenseIncome = () => {
     month = '0' + month;
   }
   const year = calendar.getFullYear();
-  // const t = Number('20.01.2022'.split('.')[0]);
-  // console.log(t);
-  // console.log(transaction.sort((b, a) => Number(a.day) - Number(b.day)));
+
+  const handelToggleType = type => {
+    setTransactionType(type);
+    console.log(transactionType);
+  };
+
   useEffect(() => {
     if (!!userToken) {
       dispatch(
         getTransactionsByMonth({ year, month, transactionType, userToken }),
       ).then(data => {
-        const sort = data.payload.sort((b, a) => Number(a.day) - Number(b.day));
-        setTransaction(sort);
+        const sortTransactions = data.payload?.sort(
+          (b, a) =>
+            Number(a.day) - Number(b.day) ||
+            Date.parse(a.createdAt) - Date.parse(b.createdAt),
+        );
+        console.log(sortTransactions);
+        setTransaction(sortTransactions);
       });
     }
   }, [year, dispatch, month, userToken, transactionType, calendar, balance]);
@@ -74,14 +82,6 @@ const ExpenseIncome = () => {
     setCalendar(newdata);
   };
 
-  const handleDelete = (transaction, type) => {
-    setIdTransaction(transaction._id);
-    dispatch(removeTransaction({ idTransaction, userToken }));
-
-    // const sum = transaction.sum
-    // const newBalance = balance - sum;
-    // dispatch(incrementByAmount());
-  };
   return (
     <>
       {!isMobile && (
@@ -108,7 +108,6 @@ const ExpenseIncome = () => {
             <TransactioInfo
               type={transactionType}
               transactions={transaction} //
-              handleDelete={handleDelete}
             />
           </TabPanel>
           <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
@@ -125,7 +124,7 @@ const ExpenseIncome = () => {
           dateFinder={getDate}
           type={transactionType}
           transactions={transaction} //
-          handleDelete={handleDelete}
+          handelToggleType={handelToggleType}
         ></TransactionMobile>
       )}
     </>
