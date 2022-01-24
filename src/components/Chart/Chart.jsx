@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Container } from './Chart.styled';
 import {
@@ -18,66 +19,87 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
-                    
-export function Chart ({ transactions, categories, chartsCategoryId}) {
+export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
+  const [labels, setLabelsArr] = useState([]);
+  const [indexAxisArr, setIndexAxisArr] = useState(5000);
+  const [category, setCategory] = useState(0);
+
   const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
-  const isMobile = useMediaQuery({minWidth: 320, maxWidth: 767 })
+  const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
   const optionsMobile = {
     indexAxis: 'y',
-      elements: {
-    bar: {
-      borderWidth: 1,
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
     },
-  },
-   responsive: true,
-   maintainAspectRatio : false,
-  plugins: {
-    legend: {
-      position: 'top',
-      display: false,
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: false,
+        text: 'График',
+      },
     },
-  },
   };
-  
-  const optionsDesktop = {
-   responsive: true,
-   plugins: {
-    legend: {
-       position: 'top',
-       display: false,
-    },
-    title: {
-      display: false,
-      text: 'График',
-    },
-  },
-};
 
-  const data = {
-    labels: [ chartsCategoryId? transactions: categories ],
+  const optionsDesktop = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'График',
+      },
+    },
+  };
+
+  useEffect(() => {
+    transactions.map((item, i) => {
+      if (i === category) {
+      const arr = Object.keys(item.description);
+      setLabelsArr(arr);
+    }
+  });
+    setCategory(chartsCategoryId);
+    getNumbersForIndexAxis(transactions);
+  }, [category, transactions, chartsCategoryId]);
+
+  const getNumbersForIndexAxis = transactions => {
+    transactions.map((item, i) => {
+      if (i === category) {
+        const arr = Object.values(item.description);
+        const lastNumber = arr.sort((a, b) => b - a);
+        const number = lastNumber[0];
+        console.log(number);
+        setIndexAxisArr(number);
+      }
+    });
+  };
+
+   const data = {
+    labels,
     datasets: [
       {
-        label: ['1', '2', '3'],
-        data: [1, 2, 3],
+        label: 'Транзакции',
+        data: labels.map(() => indexAxisArr),
         backgroundColor: 'rgba(255, 117, 29, 1)',
-    },
-  ],
-};
-  
- return (
-   <Container>
-     {isMobile &&
-       <Bar options={optionsMobile} data={data} />
-       }
-     {isTabletOrDesktop &&
-       <Bar options={optionsDesktop} data={data} />
-     }
-   </Container >
+      },
+    ],
+  };
+
+  return (
+    <Container>
+      {isMobile && <Bar options={optionsMobile} data={data} />}
+      {isTabletOrDesktop && <Bar options={optionsDesktop} data={data} />}
+    </Container>
   );
 };
-  
-    
-

@@ -99,7 +99,6 @@ const ReportView = () => {
         />
         <Chart
           transactions={data}
-          categories={type}
           chartsCategoryId={chartsCategoryId}
         />
       </ReportContainer>
