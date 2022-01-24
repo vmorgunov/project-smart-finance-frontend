@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'https://project-smart-finance.herokuapp.com/api/v1';
@@ -20,6 +21,7 @@ const signup = createAsyncThunk(
       token.set(data.data.headers.acces_token);
       return data;
     } catch (error) {
+      toast.error('Неправильный емейл или пароль');
       return thunkAPI.rejectWithValue(error.message);
     }
   },
@@ -31,6 +33,7 @@ const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
     token.set(data.data.headers.acces_token);
     return data;
   } catch (error) {
+    toast.error('Неправильный емейл или пароль');
     return thunkAPI.rejectWithValue(error.message);
   }
 });
