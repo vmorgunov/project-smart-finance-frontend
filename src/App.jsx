@@ -10,6 +10,7 @@ import {
 import { ToastContainer } from 'react-toastify';
 import AppBar from './components/AppBar';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { Container } from './App.styled.jsx';
 
 const AuthView = lazy(() =>
