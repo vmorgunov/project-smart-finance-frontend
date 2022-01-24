@@ -18,7 +18,6 @@ import moment from 'moment';
 import { ReportContainer, ReportHeader } from './ReportView.styled';
 
 const ReportView = () => {
-
   const [newDate, setNewDate] = useState(moment(new Date()));
   const [month, setMonth] = useState(moment(new Date()).format('MM'));
   const [year, setYear] = useState(moment(new Date()).format('YYYY'));
@@ -40,10 +39,11 @@ const ReportView = () => {
     if (!!userToken) {
       const transactionsData = dispatch(
         getTransactionsPreMonthForChart({ year, month, type, userToken }),
-      ).then((response) => {setData(response.payload.data)})
+      ).then(response => {
+        setData(response.payload.data);
+      });
     }
   }, [year, dispatch, month, userToken, type]);
-
 
   const switchMonthLeft = () => {
     setMonth(newDate.add(-1, 'month').format('MM'));

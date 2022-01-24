@@ -4,6 +4,9 @@ export const ReportContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 40px 75px;
+  @media (max-width: 772px) {
+    align-items: center;
+  }
 `;
 
 export const ReportHeader = styled.div`
