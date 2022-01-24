@@ -22,7 +22,7 @@ ChartJS.register(
 );
 
                     
-export const Chart = () => {
+export function Chart ({ transactions, categories, chartsCategoryId}) {
   const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = useMediaQuery({minWidth: 320, maxWidth: 767 })
   const optionsMobile = {
@@ -36,11 +36,7 @@ export const Chart = () => {
    maintainAspectRatio : false,
   plugins: {
     legend: {
-      position: 'right',
-    },
-    title: {
-      display: false,
-      text: 'График',
+      position: 'top',
     },
   },
   };
@@ -58,14 +54,12 @@ export const Chart = () => {
   },
 };
 
-  const labels = ['Тут', 'Скоро', 'Будут', 'Наши', 'Расходы', 'и', 'Доходы'];
-  
   const data = {
-    labels,
+    labels: [ chartsCategoryId? transactions: categories ],
     datasets: [
       {
-        label: 'Транзакции',
-        data: labels.map(() => Math.floor(Math.random() * 10)),
+        label: '',
+        data: [1,2,3,4],
         backgroundColor: 'var(--acent-color)',
     },
   ],
