@@ -54,7 +54,7 @@ const TransactionMobile = ({
 
     const defaultValue = type === 'costs' ? balance + sum : balance - sum;
     if (defaultValue < 0) {
-      toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
+      toast.warn(`Ваш баланс не может быть меньше 0 !!!`,{autoClose: 1500});
       return;
     }
     dispatch(pushBalance({ defaultValue, userToken }));
