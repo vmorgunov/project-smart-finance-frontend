@@ -1,1 +1,1 @@
-export { ReportStatistic } from './ReportStatistic';
+export  {ReportStatistic}  from './ReportStatistic';

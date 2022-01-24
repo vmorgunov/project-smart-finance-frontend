@@ -7,11 +7,7 @@ import {
   Reports,
   ReportStatistic,
 } from '../../components';
-// import {Balance} from '../../components'
-import {
-  getCategoriesByCosts,
-  getCategoriesByIncome,
-} from '../../api/reportApi';
+
 import { Chart } from '../../components/Chart';
 import { getUserToken } from '../../redux/selectors/tokenSelector';
 import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart/transactionOperations';
@@ -22,8 +18,6 @@ import moment from 'moment';
 import { ReportContainer, ReportHeader } from './ReportView.styled';
 
 const ReportView = () => {
-  const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
-  const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
 
   const [newDate, setNewDate] = useState(moment(new Date()));
   const [month, setMonth] = useState(moment(new Date()).format('MM'));
@@ -50,18 +44,6 @@ const ReportView = () => {
     }
   }, [year, dispatch, month, userToken, type]);
 
-  // TANYA ReportStatistic
-  useEffect(() => {
-    if (!!userToken) {
-      async function getCategories() {
-        const costs = await getCategoriesByCosts(month, year);
-        setCategoriesCosts(costs);
-        const income = await getCategoriesByIncome(month, year);
-        setCategoriesIncome(income);
-      }
-      getCategories();
-    }
-  }, [year, dispatch, month, userToken]);
 
   const switchMonthLeft = () => {
     setMonth(newDate.add(-1, 'month').format('MM'));

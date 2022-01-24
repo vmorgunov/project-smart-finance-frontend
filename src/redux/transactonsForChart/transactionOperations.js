@@ -32,4 +32,22 @@ const getTransactionsPreMonthForChart = createAsyncThunk(
   },
 );
 
-export { getTransactionsPreMonthForChart };
+const getTotalSum = createAsyncThunk(
+  'user/transactionsForChart',
+  async ({ year, month, type, userToken }, thunkAPI) => {
+    const AuthStr = 'Bearer '.concat(userToken);
+    try {
+      const { data } = await axios.get(
+        `/transactions/${year}/${month}/${type}/data`,
+        { headers: { Authorization: AuthStr } },
+      );
+      // console.log(data);
+
+      return data.total;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
+export { getTransactionsPreMonthForChart, getTotalSum };
