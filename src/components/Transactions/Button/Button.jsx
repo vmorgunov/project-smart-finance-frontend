@@ -9,6 +9,7 @@ const Button = ({
   borderRadius,
   backgroundColor,
 
+  handelToggleType,
   type,
 }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -24,6 +25,7 @@ const Button = ({
       backgroundColor={backgroundColor}
       type={type}
       matches={matches}
+      onClick={() => handelToggleType('costs')}
     >
       {text}
     </ButtonStyled>
