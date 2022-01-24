@@ -21,7 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-
 export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
   const [labels, setLabelsArr] = useState([]);
   const [indexAxisArr, setIndexAxisArr] = useState(5000);
@@ -103,3 +102,4 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     </Container>
   );
 };
+

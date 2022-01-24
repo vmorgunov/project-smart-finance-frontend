@@ -23,7 +23,7 @@ const getTransactionsPreMonthForChart = createAsyncThunk(
         `/transactions/${year}/${month}/${type}/data`,
         { headers: { Authorization: AuthStr } },
       );
-      console.log(data);
+      // console.log(data);
 
       return data;
     } catch (error) {

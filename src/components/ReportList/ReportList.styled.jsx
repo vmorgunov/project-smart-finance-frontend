@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { log } from 'react-modal/lib/helpers/ariaAppHider';
 
 export const List = styled.ul`
   display: flex;
@@ -50,7 +51,8 @@ export const SvgBox = styled.div`
   width: 59px;
   height: 46px;
   position: relative;
-  background-color: var(--bg-color);
+  background-color: ${props =>
+    props.idx == '0' ? 'var(--accent-color-2)' : 'var(--bg-color)'};
   border-radius: 20px;
   &:active {
     background-color: var(--accent-color-2);
@@ -65,7 +67,9 @@ export const Svg = styled.svg`
   left: 50%;
   transition: transform scale(0.9);
   transform: translateX(-50%);
-  fill: var(--color-icon);
+  fill: ${props =>
+    props.idx == '0' ? 'var(--acent-color)' : 'var(--color-icon)'};
+  /* fill: var(--color-icon); */
   &:hover {
     position: absolute;
     bottom: 0;
