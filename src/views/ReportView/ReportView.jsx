@@ -25,8 +25,8 @@ const ReportView = () => {
   const [type, setType] = useState('costs');
   const [data, setData] = useState([]);
 
-  const [categoriesCosts, setCategoriesCosts] = useState([]);
-  const [categoriesIncome, setCategoriesIncome] = useState([]);
+  const [categoriesCosts, setCategoriesCosts] = useState(0);
+  const [categoriesIncome, setCategoriesIncome] = useState(0);
 
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
@@ -37,13 +37,45 @@ const ReportView = () => {
   // MISHA Reports
   useEffect(() => {
     if (!!userToken) {
-      const transactionsData = dispatch(
+      dispatch(
         getTransactionsPreMonthForChart({ year, month, type, userToken }),
       ).then(response => {
         setData(response.payload.data);
       });
+      getTotalSumOfTransactions({ year, month, type, userToken });
     }
   }, [year, dispatch, month, userToken, type]);
+
+  const getTotalSumOfTransactions = ({ year, month, userToken }) => {
+    dispatch(
+      getTransactionsPreMonthForChart({
+        year,
+        month,
+        type: 'costs',
+        userToken,
+      }),
+    ).then(response => {
+      const data = response.payload.data;
+      const totalSum = data.reduce((acc, item) => {
+        return acc + item.sum;
+      }, 0);
+      setCategoriesCosts(totalSum);
+    });
+    dispatch(
+      getTransactionsPreMonthForChart({
+        year,
+        month,
+        type: 'income',
+        userToken,
+      }),
+    ).then(response => {
+      const data = response.payload.data;
+      const totalSum = data.reduce((acc, item) => {
+        return acc + item.sum;
+      }, 0);
+      setCategoriesIncome(totalSum);
+    });
+  };
 
   const switchMonthLeft = () => {
     setMonth(newDate.add(-1, 'month').format('MM'));
@@ -87,10 +119,10 @@ const ReportView = () => {
           />
         </ReportHeader>
         {/* {isTabletOrDesktop && <ModalOut />} */}
-        <ReportStatistic>
-          costs={categoriesCosts}
-          income={categoriesIncome}
-        </ReportStatistic>
+        <ReportStatistic
+          categoriesCosts={categoriesCosts}
+          categoriesIncome={categoriesIncome}
+        />
         <Reports
           data={data}
           type={type}
@@ -106,5 +138,5 @@ const ReportView = () => {
     </>
   );
 };
-  
+
 export default ReportView;
