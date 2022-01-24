@@ -42,190 +42,6 @@ export const COLUMS = [
   },
   { Header: '', accessor: 'icon', param: { width: '124px', align: 'center' } },
 ];
-export const DATA = [
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-  {
-    date: '18.01.2022',
-    description: 'Metro',
-    category: 'Cost',
-    sum: '180',
-    icon: delSrc,
-  },
-];
 
 const TransactionTable = ({ type, transactions, handleDelete }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -258,7 +74,6 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
     columns,
     data,
   });
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
@@ -289,14 +104,23 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
                 prepareRow(row);
                 return (
                   <Tr key={v4()} {...row.getRowProps()}>
+                    {/* {console.log(row.values.sum)} */}
                     {row.cells.map(cell => {
-                      // {console.log(cell.row.original)}
                       return (
                         <Td
                           key={v4()}
                           {...cell.getCellProps}
                           param={cell.column.param}
+                          //меняем цвет суммы
+                          colorTextSum={
+                            cell.column.id === 'sum'
+                              ? type === 'costs'
+                                ? 'red'
+                                : 'green'
+                              : ''
+                          }
                         >
+                          {/* вставляем картинку удалить и меняем сумму расходов и доходов /-123 грн/ 125 грн */}
                           {cell.column.id === 'icon' &&
                           Object.keys(cell.row.original).length ? (
                             <ImgDelWrrap>
@@ -308,10 +132,18 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
                                 }
                               />
                             </ImgDelWrrap>
+                          ) : cell.column.id === 'sum' &&
+                            Object.keys(cell.row.original).length ? (
+                            type === 'costs' ? (
+                              `-${cell.row.values.sum} грн`
+                            ) : (
+                              `${cell.row.values.sum} грн`
+                            )
                           ) : (
                             cell.render('Cell')
                           )}
                         </Td>
+                        // const s = false ? (true ? true : false) : true;
                       );
                     })}
                   </Tr>

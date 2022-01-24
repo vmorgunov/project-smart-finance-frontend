@@ -19,6 +19,11 @@ import {
   removeTransaction,
 } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
+import {
+  getTransactions,
+  getTransactionsList,
+} from '../../../redux/transactions/costIncomeSelector';
+import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
 
 const DEFAULT_CLASS = 'react-tabs__tab';
 const DEFAULT_SELECTED_CLASS = `${DEFAULT_CLASS}--selected`;
@@ -44,22 +49,27 @@ const ExpenseIncome = () => {
 
   const [calendar, setCalendar] = useState(new Date());
   const [idTransaction, setIdTransaction] = useState(null);
+  const balance = useSelector(getAllTransaction);
 
   let month = calendar.getUTCMonth() + 1;
   if (month < 10) {
     month = '0' + month;
   }
   const year = calendar.getFullYear();
-
+  // const t = Number('20.01.2022'.split('.')[0]);
+  // console.log(t);
+  // console.log(transaction.sort((b, a) => Number(a.day) - Number(b.day)));
   useEffect(() => {
     if (!!userToken) {
       dispatch(
         getTransactionsByMonth({ year, month, transactionType, userToken }),
-      ).then(d => {
-        setTransaction(d.payload);
+      ).then(data => {
+        const sort = data.payload.sort((b, a) => Number(a.day) - Number(b.day));
+        setTransaction(sort);
       });
     }
-  }, [year, dispatch, month, userToken, transactionType]);
+  }, [year, dispatch, month, userToken, transactionType, calendar, balance]);
+
   const getDate = newdata => {
     setCalendar(newdata);
   };
