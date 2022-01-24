@@ -21,7 +21,7 @@ export const ImageMobile = styled.svg`
   background-repeat: no-repeat;
   position: absolute;
   left: 22px;
-  top 21px;
+  top: 21px;
 `;
 
 export const Image = styled.svg`
