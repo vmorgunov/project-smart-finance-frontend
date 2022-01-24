@@ -16,10 +16,13 @@ export const Item = styled.li`
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  flex-basis: calc((100% - 20px) / 3);
+  flex-basis: calc((100% - 20px) / 6);
   height: 122px;
   cursor: pointer;
   margin-bottom: 20px;
+  @media (max-width: 772px) {
+    flex-basis: calc((100% - 20px) / 3);
+  }
 `;
 
 export const ItemValue = styled.p`
