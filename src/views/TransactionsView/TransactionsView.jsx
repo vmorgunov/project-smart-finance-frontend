@@ -1,16 +1,18 @@
 import { useMediaQuery } from 'react-responsive';
-
 import Container from '../../components/Transactions/Container';
 import ExpenseIncome from '../../components/Transactions/ExpenseIncome';
 import { Balance } from '../../components/Balance';
 
-import { Background, TransactionWrrap } from './TransactionsView.styled';
+import cabagesIcon from '../../images/twoKapusta.svg';
+import cabagesBg from '../../images/kapustaTransactionDesktop.svg';
+
+import { Background, TransactionWrrap, BgImg } from './TransactionsView.styled';
 
 const TransactionsView = () => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
-  const isDesctop = useMediaQuery({ minWidth: 1280 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const matches = { isMobile, isTablet, isDesctop };
+  const matches = { isMobile, isTablet, isDesktop };
   return (
     <Container>
       <Background matches={matches} />
@@ -19,6 +21,8 @@ const TransactionsView = () => {
       <TransactionWrrap matches={matches}>
         <ExpenseIncome />
       </TransactionWrrap>
+      {isDesktop && <BgImg matches={matches} src={cabagesBg} alt='Много капусты' />}
+      {isTablet && <BgImg matches={matches} src={cabagesIcon} alt='Две капусты' />}
     </Container>
   );
 };
