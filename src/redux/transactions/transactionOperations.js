@@ -20,5 +20,20 @@ const pushBalance = createAsyncThunk(
     }
   },
 );
-console.log(pushBalance);
+
+export const fetchBalance = createAsyncThunk(
+  'current/balance',
+  async ({ userToken }, thunkAPI) => {
+    const AuthStr = 'Bearer '.concat(userToken);
+    try {
+      const { data } = await axios.get(`/users/current`, {
+        headers: { Authorization: AuthStr },
+      });
+      return data.data.balance;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
 export default pushBalance;
