@@ -64,10 +64,10 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
   useEffect(() => {
     transactions.map((item, i) => {
       if (i === category) {
-      const arr = Object.keys(item.description);
-      setLabelsArr(arr);
-    }
-  });
+        const arr = Object.keys(item.description);
+        setLabelsArr(arr);
+      }
+    });
     setCategory(chartsCategoryId);
     getNumbersForIndexAxis(transactions);
   }, [category, transactions, chartsCategoryId]);
@@ -84,12 +84,12 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     });
   };
 
-   const data = {
+  const data = {
     labels,
     datasets: [
       {
         label: 'Транзакции',
-        data: labels.map(() => indexAxisArr),
+        data: indexAxisArr,
         backgroundColor: 'rgba(255, 117, 29, 1)',
       },
     ],
@@ -102,4 +102,3 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     </Container>
   );
 };
-
