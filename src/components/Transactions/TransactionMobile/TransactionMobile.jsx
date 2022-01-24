@@ -40,7 +40,9 @@ const TransactionMobile = ({
                   <DateWrrap>{trans.date}</DateWrrap>
                 </DescrDateWrrap>
                 <CategoryWrrap>{trans.category}</CategoryWrrap>
-                <SumWrrap>{trans.sum}</SumWrrap>
+                <SumWrrap colorTextSum={type === 'costs' ? 'red' : 'greey'}>
+                  {type === 'costs' ? `-${trans.sum} грн` : `${trans.sum} грн`}
+                </SumWrrap>
                 <ImgDelWrrap>
                   <ImgDel
                     src={delSrc}

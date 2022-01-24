@@ -57,6 +57,8 @@ export const Td = styled.td`
   width: ${({ param }) => (param.width ? param.width : '100%')};
   text-align: ${({ param }) => (param.align ? param.align : 'center')};
   padding-left: 20px;
+  color: ${({ colorTextSum }) => colorTextSum};
+  font-weight: ${({ colorTextSum }) => (colorTextSum ? 'bold' : 'normal')}; ;
 `;
 
 export const ImgDel = styled.img`

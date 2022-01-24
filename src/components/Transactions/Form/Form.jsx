@@ -26,8 +26,14 @@ import {
 
 import srcCalc from '../../../images/calculator.svg';
 import srcCalendar from '../../../images/calendar.svg';
-import { addTransaction } from '../../../redux/transactions/costIncomeOperations';
+import {
+  addTransaction,
+  getTransactionsByMonth,
+} from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
+import pushBalance from '../../../redux/transactions/transactionOperations';
+
+//const labelError = [{message: }]
 
 const Form = ({ dateFinder, type }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -41,9 +47,10 @@ const Form = ({ dateFinder, type }) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [sum, setSum] = useState('');
+  const [errMesage, seterrMesage] = useState('');
   const userToken = useSelector(getUserToken);
 
-  //const balance = useSelector(getAllTransaction);
+  const balance = useSelector(getAllTransaction);
 
   useEffect(() => {
     dateFinder(selectedDate);
@@ -83,13 +90,30 @@ const Form = ({ dateFinder, type }) => {
       sum,
     };
 
+    // const labelError = {};
+
     try {
       resetForm();
-      if (category && description && selectedDate && !!userToken) {
+      if (category && description && selectedDate && sum && !!userToken) {
         const transactionType = type;
+        const defaultValue = type === 'costs' ? balance - sum : balance + sum;
+        if (defaultValue < 0) {
+          toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
+          return;
+        }
         dispatch(
           addTransaction({ newTransaction, transactionType, userToken }),
         );
+
+        dispatch(pushBalance({ defaultValue, userToken }));
+
+        toast.success(
+          `Ваш ${transactionType === 'costs' ? 'расход' : 'доход'} внесен!`,
+        );
+      } else {
+        // error console.log(category && description && selectedDate && sum);
+        if (!category) {
+        }
       }
     } catch (error) {
       toast.error(error);
@@ -145,6 +169,7 @@ const Form = ({ dateFinder, type }) => {
           name="category"
           selected={category}
           onChange={caterory => setCategory(caterory.label)}
+          type={type}
         />
         <TransactionValueWrrap matches={matches}>
           <Input
