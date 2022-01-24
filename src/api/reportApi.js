@@ -21,16 +21,16 @@ export async function getAllTransactionsDATA({ year, month, type, userToken }) {
 }
 
 // Доход и расход
-export async function getCategoriesByCosts(YYYY, MM) {
-  const { data } = await axios.get(
-    `/transactions/:year=${YYYY}/:month=${MM}/costs`,
-  );
-  return data.total;
-}
+// export async function getCategoriesByCosts(YYYY, MM) {
+//   const { data } = await axios.get(
+//     `/transactions/:year=${YYYY}/:month=${MM}/costs`,
+//   );
+//   return data.total;
+// }
 
-export async function getCategoriesByIncome(YYYY, MM) {
-  const { data } = await axios.get(
-    `/transactions/:year=${YYYY}/:month=${MM}/income`,
-  );
-  return data.total;
-}
+// export async function getCategoriesByIncome(YYYY, MM) {
+//   const { data } = await axios.get(
+//     `/transactions/:year=${YYYY}/:month=${MM}/income`,
+//   );
+//   return data.total;
+// }
