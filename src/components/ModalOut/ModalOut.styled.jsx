@@ -10,7 +10,7 @@ export const Backdrop = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
 `;
 
 export const Container = styled.div`
@@ -41,21 +41,21 @@ export const ContainerMobile = styled.div`
 
 export const CloseButton = styled.button`
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 20px;
+  height: 20px;
   top: 20px;
   right: 20px;
-  cursor: pointer;
   border: none;
+  border-radius: 50%;
+  padding: 5px;
   background-color: inherit;
-  &:hover {
-    cursor: pointer; 
-  }  
-`;
-
-export const CloseIcon = styled.svg`
   background-image: url(${close});
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: all 0.1s ease-out;
+  &:hover {
+    border: 2px solid var(--acent-color);
+  }  
 `;
 
 export const Title = styled.h2`
@@ -83,13 +83,12 @@ export const Button = styled.button`
   text-transform: uppercase;
   border-radius: 16px;
   border: 2px solid #f5f6fb;
-  transition: 0.3s ease-in-out;
+  transition: 0.2s ease-out;
   background-color: transparent;
 
   &:hover {
     border: none;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-out;
     color: var(--bg-color);
     background-color: var(--acent-color);
   }
@@ -104,13 +103,12 @@ export const ButtonMobile = styled.button`
   text-transform: uppercase;
   border-radius: 13px;
   border: 2px solid #f5f6fb;
-  transition: 0.3s ease-in-out;
+  transition: all 0.2s ease-out;
   background-color: transparent;
 
   &:hover {
     border: none;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-out;
 
     color: var(--bg-color);
     background-color: var(--acent-color);
