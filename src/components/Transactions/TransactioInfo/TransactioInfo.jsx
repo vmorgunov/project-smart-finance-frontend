@@ -18,17 +18,13 @@ const TransactioInfo = ({ type, transactions, handleDelete }) => {
   return (
     <TransactioInfoWrrap matches={matches}>
       <TransactioDetailsWrrap matches={matches}>
-        <TransactionTable
-          type={type}
-          transactions={transactions}
-          handleDelete={handleDelete}
-        />
+        <TransactionTable type={type} transactions={transactions} />
       </TransactioDetailsWrrap>
       <Summary matches={matches}>
         <SpanningTable
           type={type}
           transactions={transactions}
-          handleDelete={handleDelete}
+          // handleDelete={handleDelete}
         />
       </Summary>
     </TransactioInfoWrrap>

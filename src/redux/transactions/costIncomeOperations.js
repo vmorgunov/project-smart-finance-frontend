@@ -46,7 +46,7 @@ const removeTransaction = createAsyncThunk(
     const AuthStr = 'Bearer '.concat(userToken);
     try {
       console.log(idTransaction);
-      const { data } = await axios.post(`/transactions/${idTransaction}`, {
+      const { data } = await axios.delete(`/transactions/${idTransaction}`, {
         headers: { Authorization: AuthStr },
       });
       console.log(data);

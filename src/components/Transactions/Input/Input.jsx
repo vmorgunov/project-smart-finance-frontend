@@ -29,6 +29,7 @@ const Input = ({
       name={name}
       value={value}
       onChange={onChange}
+      spellcheck="false"
     />
   );
 };
