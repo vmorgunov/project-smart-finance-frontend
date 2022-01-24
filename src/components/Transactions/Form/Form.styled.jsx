@@ -78,3 +78,33 @@ export const ConfirmationWrrapDiv = styled.div`
       ? '30px 0 0 0'
       : matches.isDesctop && '0px'};
 `;
+
+export const WrrapFieldForm = styled.div`
+  position: relative;
+`;
+
+export const WrrapErrorText = styled.p`
+  font-size: 12px;
+  line-height: 1.17;
+  color: var(--accent-color-3);
+
+  position: absolute;
+  left: 0;
+  top: 48px;
+
+  min-width: 200px;
+`;
+
+export const Currency = styled.span`
+  position: absolute;
+  right: 0;
+  top: 15px;
+
+  font-weight: ${({ isToggleColorCurrency }) =>
+    isToggleColorCurrency ? 600 : 400};
+  font-size: 12px;
+  line-height: 1.17;
+
+  color: ${({ isToggleColorCurrency }) =>
+    isToggleColorCurrency ? 'var(--text-color-3)' : 'var(--color-placeholder)'};
+`;

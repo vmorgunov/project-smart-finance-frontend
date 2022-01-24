@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from 'date-fns/locale/ru'; // the locale you want
 import { useMediaQuery } from 'react-responsive';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,12 +17,15 @@ import { incrementByAmount } from '../../../redux/transactions/transactionSlice'
 
 import {
   ConfirmationWrrapDiv,
+  Currency,
   DateSend,
   DateWrrap,
   DivCalc,
   FormStyle,
   InputWrrapDiv,
   TransactionValueWrrap,
+  WrrapErrorText,
+  WrrapFieldForm,
 } from './Form.styled';
 
 import srcCalc from '../../../images/calculator.svg';
@@ -32,6 +36,7 @@ import {
 } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
 import pushBalance from '../../../redux/transactions/transactionOperations';
+registerLocale('ru', ru); // register it with the name you want
 
 //const labelError = [{message: }]
 
@@ -42,15 +47,34 @@ const Form = ({ dateFinder, type }) => {
   const matches = { isMobile, isTablet, isDesctop };
 
   const dispatch = useDispatch();
-
+  //все поля формы
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [sum, setSum] = useState('');
-  const [errMesage, seterrMesage] = useState('');
-  const userToken = useSelector(getUserToken);
+  //потеря фокуса с импута
+  const [dateDirty, setDateDirty] = useState(false);
+  const [descriptionDirty, setDescriptionDirty] = useState(false);
+  const [categoryDirty, setCategoryDirty] = useState(false);
+  const [sumDirty, setSumDirty] = useState(false);
+  //текст ошибки
+  const [dateError, setDateError] = useState('Дата не может быть пустой !!!');
+  const [descriptionError, setDescriptionError] = useState(
+    'Описание не может быть пустым !!!',
+  );
+  const [categoryError, setCategoryError] = useState(
+    'Нужно выбрать категорию !!!',
+  );
+  const [sumError, setSumError] = useState('Введите сумму !!!');
+  //для валюты подсветка при фокусе
+  const [isToggleColorCurrency, setIsToggleColorCurrency] = useState(false);
 
+  const userToken = useSelector(getUserToken);
   const balance = useSelector(getAllTransaction);
+
+  // const handleiToggleColorCurrency = () => {
+  //   setIsToggleColorCurrency(!isToggleColorCurrency);
+  // };
 
   useEffect(() => {
     dateFinder(selectedDate);
@@ -60,11 +84,13 @@ const Form = ({ dateFinder, type }) => {
     const { name, value } = e.currentTarget;
     switch (name) {
       case 'description':
-        //console.log(name, value);
+        setDescriptionDirty(value ? false : true);
         setDescription(value);
         break;
       case 'sum':
-        const valueNum = parseFloat(value);
+        setSumDirty(value ? false : true);
+        setIsToggleColorCurrency(value ? true : false);
+        const valueNum = value ? parseFloat(value) : '';
         setSum(valueNum);
         break;
       default:
@@ -90,8 +116,6 @@ const Form = ({ dateFinder, type }) => {
       sum,
     };
 
-    // const labelError = {};
-
     try {
       resetForm();
       if (category && description && selectedDate && sum && !!userToken) {
@@ -111,8 +135,18 @@ const Form = ({ dateFinder, type }) => {
           `Ваш ${transactionType === 'costs' ? 'расход' : 'доход'} внесен!`,
         );
       } else {
-        // error console.log(category && description && selectedDate && sum);
+        //error
         if (!category) {
+          setCategoryDirty(true);
+        }
+        if (!selectedDate) {
+          setDateDirty(true);
+        }
+        if (!sum) {
+          setSumDirty(true);
+        }
+        if (!description) {
+          setDescriptionDirty(true);
         }
       }
     } catch (error) {
@@ -133,63 +167,92 @@ const Form = ({ dateFinder, type }) => {
           <DateWrrap matches={matches}>
             <img src={srcCalendar} alt="Календарь" width={20} height={20} />
             <DateSend>
-              <DatePicker
-                selected={selectedDate}
-                onChange={date => setSelectedDate(date)}
-                dateFormat="dd.MM.yyyy"
-                maxDate={new Date()}
-              />
+              <WrrapFieldForm>
+                {dateDirty && dateError && (
+                  <WrrapErrorText>{dateError}</WrrapErrorText>
+                )}
+                <DatePicker
+                  locale="ru"
+                  selected={selectedDate}
+                  onChange={date => setSelectedDate(date)}
+                  dateFormat="dd.MM.yyyy"
+                  maxDate={new Date()}
+                />
+              </WrrapFieldForm>
             </DateSend>
           </DateWrrap>
         )}
-        <Input
-          value={description}
-          onChange={handleChange}
-          type="text"
-          name="description"
-          placeholder="Описание товара"
-          border={{
-            top: 2,
-            right: isMobile ? 2 : 0,
-            bottom: isMobile ? 0 : 2,
-            left: 2,
-          }}
-          borderRadius={{
-            topLeft: 16,
-            topRight: isMobile ? 16 : 0,
-            bottomRight: 0,
-            bottomLeft: 0,
-          }}
-          widthInput={isDesctop ? '287' : isTablet ? '192' : isMobile && '282'}
-          paddingInput={'0px 17px 0px 20px'}
-          borderColor={isMobile && 'var(--bg-text-color)'}
-        />
-        <SelectCategry
-          placeholder="Категория товара"
-          name="category"
-          selected={category}
-          onChange={caterory => setCategory(caterory.label)}
-          type={type}
-        />
-        <TransactionValueWrrap matches={matches}>
+
+        <WrrapFieldForm>
+          {descriptionDirty && descriptionError && (
+            <WrrapErrorText>{descriptionError}</WrrapErrorText>
+          )}
           <Input
-            value={sum}
+            value={description}
             onChange={handleChange}
-            type="number"
-            name="sum"
-            placeholder="00.00 UAH"
-            border={{ top: 2, right: isMobile ? 2 : 0, bottom: 2, left: 2 }}
-            borderRadius={{
-              topLeft: isMobile ? 22 : 0,
-              topRight: 0,
-              bottomRight: 0,
-              bottomLeft: isMobile ? 22 : 0,
+            type="text"
+            name="description"
+            placeholder="Описание товара"
+            border={{
+              top: 2,
+              right: isMobile ? 2 : 0,
+              bottom: isMobile ? 0 : 2,
+              left: 2,
             }}
+            borderRadius={{
+              topLeft: 16,
+              topRight: isMobile ? 16 : 0,
+              bottomRight: 0,
+              bottomLeft: 0,
+            }}
+            widthInput={
+              isDesctop ? '287' : isTablet ? '192' : isMobile && '282'
+            }
+            paddingInput={'0px 17px 0px 20px'}
             borderColor={isMobile && 'var(--bg-text-color)'}
-            widthInput={isMobile ? 125 : 75}
-            paddingInput={isMobile ? '12px 17px 12px 3px' : '2px'}
-            textAlignInput="right"
           />
+        </WrrapFieldForm>
+        <WrrapFieldForm>
+          {categoryDirty && categoryError && (
+            <WrrapErrorText>{categoryError}</WrrapErrorText>
+          )}
+          <SelectCategry
+            placeholder="Категория товара"
+            name="category"
+            selected={category}
+            onChange={caterory => setCategory(caterory.label)}
+            type={type}
+          />
+        </WrrapFieldForm>
+        <TransactionValueWrrap matches={matches}>
+          <WrrapFieldForm>
+            {sumDirty && sumError && (
+              <WrrapErrorText>{sumError}</WrrapErrorText>
+            )}
+            <Currency isToggleColorCurrency={isToggleColorCurrency}>
+              UAH
+            </Currency>
+            <Input
+              value={sum}
+              onChange={handleChange}
+              type="number"
+              name="sum"
+              placeholder="00.00"
+              border={{ top: 2, right: isMobile ? 2 : 0, bottom: 2, left: 2 }}
+              borderRadius={{
+                topLeft: isMobile ? 22 : 0,
+                topRight: 0,
+                bottomRight: 0,
+                bottomLeft: isMobile ? 22 : 0,
+              }}
+              borderColor={isMobile && 'var(--bg-text-color)'}
+              widthInput={isMobile ? 125 : 75}
+              paddingInput={
+                isMobile ? '12px 17px 12px 3px' : '2px 30px 2px 2px'
+              }
+              textAlignInput="right"
+            />
+          </WrrapFieldForm>
           <DivCalc matches={matches}>
             <img src={srcCalc} alt="Калькулятор" width={20} height={20} />
           </DivCalc>
@@ -204,3 +267,39 @@ const Form = ({ dateFinder, type }) => {
 };
 
 export default Form;
+
+// const symbolСurrency = '\u20B4';
+// const valuesNumUAH = value?.split(' ');
+// const lastValueNoUAH = valuesNumUAH[1]?.split(symbolСurrency)[1];
+// const resultSum = lastValueNoUAH
+//   ? `${valuesNumUAH[0]}${lastValueNoUAH} ${symbolСurrency}`
+//   : `${valuesNumUAH[0]} ${symbolСurrency}`;
+
+// const handleKeyDown = e => {
+//   if (e.target.name === 'sum' && e.code === 'Backspace') {
+//     console.log('1', e.code, e.target.value, e.target.name);
+//     //расделяем цыфры и символ
+//     const valuesSumUAH = e.target.value.split(' ');
+//     console.log('34', valuesSumUAH[0].length, valuesSumUAH[0]);
+//     //удаляем
+//     const sumBackspace =
+//       valuesSumUAH[0].length === 0 || valuesSumUAH[0] === '0'
+//         ? 0
+//         : valuesSumUAH[0].slice(0, -1);
+//     e.target.value = sumBackspace + valuesSumUAH[1];
+//     console.log('2', e.code, e.target.value, e.target.name);
+//   }
+// };
+
+// useEffect(() => {
+//   window.addEventListener('keydown', handleKeyDown);
+
+//   return () => {
+//     window.removeEventListener('keydown', handleKeyDown);
+//   };
+// });
+
+//  console.log(sum);
+//берем строку только там где цыфры
+// const sumNumber = Number(sum.split(' ')[0]);
+// console.log('\u20B4');

@@ -55,7 +55,7 @@ const transactionsSlice = createSlice({
 
     [removeTransaction.fulfilled]: (state, { payload }) => {
       console.log(state.items, payload);
-      state.items = state.items.filter(el => el._id !== payload);
+      state.items = state.items?.filter(el => el?._id !== payload);
       state.isLoading = false;
     },
 

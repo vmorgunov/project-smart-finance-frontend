@@ -25,7 +25,6 @@ export const TableBody = styled.table`
       : matches.isTablet
       ? '620px'
       : matches.isDesctop && '760px'};
-  height: 384px;
 `;
 
 export const Thead = styled.thead`

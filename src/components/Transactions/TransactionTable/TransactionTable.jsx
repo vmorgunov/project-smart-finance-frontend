@@ -17,7 +17,16 @@ import {
 } from './TransactionTable.styled';
 import delSrc from '../../../images/delete.svg';
 import { getLoading } from '../../../redux/transactions/costIncomeSelector';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeTransaction } from '../../../redux/transactions/costIncomeOperations';
+import { getUserToken } from '../../../redux/selectors/tokenSelector';
+import LoaderComponent from '../../../common/Loader';
+import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
+import pushBalance from '../../../redux/transactions/transactionOperations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ModalOut } from '../..';
+import { useState } from 'react';
 
 export const COLUMS = [
   {
@@ -43,10 +52,38 @@ export const COLUMS = [
   { Header: '', accessor: 'icon', param: { width: '124px', align: 'center' } },
 ];
 
-const TransactionTable = ({ type, transactions, handleDelete }) => {
+const TransactionTable = ({ type, transactions }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  const balance = useSelector(getAllTransaction);
+  const userToken = useSelector(getUserToken);
+  const [isToggleDel, setIsToggleDel] = useState(false);
+  const [transactionForDel, setTransactionForDel] = useState();
+  const dispatch = useDispatch();
+
+  const handelToggleModal = transaction => {
+    setIsToggleDel(!isToggleDel);
+    setTransactionForDel(transaction);
+  };
+  const handelYesDel = transaction => {
+    setIsToggleDel(!isToggleDel);
+    handleDelete(transactionForDel);
+  };
+
+  const handleDelete = transaction => {
+    const idTransaction = transaction._id;
+    const sum = transaction.sum;
+    dispatch(removeTransaction({ idTransaction, userToken }));
+
+    const defaultValue = type === 'costs' ? balance + sum : balance - sum;
+    if (defaultValue < 0) {
+      toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
+      return;
+    }
+    dispatch(pushBalance({ defaultValue, userToken }));
+  };
 
   transactions = transactions ? transactions : [];
   //console.log(transactions);
@@ -79,6 +116,13 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
 
   return (
     <>
+      {isToggleDel && (
+        <ModalOut
+          onClose={handelToggleModal}
+          onAgree={handelYesDel}
+          title={'Вы уверены ?'}
+        />
+      )}
       <TableHeader {...getTableProps()} matches={matches}>
         <Thead>
           {headerGroups.map(headerGroup => (
@@ -96,6 +140,9 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
           ))}
         </Thead>
       </TableHeader>
+      {isLoading && (
+        <LoaderComponent height={50} width={400} padding={'30px 0 '} />
+      )}
       {!isMobile && !isLoading && (
         <SimpleBar style={{ maxHeight: 345 }}>
           <TableBody matches={matches}>
@@ -128,7 +175,7 @@ const TransactionTable = ({ type, transactions, handleDelete }) => {
                                 src={delSrc}
                                 alt="Удалить"
                                 onClick={() =>
-                                  handleDelete(cell.row.original, type)
+                                  handelToggleModal(cell.row.original)
                                 }
                               />
                             </ImgDelWrrap>

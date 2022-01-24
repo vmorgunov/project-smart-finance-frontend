@@ -2,6 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { fetchCurrentUser } from './redux/auth/authOperations.js';
 import {
   getIsFetchingCurrent,
