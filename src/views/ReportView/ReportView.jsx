@@ -129,10 +129,7 @@ const ReportView = () => {
           onClickSwitchType={onClickSwitchType}
           onClickGetChart={onClickGetChart}
         />
-        <Chart
-          transactions={data}
-          chartsCategoryId={chartsCategoryId}
-        />
+        <Chart transactions={data} chartsCategoryId={chartsCategoryId} />
       </ReportContainer>
     </>
   );

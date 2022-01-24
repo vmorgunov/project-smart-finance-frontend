@@ -76,10 +76,7 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     transactions.map((item, i) => {
       if (i === category) {
         const arr = Object.values(item.description);
-        const lastNumber = arr.sort((a, b) => b - a);
-        const number = lastNumber[0];
-        console.log(number);
-        setIndexAxisArr(number);
+        setIndexAxisArr(arr);
       }
     });
   };
