@@ -52,7 +52,7 @@ export const SvgBox = styled.div`
   height: 46px;
   position: relative;
   background-color: ${props =>
-    props.idx == '0' ? 'var(--accent-color-2)' : 'var(--bg-color)'};
+    props.idx === props.aidx ? 'var(--accent-color-2)' : 'var(--bg-color)'};
   border-radius: 20px;
   &:active {
     background-color: var(--accent-color-2);
@@ -68,8 +68,7 @@ export const Svg = styled.svg`
   transition: transform scale(0.9);
   transform: translateX(-50%);
   fill: ${props =>
-    props.idx == '0' ? 'var(--acent-color)' : 'var(--color-icon)'};
-  /* fill: var(--color-icon); */
+    props.aidx === props.idx ? 'var(--acent-color)' : 'var(--color-icon)'};
   &:hover {
     position: absolute;
     bottom: 0;

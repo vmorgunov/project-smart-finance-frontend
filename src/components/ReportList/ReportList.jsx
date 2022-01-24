@@ -11,14 +11,17 @@ import {
   Svg,
 } from './ReportList.styled';
 
-import LoaderComponent from '../../common/Loader/Loader';
 import { Rings } from 'react-loader-spinner';
 
 import icons from '../../images/symbol-defs.svg';
 
 const ReportList = ({ data, onClickGetChart }) => {
   const isFulfilled = useSelector(getIsFulfilled);
-  const [isActiveIdx, setIsActiveId] = useState('');
+  const [isActiveIdx, setIsActiveId] = useState(0);
+
+  const onIsActiveIdx = idx => {
+    setIsActiveId(idx);
+  };
 
   return (
     <List>
@@ -37,11 +40,11 @@ const ReportList = ({ data, onClickGetChart }) => {
             key={index}
             onClick={() => {
               onClickGetChart(index);
-              setIsActiveId(index);
+              onIsActiveIdx(index);
             }}
           >
             <ItemValue>{item.sum}</ItemValue>
-            <SvgBox idx={index}>
+            <SvgBox idx={index} aidx={isActiveIdx}>
               <Svg idx={index} width="58" height="58">
                 <use xlinkHref={`${icons}#${item.category}`} />
               </Svg>

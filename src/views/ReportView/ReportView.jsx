@@ -101,7 +101,7 @@ const ReportView = () => {
   };
   // useState for Chart
   const onClickGetChart = id => {
-    console.log(id);
+    // console.log(id);
     setChartsCategoryId(id);
   };
 
