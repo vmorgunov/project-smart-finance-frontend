@@ -22,25 +22,22 @@ ChartJS.register(
 );
 
                     
-export const Chart = () => {
+export function Chart ({ transactions, categories, chartsCategoryId}) {
   const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = useMediaQuery({minWidth: 320, maxWidth: 767 })
   const optionsMobile = {
     indexAxis: 'y',
       elements: {
     bar: {
-      borderWidth: 2,
+      borderWidth: 1,
     },
   },
    responsive: true,
    maintainAspectRatio : false,
   plugins: {
     legend: {
-      position: 'right',
-    },
-    title: {
+      position: 'top',
       display: false,
-      text: 'График',
     },
   },
   };
@@ -49,24 +46,23 @@ export const Chart = () => {
    responsive: true,
    plugins: {
     legend: {
-      position: 'top',
+       position: 'top',
+       display: false,
     },
     title: {
-      display: true,
+      display: false,
       text: 'График',
     },
   },
 };
 
-  const labels = ['Тут', 'Скоро', 'Будут', 'Наши', 'Расходы', 'и', 'Доходы'];
-  
   const data = {
-    labels,
+    labels: [ chartsCategoryId? transactions: categories ],
     datasets: [
       {
-        label: 'Транзакции',
-        data: labels.map(() => Math.floor(Math.random() * 10)),
-        backgroundColor: 'var(--acent-color)',
+        label: ['1', '2', '3'],
+        data: [1, 2, 3],
+        backgroundColor: 'rgba(255, 117, 29, 1)',
     },
   ],
 };
@@ -75,7 +71,7 @@ export const Chart = () => {
    <Container>
      {isMobile &&
        <Bar options={optionsMobile} data={data} />
-     }
+       }
      {isTabletOrDesktop &&
        <Bar options={optionsDesktop} data={data} />
      }
