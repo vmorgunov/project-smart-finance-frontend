@@ -21,7 +21,7 @@ const signup = createAsyncThunk(
       token.set(data.data.headers.acces_token);
       return data;
     } catch (error) {
-      toast.error('Неправильный емейл или пароль');
+      toast.error('Неправильная почта или пароль', { autoClose: 1500 });
       return thunkAPI.rejectWithValue(error.message);
     }
   },
@@ -33,7 +33,7 @@ const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
     token.set(data.data.headers.acces_token);
     return data;
   } catch (error) {
-    toast.error('Неправильный емейл или пароль');
+    toast.error('Неправильная почта или пароль', { autoClose: 1500 });
     return thunkAPI.rejectWithValue(error.message);
   }
 });
