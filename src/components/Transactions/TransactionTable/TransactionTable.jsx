@@ -49,6 +49,11 @@ export const COLUMS = [
     accessor: 'sum',
     param: { width: '120px', align: 'right' },
   },
+  {
+    Header: '',
+    accessor: 'type',
+    param: { width: '0px', align: 'right' },
+  },
   { Header: '', accessor: 'icon', param: { width: '124px', align: 'center' } },
 ];
 
@@ -80,14 +85,14 @@ const TransactionTable = ({ type, transactions }) => {
 
     const defaultValue = type === 'costs' ? balance + sum : balance - sum;
     if (defaultValue < 0) {
-      toast.warn(`Ваш баланс не может быть меньше 0 !!!`, { autoClose: 1500 });
+      toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
       return;
     }
     dispatch(pushBalance({ defaultValue, userToken }));
   };
 
   transactions = transactions ? transactions : [];
-  //console.log(transactions);
+
   const isLoading = useSelector(getLoading);
   //с юсмемо нужно разобратся что то не коректно перелистывает TAB
   const columns = COLUMS; //useMemo(() => COLUMS, [])
@@ -151,8 +156,8 @@ const TransactionTable = ({ type, transactions }) => {
                 prepareRow(row);
                 return (
                   <Tr key={v4()} {...row.getRowProps()}>
-                    {/* {console.log(row.values.sum)} */}
                     {row.cells.map(cell => {
+                      console.log(cell.column.id);
                       return (
                         <Td
                           key={v4()}
@@ -161,34 +166,36 @@ const TransactionTable = ({ type, transactions }) => {
                           //меняем цвет суммы
                           colorTextSum={
                             cell.column.id === 'sum'
-                              ? type === 'costs'
+                              ? row.values.type === 'costs'
                                 ? 'red'
                                 : 'green'
                               : ''
                           }
                         >
                           {/* вставляем картинку удалить и меняем сумму расходов и доходов /-123 грн/ 125 грн */}
-                          {cell.column.id === 'icon' &&
-                          Object.keys(cell.row.original).length ? (
-                            <ImgDelWrrap>
-                              <ImgDel
-                                src={delSrc}
-                                alt="Удалить"
-                                onClick={() =>
-                                  handelToggleModal(cell.row.original)
-                                }
-                              />
-                            </ImgDelWrrap>
-                          ) : cell.column.id === 'sum' &&
+                          {console.log(cell.column.id)}
+                          {cell.column.id !== 'type' &&
+                            (cell.column.id === 'icon' &&
                             Object.keys(cell.row.original).length ? (
-                            type === 'costs' ? (
-                              `-${cell.row.values.sum} грн`
+                              <ImgDelWrrap>
+                                <ImgDel
+                                  src={delSrc}
+                                  alt="Удалить"
+                                  onClick={() =>
+                                    handelToggleModal(cell.row.original)
+                                  }
+                                />
+                              </ImgDelWrrap>
+                            ) : cell.column.id === 'sum' &&
+                              Object.keys(cell.row.original).length ? (
+                              row.values.type === 'costs' ? (
+                                `-${cell.row.values.sum} грн`
+                              ) : (
+                                `${cell.row.values.sum} грн`
+                              )
                             ) : (
-                              `${cell.row.values.sum} грн`
-                            )
-                          ) : (
-                            cell.render('Cell')
-                          )}
+                              cell.render('Cell')
+                            ))}
                         </Td>
                         // const s = false ? (true ? true : false) : true;
                       );

@@ -1,4 +1,7 @@
 import SimpleBar from 'simplebar-react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import ButtonMobile from '../ButtonCostsIncomeMobile';
 import Form from '../Form';
@@ -17,12 +20,11 @@ import {
   TransactionWrrap,
 } from './TransactionMobile.styled';
 import delSrc from '../../../images/delete.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import { getLoading } from '../../../redux/transactions/costIncomeSelector';
 import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
-import { useState } from 'react';
 import { removeTransaction } from '../../../redux/transactions/costIncomeOperations';
-import { toast } from 'react-toastify';
+import LoaderComponent from '../../../common/Loader';
 import pushBalance from '../../../redux/transactions/transactionOperations';
 import { ModalOut } from '../..';
 
@@ -37,6 +39,7 @@ const TransactionMobile = ({
   const [isToggleDel, setIsToggleDel] = useState(false);
   const [transactionForDel, setTransactionForDel] = useState();
   const dispatch = useDispatch();
+  const isLoading = useSelector(getLoading);
 
   const handelToggleModal = transaction => {
     setIsToggleDel(!isToggleDel);
@@ -54,7 +57,7 @@ const TransactionMobile = ({
 
     const defaultValue = type === 'costs' ? balance + sum : balance - sum;
     if (defaultValue < 0) {
-      toast.warn(`Ваш баланс не может быть меньше 0 !!!`,{autoClose: 1500});
+      toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
       return;
     }
     dispatch(pushBalance({ defaultValue, userToken }));
@@ -71,17 +74,24 @@ const TransactionMobile = ({
       {/* <BalanseWrrap><Balance></Balance></BalanseWrrap> */}
       <Form dateFinder={dateFinder} type={type} />
       <TransactionWrrap>
+        {isLoading && (
+          <LoaderComponent height={40} width={400} padding={'30px 0 '} />
+        )}
         <SimpleBar style={{ maxHeight: 225 }}>
           <List>
-            {transactions.map(trans => (
+            {transactions?.map(trans => (
               <Item key={trans._id}>
                 <DescrDateWrrap>
                   <DescrWrrap>{trans.description}</DescrWrrap>
                   <DateWrrap>{trans.date}</DateWrrap>
                 </DescrDateWrrap>
                 <CategoryWrrap>{trans.category}</CategoryWrrap>
-                <SumWrrap colorTextSum={type === 'costs' ? 'red' : 'greey'}>
-                  {type === 'costs' ? `-${trans.sum} грн` : `${trans.sum} грн`}
+                <SumWrrap
+                  colorTextSum={trans.type === 'costs' ? 'red' : 'green'}
+                >
+                  {trans.type === 'costs'
+                    ? `-${trans.sum} грн`
+                    : `${trans.sum} грн`}
                 </SumWrrap>
                 <ImgDelWrrap>
                   <ImgDel
@@ -103,6 +113,16 @@ const TransactionMobile = ({
           borderRadius="0"
           backgroundColor="var(--bg-color)"
           handelToggleType={handelToggleType}
+          lableForHandelToggleType={'costs'}
+        />
+        <ButtonMobile
+          marginButton="0 3px 0 0"
+          widthButton="58"
+          heightButton="53"
+          borderRadius="0"
+          backgroundColor="var(--bg-color)"
+          handelToggleType={handelToggleType}
+          lableForHandelToggleType={'all'}
         />
         <ButtonMobile
           text="доход"
@@ -111,7 +131,8 @@ const TransactionMobile = ({
           heightButton="53"
           borderRadius="0"
           backgroundColor="var(--bg-color)"
-          handelToggleType={handelToggleType} //не меняется ти остается один
+          handelToggleType={handelToggleType}
+          lableForHandelToggleType={'income'} //не меняется ти остается один
         />
       </BtnWrap>
     </>

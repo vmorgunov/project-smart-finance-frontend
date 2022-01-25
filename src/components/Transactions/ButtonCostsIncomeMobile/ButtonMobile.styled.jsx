@@ -17,6 +17,8 @@ export const ButtonStyledMobile = styled.button`
   color: var(--text-color-3);
   background-color: ${({ backgroundColor }) =>
     backgroundColor ? backgroundColor : 'transparent'};
+    
+  outline: none;
 
   &:hover {
     border: none;
@@ -25,5 +27,21 @@ export const ButtonStyledMobile = styled.button`
 
     color: white;
     background-color: var(--acent-color)};
+  }
+`;
+
+export const Svg = styled.svg`
+  margin-right: 4px;
+  padding: 13px;
+
+  color: var(--text-color-3);
+  background-color: var(--bg-color);
+
+  &:hover {
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    
+    background-color: var(--acent-color)};
+    color: var(--bg-text-color);
   }
 `;

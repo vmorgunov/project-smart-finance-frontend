@@ -105,16 +105,14 @@ const Form = ({ dateFinder, type }) => {
       year,
       sum,
     };
-    console.log(newTransaction);
+
     try {
       resetForm();
       if (category && description && selectedDate && sum && !!userToken) {
         const transactionType = type;
         const defaultValue = type === 'costs' ? balance - sum : balance + sum;
         if (defaultValue < 0) {
-          toast.warn(`Ваш баланс не может быть меньше 0 !!!`, {
-            autoClose: 1500,
-          });
+          toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
           return;
         }
         dispatch(
@@ -125,7 +123,6 @@ const Form = ({ dateFinder, type }) => {
 
         toast.success(
           `Ваш ${transactionType === 'costs' ? 'расход' : 'доход'} внесен!`,
-          { autoClose: 1500 },
         );
       } else {
         //error
@@ -156,8 +153,7 @@ const Form = ({ dateFinder, type }) => {
   return (
     <FormStyle matches={matches} autoComplete="off" onSubmit={handleSubmit}>
       <InputWrrapDiv matches={matches}>
-        {/* {!matches.isMobile && ( */}
-        <DateWrrap matches={matches}>
+        <DateWrrap type={type} matches={matches}>
           <img src={srcCalendar} alt="Календарь" width={20} height={20} />
           <DateSend>
             <WrrapFieldForm>
@@ -176,134 +172,110 @@ const Form = ({ dateFinder, type }) => {
             </WrrapFieldForm>
           </DateSend>
         </DateWrrap>
-        {/* )} */}
 
-        <WrrapFieldForm>
-          {descriptionDirty && descriptionError && (
-            <WrrapErrorText label="top" matches={matches}>
-              {descriptionError}
-            </WrrapErrorText>
-          )}
-          <Input
-            value={description}
-            onChange={handleChange}
-            type="text"
-            name="description"
-            placeholder="Описание товара"
-            border={{
-              top: 2,
-              right: isMobile ? 2 : 0,
-              bottom: isMobile ? 0 : 2,
-              left: 2,
-            }}
-            borderRadius={{
-              topLeft: 16,
-              topRight: isMobile ? 16 : 0,
-              bottomRight: 0,
-              bottomLeft: 0,
-            }}
-            widthInput={
-              isDesctop ? '287' : isTablet ? '192' : isMobile && '282'
-            }
-            paddingInput={'0px 17px 0px 20px'}
-            borderColor={isMobile && 'var(--bg-text-color)'}
-          />
-        </WrrapFieldForm>
-        <WrrapFieldForm>
-          {categoryDirty && categoryError && (
-            <WrrapErrorText label="bottom" matches={matches}>
-              {categoryError}
-            </WrrapErrorText>
-          )}
-          <SelectCategry
-            placeholder="Категория товара"
-            name="category"
-            selected={category}
-            onChange={caterory => setCategory(caterory.label)}
-            type={type}
-          />
-        </WrrapFieldForm>
-        <TransactionValueWrrap matches={matches}>
-          <WrrapFieldForm>
-            {sumDirty && sumError && (
-              <WrrapErrorText label="bottom" matches={matches}>
-                {sumError}
-              </WrrapErrorText>
-            )}
-            <Currency
-              isToggleColorCurrency={isToggleColorCurrency}
-              matches={matches}
-            >
-              UAH
-            </Currency>
-            <Input
-              value={sum}
-              onChange={handleChange}
-              type="number"
-              name="sum"
-              placeholder="00.00"
-              border={{ top: 2, right: isMobile ? 2 : 0, bottom: 2, left: 2 }}
-              borderRadius={{
-                topLeft: isMobile ? 22 : 0,
-                topRight: 0,
-                bottomRight: 0,
-                bottomLeft: isMobile ? 22 : 0,
-              }}
-              borderColor={isMobile && 'var(--bg-text-color)'}
-              widthInput={isMobile ? 125 : 75}
-              paddingInput={
-                isMobile ? '12px 35px 12px 3px' : '2px 30px 2px 2px'
-              }
-              textAlignInput="right"
-            />
-          </WrrapFieldForm>
-          <DivCalc matches={matches}>
-            <img src={srcCalc} alt="Калькулятор" width={20} height={20} />
-          </DivCalc>
-        </TransactionValueWrrap>
+        {type !== 'all' && (
+          <>
+            <WrrapFieldForm>
+              {descriptionDirty && descriptionError && (
+                <WrrapErrorText label="top" matches={matches}>
+                  {descriptionError}
+                </WrrapErrorText>
+              )}
+              <Input
+                value={description}
+                onChange={handleChange}
+                type="text"
+                name="description"
+                placeholder="Описание товара"
+                border={{
+                  top: 2,
+                  right: isMobile ? 2 : 0,
+                  bottom: isMobile ? 0 : 2,
+                  left: 2,
+                }}
+                borderRadius={{
+                  topLeft: 16,
+                  topRight: isMobile ? 16 : 0,
+                  bottomRight: 0,
+                  bottomLeft: 0,
+                }}
+                widthInput={
+                  isDesctop ? '287' : isTablet ? '192' : isMobile && '282'
+                }
+                paddingInput={'0px 17px 0px 20px'}
+                borderColor={isMobile && 'var(--bg-text-color)'}
+              />
+            </WrrapFieldForm>
+            <WrrapFieldForm>
+              {categoryDirty && categoryError && (
+                <WrrapErrorText label="bottom" matches={matches}>
+                  {categoryError}
+                </WrrapErrorText>
+              )}
+              <SelectCategry
+                placeholder="Категория товара"
+                name="category"
+                selected={category}
+                onChange={caterory => setCategory(caterory.label)}
+                type={type}
+              />
+            </WrrapFieldForm>
+            <TransactionValueWrrap matches={matches}>
+              <WrrapFieldForm>
+                {sumDirty && sumError && (
+                  <WrrapErrorText label="bottom" matches={matches}>
+                    {sumError}
+                  </WrrapErrorText>
+                )}
+                <Currency
+                  isToggleColorCurrency={isToggleColorCurrency}
+                  matches={matches}
+                >
+                  UAH
+                </Currency>
+                <Input
+                  value={sum}
+                  onChange={handleChange}
+                  type="number"
+                  name="sum"
+                  placeholder="00.00"
+                  border={{
+                    top: 2,
+                    right: isMobile ? 2 : 0,
+                    bottom: 2,
+                    left: 2,
+                  }}
+                  borderRadius={{
+                    topLeft: isMobile ? 22 : 0,
+                    topRight: 0,
+                    bottomRight: 0,
+                    bottomLeft: isMobile ? 22 : 0,
+                  }}
+                  borderColor={isMobile && 'var(--bg-text-color)'}
+                  widthInput={isMobile ? 125 : 75}
+                  paddingInput={
+                    isMobile ? '12px 35px 12px 3px' : '2px 30px 2px 2px'
+                  }
+                  textAlignInput="right"
+                />
+              </WrrapFieldForm>
+              <DivCalc matches={matches}>
+                <img src={srcCalc} alt="Калькулятор" width={20} height={20} />
+              </DivCalc>
+            </TransactionValueWrrap>
+          </>
+        )}
       </InputWrrapDiv>
-      <ConfirmationWrrapDiv matches={matches}>
-        <Button type="submit" text={'Ввод'} marginButton={'0 15px 0 0'} />
-        <Button text={'Очистить'} marginButton={'0'} type="reset" />
-      </ConfirmationWrrapDiv>
+      {type !== 'all' && (
+        <>
+          <ConfirmationWrrapDiv matches={matches}>
+            <Button type="submit" text={'Ввод'} marginButton={'0 15px 0 0'} />
+            <Button text={'Очистить'} marginButton={'0'} type="reset" />
+          </ConfirmationWrrapDiv>
+        </>
+      )}
     </FormStyle>
   );
 };
 
 export default Form;
-
-// const symbolСurrency = '\u20B4';
-// const valuesNumUAH = value?.split(' ');
-// const lastValueNoUAH = valuesNumUAH[1]?.split(symbolСurrency)[1];
-// const resultSum = lastValueNoUAH
-//   ? `${valuesNumUAH[0]}${lastValueNoUAH} ${symbolСurrency}`
-//   : `${valuesNumUAH[0]} ${symbolСurrency}`;
-
-// const handleKeyDown = e => {
-//   if (e.target.name === 'sum' && e.code === 'Backspace') {
-//     console.log('1', e.code, e.target.value, e.target.name);
-//     //расделяем цыфры и символ
-//     const valuesSumUAH = e.target.value.split(' ');
-//     console.log('34', valuesSumUAH[0].length, valuesSumUAH[0]);
-//     //удаляем
-//     const sumBackspace =
-//       valuesSumUAH[0].length === 0 || valuesSumUAH[0] === '0'
-//         ? 0
-//         : valuesSumUAH[0].slice(0, -1);
-//     e.target.value = sumBackspace + valuesSumUAH[1];
-//     console.log('2', e.code, e.target.value, e.target.name);
-//   }
-// };
-
-// useEffect(() => {
-//   window.addEventListener('keydown', handleKeyDown);
-
-//   return () => {
-//     window.removeEventListener('keydown', handleKeyDown);
-//   };
-// });
-
-//  console.log(sum);
-//берем строку только там где цыфры
-// const sumNumber = Number(sum.split(' ')[0]);
-// console.log('\u20B4');
