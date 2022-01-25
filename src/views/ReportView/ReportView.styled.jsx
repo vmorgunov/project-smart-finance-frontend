@@ -67,8 +67,8 @@ export const BalanceInputText = styled.span`
   line-height: 14px;
 
   color: var(--text-color);
-  @media (max-width: 768px) {
-    top: 61px;
+  @media (max-width: 767px) {
+    top: 62px;
     right: 55px;
   }
   @media (max-width: 468px) {
