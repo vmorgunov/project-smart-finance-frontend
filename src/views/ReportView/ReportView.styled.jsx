@@ -4,6 +4,7 @@ export const ReportContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin: 0 auto;
   padding: ${({ matches }) =>
     matches.isMobile
       ? '50px 19px 50px 19px'
@@ -45,10 +46,16 @@ export const Background = styled.div`
 `;
 
 export const ReportHeader = styled.div`
+  min-width: 1280;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+
+  @media (max-width: 766px) {
+    flex-direction: column;
+  }
 `;
 
 export const BgImg = styled.img`
