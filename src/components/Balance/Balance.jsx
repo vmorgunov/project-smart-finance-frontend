@@ -53,6 +53,7 @@ export const Balance = ({ typeView }) => {
           {balance > 0 ? (
             <>
               <BalanceInput
+                typeView={typeView}
                 type="number"
                 readOnly
                 value={value}

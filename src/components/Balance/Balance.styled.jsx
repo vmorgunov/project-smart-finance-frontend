@@ -66,8 +66,9 @@ export const BalanceInput = styled.input`
 
   @media (max-width: 468px) {
     margin: 0;
-    border-radius: 22px 0px 0px 22px;
-    padding: 15px 19px 15px 17px;
+    border-radius: ${props => (!props.typeView ? '22px 0px 0px 22px' : '16px')};
+    padding: ${props =>
+      !props.typeView ? '15px 19px 15px 17px' : '15px 30px 15px 10px'};
   }
   @media (max-width: 320px) {
     padding: 15px 19px 15px 25px;
