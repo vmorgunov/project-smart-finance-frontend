@@ -45,7 +45,7 @@ const ReportView = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesktop };
 
-  const [chartsCategoryId, setChartsCategoryId] = useState('');
+  const [chartsCategoryId, setChartsCategoryId] = useState(0);
 
   useEffect(() => {
     if (!!userToken) {
