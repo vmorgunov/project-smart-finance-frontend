@@ -17,6 +17,10 @@ import { useSelector } from 'react-redux';
 import { getTransactionsByMonth } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
 import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
+import {
+  fetchSummaryCosts,
+  fetchSummaryIncome,
+} from '../../../redux/transactions/transactionOperations';
 
 const DEFAULT_CLASS = 'react-tabs__tab';
 const DEFAULT_SELECTED_CLASS = `${DEFAULT_CLASS}--selected`;
@@ -76,7 +80,9 @@ const ExpenseIncome = ({ changeBackgroundForFormModal }) => {
   const getDate = newdata => {
     setCalendar(newdata);
   };
-
+  transactionType === 'costs'
+    ? dispatch(fetchSummaryCosts({ userToken }))
+    : dispatch(fetchSummaryIncome({ userToken }));
   return (
     <>
       {!isMobile && (

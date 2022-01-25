@@ -49,6 +49,7 @@ const totaBalanceSlice = createSlice({
     [fetchSummaryCosts.fulfilled]: (state, { payload }) => {
       state.costs = payload.data;
       state.isLoading = true;
+      state.income = false;
     },
     [fetchSummaryCosts.rejected]: (state, action) => {
       state.error = action.error.message;
@@ -61,6 +62,7 @@ const totaBalanceSlice = createSlice({
     [fetchSummaryIncome.fulfilled]: (state, { payload }) => {
       state.income = payload.data;
       state.isLoading = true;
+      state.costs = false;
     },
     [fetchSummaryIncome.rejected]: (state, action) => {
       state.error = action.error.message;

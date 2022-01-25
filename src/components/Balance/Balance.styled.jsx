@@ -19,7 +19,6 @@ export const BalanceWrapper = styled.div`
 `;
 
 export const BalanceText = styled.span`
-  font-family: 'Roboto';
   font-weight: 500;
   font-size: 12px;
   line-height: 14px;
@@ -81,7 +80,6 @@ export const BalanceConfirm = styled.button`
   border: 2px solid #ffffff;
   background-color: var(--bg-color);
   border-radius: 16px;
-  font-family: 'Roboto';
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
@@ -168,7 +166,6 @@ export const InputText = styled.span`
   position: absolute;
   top: 57px;
   right: 505px;
-  font-family: 'Roboto';
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;

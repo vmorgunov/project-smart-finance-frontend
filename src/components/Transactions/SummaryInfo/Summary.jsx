@@ -1,12 +1,9 @@
-// import React, { useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-import // fetchSummaryCosts,
-// fetchSummaryIncome,
-'../../../redux/transactions/transactionOperations';
-import // getIncome,
-// getCosts,
-'../../../redux/transactions/transactionSelectors';
-// import { getUserToken } from '../../../redux/selectors/tokenSelector';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import {
+  getIncome,
+  getCosts,
+} from '../../../redux/transactions/transactionSelectors';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -21,59 +18,97 @@ import {
 } from './Summary.styled.jsx';
 
 const SpanningTable = () => {
-  // const dispatch = useDispatch();
-  // const income = useSelector(getIncome);
-  // const costs = useSelector(getCosts);
-  // const arrIncome = Object.values(income);
-  // const userToken = useSelector(getUserToken);
-  // useEffect(() => {
-  //   dispatch(fetchSummaryCosts({ userToken }));
-  // }, [dispatch, userToken]);
-
-  // useEffect(() => {
-  //   dispatch(fetchSummaryIncome({ userToken }));
-  // }, [dispatch, userToken]);
-
+  const income = useSelector(getIncome);
+  const costs = useSelector(getCosts);
+  const monthIncome = Object.keys(income);
+  const monthCosts = Object.keys(costs);
+  const sumIncome = Object.values(income);
+  const sumCosts = Object.values(costs);
   return (
-    <NewTableContainer component={Paper}>
-      <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" colSpan={3}>
-              <SummaryText>Сводка</SummaryText>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <NewTabCell>
-              <TableText>Январь</TableText>
-              <TableText>1 563.45 UAH</TableText>
-            </NewTabCell>
-            <NewTabCell>
-              <TableText>Февраль</TableText>
-              <TableText>15 045.37 UAH</TableText>
-            </NewTabCell>
-            <NewTabCell>
-              <TableText>Март</TableText>
-              <TableText>9 665.77 UAH</TableText>
-            </NewTabCell>
-            <NewTabCell>
-              <TableText>Апрель</TableText>
-              <TableText>7 450.96 UAH</TableText>
-            </NewTabCell>
-            <NewTabCell>
-              <TableText>Май</TableText>
-              <TableText>85 620.20 UAH</TableText>
-            </NewTabCell>
-            <NewTabCell>
-              <TableText>Июнь</TableText>
-              <TableText>56 200.63 UAH</TableText>
-            </NewTabCell>
-          </TableRow>
-        </TableBody>
-      </NewTable>
-    </NewTableContainer>
+    <>
+      {costs && (
+        <NewTableContainer component={Paper}>
+          <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" colSpan={3}>
+                  <SummaryText>Сводка</SummaryText>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <NewTabCell>
+                  <TableText>{monthCosts[0]}</TableText>
+                  <TableText>{sumCosts[0]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthCosts[1]}</TableText>
+                  <TableText>{sumCosts[1]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthCosts[2]}</TableText>
+                  <TableText>{sumCosts[2]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthCosts[3]}</TableText>
+                  <TableText>{sumCosts[3]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthCosts[4]}</TableText>
+                  <TableText>{sumCosts[4]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthCosts[5]}</TableText>
+                  <TableText>{sumCosts[5]} UAH</TableText>
+                </NewTabCell>
+              </TableRow>
+            </TableBody>
+          </NewTable>
+        </NewTableContainer>
+      )}
+      {income && (
+        <NewTableContainer component={Paper}>
+          <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" colSpan={3}>
+                  <SummaryText>Сводка</SummaryText>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <NewTabCell>
+                  <TableText>{monthIncome[0]}</TableText>
+                  <TableText>{sumIncome[0]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthIncome[1]}</TableText>
+                  <TableText>{sumIncome[1]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthIncome[2]}</TableText>
+                  <TableText>{sumIncome[2]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthIncome[3]}</TableText>
+                  <TableText>{sumIncome[3]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthIncome[4]}</TableText>
+                  <TableText>{sumIncome[4]} UAH</TableText>
+                </NewTabCell>
+                <NewTabCell>
+                  <TableText>{monthIncome[5]}</TableText>
+                  <TableText>{sumIncome[5]} UAH</TableText>
+                </NewTabCell>
+              </TableRow>
+            </TableBody>
+          </NewTable>
+        </NewTableContainer>
+      )}
+    </>
   );
 };
 

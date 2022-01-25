@@ -23,7 +23,7 @@ export const NewTabCell = styled(TableCell)`
 
 export const TableText = styled.span`
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
   line-height: 14px;
   text-transform: uppercase;

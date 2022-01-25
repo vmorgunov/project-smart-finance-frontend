@@ -46,7 +46,7 @@ export const Balance = ({ typeView }) => {
 
   return (
     <>
-      {balance === 0 ? <ModalWelcome IsOpen={true} /> : !(<ModalWelcome />)}
+      {!balance ? <ModalWelcome IsOpen={true} /> : !(<ModalWelcome />)}
       <BalanceWrapper>
         <BalanceText>Баланс:</BalanceText>
         <LabelWrapper>
