@@ -4,6 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import {
   ReportButton,
   MonthPicker,
+  Balance,
   Reports,
   ReportStatistic,
 } from '../../components';
@@ -18,7 +19,12 @@ import moment from 'moment';
 import cabagesImg from '../../images/kapustaReportDesktop.svg';
 import twoCabages from '../../images/twoKapustaReport.svg';
 
-import { Background, ReportContainer, ReportHeader, BgImg } from './ReportView.styled';
+import {
+  Background,
+  ReportContainer,
+  ReportHeader,
+  BgImg,
+} from './ReportView.styled';
 
 const ReportView = () => {
   const [newDate, setNewDate] = useState(moment(new Date()));
@@ -39,10 +45,8 @@ const ReportView = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesktop };
 
-  // useState for Chart
   const [chartsCategoryId, setChartsCategoryId] = useState('');
 
-  // MISHA Reports
   useEffect(() => {
     if (!!userToken) {
       dispatch(
@@ -109,7 +113,6 @@ const ReportView = () => {
   };
   // useState for Chart
   const onClickGetChart = id => {
-    // console.log(id);
     setChartsCategoryId(id);
   };
 
@@ -119,7 +122,7 @@ const ReportView = () => {
         <Background matches={matches} />
         <ReportHeader>
           <ReportButton />
-          {/* <Balance/> */}
+          <Balance typeView="report" />
           <MonthPicker
             switchMonthLeft={switchMonthLeft}
             switchMonthRight={switchMonthRight}
@@ -140,8 +143,12 @@ const ReportView = () => {
         />
         <Chart transactions={data} chartsCategoryId={chartsCategoryId} />
 
-        {isDesktop && <BgImg matches={matches} src={cabagesImg} alt='Много капусты' />}
-        {isTablet && <BgImg matches={matches} src={twoCabages} alt='Две капусты' />}
+        {isDesktop && (
+          <BgImg matches={matches} src={cabagesImg} alt="Много капусты" />
+        )}
+        {isTablet && (
+          <BgImg matches={matches} src={twoCabages} alt="Две капусты" />
+        )}
       </ReportContainer>
     </>
   );

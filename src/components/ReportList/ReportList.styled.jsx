@@ -21,6 +21,7 @@ export const Item = styled.li`
   height: 122px;
   cursor: pointer;
   margin-bottom: 20px;
+
   @media (max-width: 772px) {
     flex-basis: calc((100% - 20px) / 3);
   }
