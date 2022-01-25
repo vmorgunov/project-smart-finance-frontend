@@ -112,7 +112,9 @@ const Form = ({ dateFinder, type }) => {
         const transactionType = type;
         const defaultValue = type === 'costs' ? balance - sum : balance + sum;
         if (defaultValue < 0) {
-          toast.warn(`Ваш баланс не может быть меньше 0 !!!`);
+          toast.warn(`Ваш баланс не может быть меньше 0 !!!`, {
+            autoClose: 1500,
+          });
           return;
         }
         dispatch(
@@ -123,6 +125,7 @@ const Form = ({ dateFinder, type }) => {
 
         toast.success(
           `Ваш ${transactionType === 'costs' ? 'расход' : 'доход'} внесен!`,
+          { autoClose: 1500 },
         );
       } else {
         //error

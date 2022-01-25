@@ -85,9 +85,10 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     labels,
     datasets: [
       {
-        label: 'Транзакции',
+        label: '',
         data: indexAxisArr,
-        backgroundColor: 'rgba(255, 117, 29, 1)',
+        backgroundColor: ['rgba(255, 117, 29, 1)', 'rgba(255, 218, 192, 1)'],
+        borderRadius: 20,
       },
     ],
   };
