@@ -45,7 +45,7 @@ const ReportList = ({ data, onClickGetChart }) => {
           >
             <ItemValue>{item.sum}</ItemValue>
             <SvgBox idx={index} aidx={isActiveIdx}>
-              <Svg idx={index} width="58" height="58">
+              <Svg idx={index} aidx={isActiveIdx} width="58" height="58">
                 <use xlinkHref={`${icons}#${item.category}`} />
               </Svg>
             </SvgBox>
