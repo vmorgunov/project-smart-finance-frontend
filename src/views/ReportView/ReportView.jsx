@@ -15,7 +15,10 @@ import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart
 import 'moment/locale/ru';
 import moment from 'moment';
 
-import { ReportContainer, ReportHeader } from './ReportView.styled';
+import cabagesImg from '../../images/kapustaReportDesktop.svg';
+import twoCabages from '../../images/twoKapustaReport.svg';
+
+import { Background, ReportContainer, ReportHeader, BgImg } from './ReportView.styled';
 
 const ReportView = () => {
   const [newDate, setNewDate] = useState(moment(new Date()));
@@ -30,6 +33,11 @@ const ReportView = () => {
 
   const userToken = useSelector(getUserToken);
   const dispatch = useDispatch();
+
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const matches = { isMobile, isTablet, isDesktop };
 
   // useState for Chart
   const [chartsCategoryId, setChartsCategoryId] = useState('');
@@ -107,7 +115,8 @@ const ReportView = () => {
 
   return (
     <>
-      <ReportContainer>
+      <ReportContainer matches={matches}>
+        <Background matches={matches} />
         <ReportHeader>
           <ReportButton />
           {/* <Balance/> */}
@@ -130,6 +139,9 @@ const ReportView = () => {
           onClickGetChart={onClickGetChart}
         />
         <Chart transactions={data} chartsCategoryId={chartsCategoryId} />
+
+        {isDesktop && <BgImg matches={matches} src={cabagesImg} alt='Много капусты' />}
+        {isTablet && <BgImg matches={matches} src={twoCabages} alt='Две капусты' />}
       </ReportContainer>
     </>
   );
