@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import pushBalance from './transactionOperations';
-import { fetchBalance } from './transactionOperations';
+import {
+  fetchBalance,
+  fetchSummaryCosts,
+  fetchSummaryIncome,
+} from './transactionOperations';
 
 const initialState = {
   balance: 0,
+  income: {},
+  costs: {},
   error: null,
   isLoading: false,
 };
@@ -33,6 +39,30 @@ const totaBalanceSlice = createSlice({
       state.isLoading = false;
     },
     [fetchBalance.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    },
+    [fetchSummaryCosts.pending]: (state, _) => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [fetchSummaryCosts.fulfilled]: (state, { payload }) => {
+      state.costs = payload.data;
+      state.isLoading = true;
+    },
+    [fetchSummaryCosts.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    },
+    [fetchSummaryIncome.pending]: (state, _) => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [fetchSummaryIncome.fulfilled]: (state, { payload }) => {
+      state.income = payload.data;
+      state.isLoading = true;
+    },
+    [fetchSummaryIncome.rejected]: (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
     },
