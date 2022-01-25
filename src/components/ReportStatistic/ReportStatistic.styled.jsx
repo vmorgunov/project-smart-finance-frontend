@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,7 +9,8 @@ export const Container = styled.div`
   margin: 30px 0 40px;
   height: 50px;
   border-radius: 30px;
-  box-shadow: 5px 10px 20px rgba(170, 178, 197, 0.4);
+  box-shadow: var(--box-shadow-tab-wrrap);
+  background-color: var(--bg-text-color);
 `;
 
 export const ContainerDesktop = styled.div`
