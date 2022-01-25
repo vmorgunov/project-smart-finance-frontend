@@ -12,7 +12,6 @@ export const getTransactionsList = createSelector(
     const result = transactionsSort.sort(
       (a, b) => new Date(a.date) - new Date(b.date),
     );
-    console.log(result);
     return result;
   },
 );

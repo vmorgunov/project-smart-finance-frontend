@@ -20,19 +20,16 @@ export const Background = styled.div`
       : matches.isTablet
       ? '768px'
       : matches.isDesctop && '1280px'};
-  height: ${({ matches }) =>
+  height: ${({ matches, changeBackground }) =>
     matches.isMobile
-      ? '440px'
+      ? changeBackground === 'all'
+        ? '300px'
+        : '440px'
       : matches.isTablet
       ? '527px'
       : matches.isDesctop && '527px'};
 `;
 export const TransactionWrrap = styled.div`
-  /* для таблицы */
-  /* display: flex;
-    flex-direction: ${({ matches }) =>
-    matches.isTablet ? 'row' : matches.isDesctop && 'column'};
-    justify-content: center; */
   width: ${({ matches }) =>
     matches.isTablet ? '665px' : matches.isDesctop && '1060px'};
 `;

@@ -19,7 +19,7 @@ export const FormStyle = styled.form`
       : matches.isTablet
       ? '48px'
       : matches.isDesctop && '59px'};
-  padding-top: ${({ matches }) => (matches.isMobile ? '54px' : '0px')};
+  padding-top: ${({ matches }) => (matches.isMobile ? '25px' : '0px')};
 `;
 
 export const DivCalc = styled.div`
@@ -50,7 +50,8 @@ export const TransactionValueWrrap = styled.div`
 
 export const DateWrrap = styled.div`
   width: ${({ matches }) => (matches.isMobile ? '279px' : '104px')};
-  height: 44px;
+  height: ${({ matches, type }) =>
+    matches.isMobile && type === 'all' ? '98px' : '44px'};
 
   margin-right: ${({ matches }) =>
     matches.isTablet ? '33px' : matches.isDesctop && '20px'};

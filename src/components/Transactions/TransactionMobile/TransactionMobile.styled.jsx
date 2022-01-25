@@ -96,6 +96,7 @@ export const ImgDelWrrap = styled.div`
     background: var(--bg-color);
   }
 `;
+
 export const ImgDel = styled.img`
   width: 18px;
   height: 18px;

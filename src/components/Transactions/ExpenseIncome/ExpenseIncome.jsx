@@ -14,15 +14,8 @@ import TransactionMobile from '../TransactionMobile';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {
-  getTransactionsByMonth,
-  removeTransaction,
-} from '../../../redux/transactions/costIncomeOperations';
+import { getTransactionsByMonth } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
-import {
-  getTransactions,
-  getTransactionsList,
-} from '../../../redux/transactions/costIncomeSelector';
 import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
 
 const DEFAULT_CLASS = 'react-tabs__tab';
@@ -38,7 +31,7 @@ const CustomTab = ({ className, selectedClassName, ...props }) => (
 
 CustomTab.tabsRole = 'Tab';
 
-const ExpenseIncome = () => {
+const ExpenseIncome = ({ changeBackgroundForFormModal }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const [transactionType, setTransactionType] = useState('costs');
@@ -57,23 +50,25 @@ const ExpenseIncome = () => {
   }
   const year = calendar.getFullYear();
 
+  changeBackgroundForFormModal(transactionType);
+
   const handelToggleType = type => {
     setTransactionType(type);
-    console.log(transactionType);
   };
+
+  const sortTransactions = data =>
+    data?.sort(
+      (b, a) =>
+        Number(a.day) - Number(b.day) ||
+        Date.parse(a.createdAt) - Date.parse(b.createdAt),
+    );
 
   useEffect(() => {
     if (!!userToken) {
       dispatch(
         getTransactionsByMonth({ year, month, transactionType, userToken }),
       ).then(data => {
-        const sortTransactions = data.payload?.sort(
-          (b, a) =>
-            Number(a.day) - Number(b.day) ||
-            Date.parse(a.createdAt) - Date.parse(b.createdAt),
-        );
-        console.log(sortTransactions);
-        setTransaction(sortTransactions);
+        setTransaction(sortTransactions(data.payload));
       });
     }
   }, [year, dispatch, month, userToken, transactionType, calendar, balance]);
@@ -101,8 +96,22 @@ const ExpenseIncome = () => {
             >
               Доход
             </Tab>
+            <Tab
+              onClick={() => setTransactionType('all')}
+              selectedClassName={cx(tabSelected)}
+              className={cx(tab)}
+            >
+              Общее
+            </Tab>
           </TabList>
 
+          <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
+            <Form dateFinder={getDate} type={transactionType} />
+            <TransactioInfo
+              type={transactionType}
+              transactions={transaction} //
+            />
+          </TabPanel>
           <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
             <Form dateFinder={getDate} type={transactionType} />
             <TransactioInfo

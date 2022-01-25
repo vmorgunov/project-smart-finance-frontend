@@ -1,5 +1,7 @@
 import { ButtonStyledMobile } from './ButtonMobile.styled';
 import { useMediaQuery } from 'react-responsive';
+import { Svg } from '../ButtonCostsIncomeMobile/ButtonMobile.styled';
+import allTransSVG from '../../../images/arrow-all.svg';
 
 const ButtonMobile = ({
   text,
@@ -10,6 +12,7 @@ const ButtonMobile = ({
   backgroundColor,
 
   handelToggleType,
+  lableForHandelToggleType,
   type,
 }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -26,11 +29,16 @@ const ButtonMobile = ({
       type={type}
       matches={matches}
       onClick={() => {
-        console.log('handelToggleType');
-        handelToggleType('costs');
+        handelToggleType(lableForHandelToggleType); //для перерисовки расход доход для мобилки
       }}
     >
-      {text}
+      {text ? (
+        text
+      ) : (
+        <Svg width="58" height="53">
+          <use xlinkHref={`${allTransSVG}#icon-arrow_all`} />
+        </Svg>
+      )}
     </ButtonStyledMobile>
   );
 };
