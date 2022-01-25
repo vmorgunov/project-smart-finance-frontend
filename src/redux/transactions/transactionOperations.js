@@ -41,7 +41,7 @@ export const fetchSummaryCosts = createAsyncThunk(
   async ({ userToken }, thunkAPI) => {
     const AuthStr = 'Bearer '.concat(userToken);
     try {
-      const { data } = await axios.get(`/transactions/2022/01/costs/total`, {
+      const { data } = await axios.get(`/transactions/costs/total`, {
         headers: { Authorization: AuthStr },
       });
       return data;
@@ -56,7 +56,7 @@ export const fetchSummaryIncome = createAsyncThunk(
   async ({ userToken }, thunkAPI) => {
     const AuthStr = 'Bearer '.concat(userToken);
     try {
-      const { data } = await axios.get(`/transactions/2022/01/income/total`, {
+      const { data } = await axios.get(`/transactions/income/total`, {
         headers: { Authorization: AuthStr },
       });
       return data;
