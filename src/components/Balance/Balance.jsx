@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   BalanceWrapper,
   BalanceText,
@@ -23,6 +24,7 @@ export const Balance = () => {
   const dispatch = useDispatch();
   const balance = useSelector(getAllTransaction);
   const userToken = useSelector(getUserToken);
+
   const onClick = e => {
     e.preventDefault();
     dispatch(pushBalance({ defaultValue, userToken }));
@@ -87,5 +89,3 @@ export const Balance = () => {
     </>
   );
 };
-
-// export default Balance;

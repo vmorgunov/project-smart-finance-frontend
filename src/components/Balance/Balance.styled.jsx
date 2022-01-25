@@ -8,8 +8,6 @@ export const BalanceWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   position: relative;
   background-color: var(--bg-color);
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
   @media (max-width: 768px) {
     padding: 40px 0px 40px 0px;
@@ -117,7 +115,6 @@ export const BalanceSet = styled.button`
   border: 2px solid #ffffff;
   background-color: var(--bg-color);
   border-radius: 16px;
-  font-family: 'Roboto';
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
@@ -128,7 +125,7 @@ export const BalanceSet = styled.button`
   color: var(--text-color-2);
   &:hover {
     border: 2px solid #ffffff;
-    cursor: pointer;
+    cursor: unset;
   }
   @media (max-width: 768px) {
     margin-right: 110px;
