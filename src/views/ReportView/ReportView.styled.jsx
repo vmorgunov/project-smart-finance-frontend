@@ -53,7 +53,27 @@ export const ReportHeader = styled.div`
   margin-bottom: 10px;
 
   @media (max-width: 766px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+`;
+
+export const BalanceInputText = styled.span`
+  position: absolute;
+  top: 57px;
+  right: 25px;
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+
+  color: var(--text-color);
+  @media (max-width: 768px) {
+    top: 61px;
+    right: 55px;
+  }
+  @media (max-width: 468px) {
+    top: 72px;
+    right: 35px;
   }
 `;
 

@@ -12,6 +12,8 @@ import {
   InputText,
   BalanceSet,
 } from './Balance.styled';
+
+import { BalanceInputText } from '../../views/ReportView/ReportView.styled';
 import report from '../../images/report.svg';
 import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
 import { getUserToken } from '../../redux/selectors/tokenSelector';
@@ -58,7 +60,8 @@ export const Balance = ({ typeView }) => {
                 maxLength="20"
                 autoComplete="off"
               />
-              <InputText>UAH</InputText>
+              {!typeView && <InputText>UAH</InputText>}
+              {typeView && <BalanceInputText>UAH</BalanceInputText>}
             </>
           ) : (
             <>
@@ -70,7 +73,7 @@ export const Balance = ({ typeView }) => {
                 maxLength="20"
                 autoComplete="off"
               />
-              <InputText>UAH</InputText>
+              {!typeView && <InputText>UAH</InputText>}
             </>
           )}
           {balance > 0
