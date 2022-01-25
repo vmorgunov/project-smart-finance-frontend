@@ -122,7 +122,7 @@ const ReportView = () => {
         <Background matches={matches} />
         <ReportHeader>
           <ReportButton />
-          <Balance />
+          <Balance typeView="report" />
           <MonthPicker
             switchMonthLeft={switchMonthLeft}
             switchMonthRight={switchMonthRight}

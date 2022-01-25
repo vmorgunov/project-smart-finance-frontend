@@ -18,7 +18,7 @@ import { getUserToken } from '../../redux/selectors/tokenSelector';
 import ModalWelcome from '../ModalWelcome/ModalWelcome';
 import pushBalance from '../../redux/transactions/transactionOperations';
 import { fetchBalance } from '../../redux/transactions/transactionOperations';
-export const Balance = () => {
+export const Balance = ({ typeView }) => {
   const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
   const dispatch = useDispatch();
@@ -73,18 +73,22 @@ export const Balance = () => {
               <InputText>UAH</InputText>
             </>
           )}
-          {balance > 0 ? (
-            <BalanceSet disabled="disabled">Подтвердить</BalanceSet>
-          ) : (
-            <BalanceConfirm onClick={onClick} type="submit">
-              Подтвердить
-            </BalanceConfirm>
-          )}
+          {balance > 0
+            ? !typeView && (
+                <BalanceSet disabled="disabled">Подтвердить</BalanceSet>
+              )
+            : !typeView && (
+                <BalanceConfirm onClick={onClick} type="submit">
+                  Подтвердить
+                </BalanceConfirm>
+              )}
         </LabelWrapper>
-        <BalanceNavLink to="/report">
-          Перейти к отчетам
-          <ImgReport src={report} alt="Отчеты" />
-        </BalanceNavLink>
+        {!typeView && (
+          <BalanceNavLink to="/report">
+            Перейти к отчетам
+            <ImgReport src={report} alt="Отчеты" />
+          </BalanceNavLink>
+        )}
       </BalanceWrapper>
     </>
   );
