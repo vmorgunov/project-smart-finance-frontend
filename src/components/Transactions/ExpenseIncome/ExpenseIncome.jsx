@@ -86,15 +86,17 @@ const ExpenseIncome = ({ changeBackgroundForFormModal }) => {
   return (
     <>
       {!isMobile && (
-        <Tabs>
-          defaultIndex=
-          {transactionType === 'costs'
-            ? 0
-            : transactionType === 'income'
-            ? 1
-            : transactionType === 'all'
-            ? 2
-            : 0}
+        <Tabs
+          defaultIndex={
+            transactionType === 'costs'
+              ? 0
+              : transactionType === 'income'
+              ? 1
+              : transactionType === 'all'
+              ? 2
+              : 0
+          }
+        >
           <TabList className={cx(tabList)}>
             <Tab
               onClick={() => setTransactionType('costs')}

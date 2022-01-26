@@ -50,7 +50,7 @@ export const Balance = ({ typeView }) => {
       <BalanceWrapper>
         <BalanceText>Баланс:</BalanceText>
         <LabelWrapper>
-          {balance < 0 ? (
+          {balance > 0 ? (
             <>
               <BalanceInput
                 typeView={typeView}
@@ -77,7 +77,7 @@ export const Balance = ({ typeView }) => {
               {!typeView && <InputText>UAH</InputText>}
             </>
           )}
-          {balance < 0
+          {balance > 0
             ? !typeView && (
                 <BalanceSet disabled="disabled">Подтвердить</BalanceSet>
               )
