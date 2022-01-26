@@ -87,6 +87,14 @@ const ExpenseIncome = ({ changeBackgroundForFormModal }) => {
     <>
       {!isMobile && (
         <Tabs>
+          defaultIndex=
+          {transactionType === 'costs'
+            ? 0
+            : transactionType === 'income'
+            ? 1
+            : transactionType === 'all'
+            ? 2
+            : 0}
           <TabList className={cx(tabList)}>
             <Tab
               onClick={() => setTransactionType('costs')}
@@ -110,7 +118,6 @@ const ExpenseIncome = ({ changeBackgroundForFormModal }) => {
               Общее
             </Tab>
           </TabList>
-
           <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
             <Form dateFinder={getDate} type={transactionType} />
             <TransactioInfo
