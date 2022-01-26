@@ -21,7 +21,7 @@ const signup = createAsyncThunk(
       token.set(data.data.headers.acces_token);
       return data;
     } catch (error) {
-      toast.error('Неправильная почта или пароль', { autoClose: 1500 });
+      toast.error('Пользователь уже зарегистрирован', { autoClose: 1500 });
       return thunkAPI.rejectWithValue(error.message);
     }
   },
