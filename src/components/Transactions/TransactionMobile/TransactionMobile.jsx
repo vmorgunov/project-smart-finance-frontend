@@ -1,35 +1,145 @@
-import Button from "../Button";
-import { BalanseWrrap, BtnWrap, Item, List } from "./TransactionMobile.styled";
+import SimpleBar from 'simplebar-react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
-const TransactionMobile = () => {
-return (
+import ButtonMobile from '../ButtonMobile';
+import Form from '../Form';
+import {
+  BtnWrap,
+  CategoryWrrap,
+  DateWrrap,
+  DescrDateWrrap,
+  DescrWrrap,
+  ImgDel,
+  ImgDelWrrap,
+  Item,
+  List,
+  SumWrrap,
+  TransactionWrrap,
+} from './TransactionMobile.styled';
+import delSrc from '../../../images/delete.svg';
+import { getLoading } from '../../../redux/transactions/costIncomeSelector';
+import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
+import { getUserToken } from '../../../redux/selectors/tokenSelector';
+import { removeTransaction } from '../../../redux/transactions/costIncomeOperations';
+import LoaderComponent from '../../../common/Loader';
+import pushBalance from '../../../redux/transactions/transactionOperations';
+import { ModalOut } from '../..';
+
+const TransactionMobile = ({
+  type,
+  transactions,
+  dateFinder,
+  handelToggleType,
+}) => {
+  const balance = useSelector(getAllTransaction);
+  const userToken = useSelector(getUserToken);
+  const [isToggleDel, setIsToggleDel] = useState(false);
+  const [transactionForDel, setTransactionForDel] = useState();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getLoading);
+
+  const handelToggleModal = transaction => {
+    setIsToggleDel(!isToggleDel);
+    setTransactionForDel(transaction);
+  };
+  const handelYesDel = transaction => {
+    setIsToggleDel(!isToggleDel);
+    handleDelete(transactionForDel);
+  };
+
+  const handleDelete = transaction => {
+    const idTransaction = transaction._id;
+    const sum = transaction.sum;
+    dispatch(removeTransaction({ idTransaction, userToken }));
+
+    const defaultValue = type === 'costs' ? balance + sum : balance - sum;
+    if (defaultValue < 0) {
+      toast.warn(`Ваш баланс не может быть меньше 0 !!!`, { autoClose: 1500 });
+      return;
+    }
+    dispatch(pushBalance({ defaultValue, userToken }));
+  };
+  return (
     <>
-        {/* <BalanseWrrap></BalanseWrrap> */}
-        <List >
-            <Item >
-
-            </Item>
-        </List>
-        <BtnWrap>
-            <Button
-                text='расход'
-                marginButton='0 2px 0 0'
-                widthButton='159'
-                heightButton='53'
-                borderRadius='0'
-                backgroundColor='var(--bg-color)'
-            />
-            <Button
-                text='доход'
-                marginButton='0'
-                widthButton='159'
-                heightButton='53'
-                borderRadius='0'
-                backgroundColor='var(--bg-color)'
-            />
-        </BtnWrap>
+      {isToggleDel && (
+        <ModalOut
+          onClose={handelToggleModal}
+          onAgree={handelYesDel}
+          title={'Вы уверены ?'}
+        />
+      )}
+      {/* <BalanseWrrap><Balance></Balance></BalanseWrrap> */}
+      <Form dateFinder={dateFinder} type={type} />
+      <TransactionWrrap>
+        {isLoading && (
+          <LoaderComponent height={40} width={400} padding={'30px 0 '} />
+        )}
+        <SimpleBar style={{ maxHeight: 325 }}>
+          <List>
+            {transactions?.map(trans => (
+              <Item key={trans._id}>
+                <DescrDateWrrap>
+                  <DescrWrrap>{trans.description}</DescrWrrap>
+                  <DateWrrap>{trans.date}</DateWrrap>
+                </DescrDateWrrap>
+                <CategoryWrrap>{trans.category}</CategoryWrrap>
+                <SumWrrap
+                  colorTextSum={trans.type === 'costs' ? 'red' : 'green'}
+                >
+                  {trans.type === 'costs'
+                    ? `-${trans.sum} грн`
+                    : `${trans.sum} грн`}
+                </SumWrrap>
+                <ImgDelWrrap>
+                  <ImgDel
+                    src={delSrc}
+                    onClick={() => handelToggleModal(trans)}
+                  ></ImgDel>
+                </ImgDelWrrap>
+              </Item>
+            ))}
+          </List>
+        </SimpleBar>
+      </TransactionWrrap>
+      <BtnWrap>
+        <ButtonMobile
+          text="расход"
+          marginButton="0 2px 0 0"
+          widthButton="159"
+          heightButton="53"
+          borderRadius="0"
+          backgroundColor="var(--bg-color)"
+          handelToggleType={handelToggleType}
+          lableForHandelToggleType={'costs'}
+          labelSend={type === 'costs' ? true : false}
+          // onClick
+        />
+        <ButtonMobile
+          marginButton="0 3px 0 0"
+          widthButton="58"
+          heightButton="53"
+          borderRadius="0"
+          backgroundColor="var(--bg-color)"
+          handelToggleType={handelToggleType}
+          lableForHandelToggleType={'all'}
+          labelSend={type === 'all' ? true : false} //подсвечиваем кнопку при переходе с табл на мобал
+        />
+        <ButtonMobile
+          text="доход"
+          marginButton="0"
+          widthButton="159"
+          heightButton="53"
+          borderRadius="0"
+          backgroundColor="var(--bg-color)"
+          handelToggleType={handelToggleType}
+          lableForHandelToggleType={'income'} //не меняется ти остается один
+          labelSend={type === 'income' ? true : false}
+        />
+      </BtnWrap>
     </>
-    );
+  );
 };
 
 export default TransactionMobile;

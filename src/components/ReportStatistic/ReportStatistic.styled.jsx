@@ -1,35 +1,35 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 30px 0 40px;  
+  margin: 30px 0 40px;
   height: 50px;
   border-radius: 30px;
-  box-shadow: 5px 10px 20px rgba(170, 178, 197, 0.4);
-  
+  box-shadow: var(--box-shadow-tab-wrrap);
+  background-color: var(--bg-text-color);
 `;
 
 export const ContainerDesktop = styled.div`
   display: flex;
-  align-items: center; 
+  align-items: center;
 `;
 
 export const ContainerMobile = styled.div`
-    display: flex;
-    margin-top: 30px;
-    height: 85px;
-    min-width:282px;
-    box-shadow: 5px 10px 20px rgba(170, 178, 197, 0.4);
-    border-radius: 20px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: #ffffff;
-    
-`
+  display: flex;
+  margin-top: 30px;
+  height: 85px;
+  min-width: 282px;
+  box-shadow: 5px 10px 20px rgba(170, 178, 197, 0.4);
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+`;
 
 export const Title = styled.p`
   margin-right: 15px;
@@ -51,15 +51,12 @@ export const Span = styled.span`
   display: inline;
   margin-left: 15px;
   margin-top: 0;
-  
 `;
 export const SpanMobile = styled.span`
   display: block;
   margin-top: 5px;
   color: var(--accent-color-4);
   display: block;
-  margin-top: 5px;
-  
 `;
 export const SpanRed = styled.span`
   display: block;
@@ -70,13 +67,10 @@ export const SpanRed = styled.span`
   color: var(--accent-color-3);
 `;
 
-
 export const SpanRedMobile = styled.span`
   display: block;
   margin-top: 5px;
-  display: block;
   margin-left: 15px;
-  margin-top: 0;
   color: var(--accent-color-3);
 `;
 

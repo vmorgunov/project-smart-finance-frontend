@@ -1,32 +1,37 @@
-import { InputStyle } from "./Input.styled";
+import { InputStyle } from './Input.styled';
 
 const Input = ({
-    type,
-    border,
-    borderRadius,
-    placeholder,
-    widthInput,
-    marginInput,
-    paddingInput,
-    textAlignInput,
-    borderColor,
-    value, onChange }) => {
-    return (
-        <InputStyle
-            type={type}
-            placeholder = {placeholder}
-            border = {border}
-            borderRadius={borderRadius}
-            widthInput={widthInput}
-            marginInput={marginInput}
-            paddingInput={paddingInput}
-            textAlignInput={textAlignInput}
-            borderColor={borderColor}
+  type,
+  border,
+  borderRadius,
+  placeholder,
+  widthInput,
+  marginInput,
+  paddingInput,
+  textAlignInput,
+  borderColor,
 
-            value={value}
-            onChange={onChange}
-        />
-    );
+  name,
+  value,
+  onChange,
+}) => {
+  return (
+    <InputStyle
+      type={type}
+      placeholder={placeholder}
+      border={border}
+      borderRadius={borderRadius}
+      widthInput={widthInput}
+      marginInput={marginInput}
+      paddingInput={paddingInput}
+      textAlignInput={textAlignInput}
+      borderColor={borderColor}
+      name={name}
+      value={value}
+      onChange={onChange}
+      spellcheck="false"
+    />
+  );
 };
 
 export default Input;

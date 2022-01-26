@@ -12,7 +12,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/authSlice';
-import transactionReducer from './transactions/transactionSlice';
+import { chartReducer } from './transactonsForChart/transactionsPerMonthSlice';
+import transactionReducer from './transactions/transactionSlice';//balance
+import transactionsReducer from './transactions/costIncomeSlice'
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -32,7 +34,9 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    transaction: transactionReducer,
+    transaction: transactionReducer,//balance
+    transactions: transactionsReducer,
+    chart: chartReducer,
   },
   middleware,
   devTools: process.env.NODE_ENV === 'development',

@@ -1,6 +1,6 @@
 import React from "react";
 import { useMediaQuery } from 'react-responsive';
-import { AuthForm } from "../../components/AuthForm";
+import AuthForm from "../../components/AuthForm";
 
 import cabagesIcon from '../../images/twoKapusta.svg';
 import cabagesIconMbl from '../../images/cabagesIconMbl.svg';

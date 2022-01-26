@@ -1,25 +1,60 @@
-import React from 'react';
+import { React, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getIsFulfilled } from '../../redux/transactonsForChart/chartSelectors';
 
-import {List, Item} from './ReportList.styled'
-import repAlcohol from '../../images/rep-alcohol.svg'
-import salary from '../../images/salary.svg'
+import {
+  List,
+  Item,
+  ItemValue,
+  ItemTitle,
+  SvgBox,
+  Svg,
+} from './ReportList.styled';
 
-const ReportList = ({category}) => {
-    return (
+import { Rings } from 'react-loader-spinner';
 
-        <List>
-            <Item>
-                <p>summa</p>
-                {category === 'Расходы' ?
-                   (<img width="58" height="58" src={repAlcohol} alt="repAlcohol" />)
-                    :
-                    (<img width="58" height="58" src={salary} alt="salary" />)
-                }
-                <p>{category}</p>
-                
-            </Item>
-        </List>
-    )
-}
+import icons from '../../images/symbol-defs.svg';
+
+const ReportList = ({ data, onClickGetChart }) => {
+  const isFulfilled = useSelector(getIsFulfilled);
+  const [isActiveIdx, setIsActiveId] = useState(0);
+
+  const onIsActiveIdx = idx => {
+    setIsActiveId(idx);
+  };
+
+  return (
+    <List>
+      {!isFulfilled ? (
+        <Rings
+          heigth="100"
+          width="100"
+          color="var(--acent-color)"
+          ariaLabel="loading"
+        />
+      ) : data.length === 0 ? (
+        <Item>Транзакций нет</Item>
+      ) : (
+        data.map((item, index) => (
+          <Item
+            key={index}
+            onClick={() => {
+              onClickGetChart(index);
+              onIsActiveIdx(index);
+            }}
+          >
+            <ItemValue>{item.sum}</ItemValue>
+            <SvgBox idx={index} aidx={isActiveIdx}>
+              <Svg idx={index} aidx={isActiveIdx} width="58" height="58">
+                <use xlinkHref={`${icons}#${item.category}`} />
+              </Svg>
+            </SvgBox>
+            <ItemTitle>{item.category}</ItemTitle>
+          </Item>
+        ))
+      )}
+    </List>
+  );
+};
 
 export default ReportList;

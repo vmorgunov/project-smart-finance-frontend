@@ -14,6 +14,7 @@
   --bg-tab: rgba(250, 251, 253, 1);
   --box-shadow-tab-wrrap: 0px 10px 60px rgba(170, 178, 197, 0.2);
   --color-placeholder: rgba(199, 204, 220, 1);
+  --color-icon: rgba(7, 31, 65, 1);
 }
 
 * {
@@ -43,4 +44,18 @@ button {
   font-style: normal;
   text-decoration: none;
   cursor: pointer;
+}
+/* для скрола в таблице все трансакции */
+.simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
+  opacity: 1;
+  background-color: var(--acent-color);
+}
+
+
+.simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
+  opacity: 1;
+}
+.simplebar-track.simplebar-horizontal {
+  width: 0;
+
 }

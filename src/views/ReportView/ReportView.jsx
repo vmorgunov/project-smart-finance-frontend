@@ -1,93 +1,157 @@
-import {React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { ReportButton, MonthPicker, Reports, ReportStatistic } from '../../components';
-// import {Balance} from '../../components'
+import {
+  ReportButton,
+  MonthPicker,
+  Balance,
+  Reports,
+  ReportStatistic,
+} from '../../components';
+
+import { Chart } from '../../components/Chart';
+import { getUserToken } from '../../redux/selectors/tokenSelector';
+import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart/transactionOperations';
 
 import 'moment/locale/ru';
 import moment from 'moment';
 
+import cabagesImg from '../../images/kapustaReportDesktop.svg';
+import twoCabages from '../../images/twoKapustaReport.svg';
+
 import {
-    ReportContainer,
-    ReportHeader,
-    ReportGraph
-} from './ReportView.styled'
+  Background,
+  ReportContainer,
+  ReportHeader,
+  BgImg,
+} from './ReportView.styled';
 
-export const ReportView = () => {
-    const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 767 });
-    const isTabletOrDesktop = useMediaQuery({ minWidth: 768 });
-    
-    const [newDate, setNewDate] = useState(moment(new Date()));
-    const [dateMonth, setDateMonth] = useState(moment(new Date()).format('MM'));
-    const [dateYears, setDateYears] = useState(moment(new Date()).format('YYYY'));
-    const [switchData, setSwitchData] = useState('Расходы');
+const ReportView = () => {
+  const [newDate, setNewDate] = useState(moment(new Date()));
+  const [month, setMonth] = useState(moment(new Date()).format('MM'));
+  const [year, setYear] = useState(moment(new Date()).format('YYYY'));
 
-    const switchMonthLeft = () => {
-        setDateMonth(newDate.add(-1, 'month').format('MM'));
-        if (dateMonth === '01') {
-            setDateYears(newDate.add('year').format('YYYY'));
-        }
-    };
+  const [type, setType] = useState('costs');
+  const [data, setData] = useState([]);
 
-    const switchMonthRight = () => {
-        setDateMonth(newDate.add(1, 'month').format('MM'));
-        if (dateMonth === '12') {
-            setDateYears(newDate.add('year').format('YYYY'));
-        }
-    };
+  const [categoriesCosts, setCategoriesCosts] = useState(0);
+  const [categoriesIncome, setCategoriesIncome] = useState(0);
 
-    const clickOnSwitch = () => {
-        if (switchData === 'Расходы') {
-            setSwitchData('Доходы');
-        }
-        if (switchData !== 'Расходы') {
-            setSwitchData('Расходы');
-        }
-    };
-    
-    return (
-        <>
-            <ReportContainer> 
-                {isMobile &&
-                <>
-                    <ReportButton /> 
-                    
-                    <MonthPicker
-                        switchMonthLeft={switchMonthLeft}
-                        switchMonthRight={switchMonthRight}
-                        dateMonth={dateMonth}
-                        dateYears={dateYears}
-                    />
-                </>
-                }
-                {isTabletOrDesktop &&
-                    <ReportHeader>
+  const userToken = useSelector(getUserToken);
+  const dispatch = useDispatch();
 
-                        <ReportButton />
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const matches = { isMobile, isTablet, isDesktop };
 
-                        {/* <Balance/> */}
+  const [chartsCategoryId, setChartsCategoryId] = useState(0);
 
-                        <MonthPicker
-                            switchMonthLeft={switchMonthLeft}
-                            switchMonthRight={switchMonthRight}
-                            dateMonth={dateMonth}
-                            dateYears={dateYears}
-                        />
+  useEffect(() => {
+    if (!!userToken) {
+      dispatch(
+        getTransactionsPreMonthForChart({ year, month, type, userToken }),
+      ).then(response => {
+        setData(response.payload.data);
+      });
+      getTotalSumOfTransactions({ year, month, type, userToken });
+    }
+  }, [year, dispatch, month, userToken, type]);
 
-                    </ReportHeader>
-                }
-                      {/* {isTabletOrDesktop && <ModalOut />}
-                      {isMobile && <ModalOutMobile/>} */}
-                <ReportStatistic>
-                </ReportStatistic>
+  const getTotalSumOfTransactions = ({ year, month, userToken }) => {
+    dispatch(
+      getTransactionsPreMonthForChart({
+        year,
+        month,
+        type: 'costs',
+        userToken,
+      }),
+    ).then(response => {
+      const data = response.payload.data;
+      const totalSum = data.reduce((acc, item) => {
+        return acc + item.sum;
+      }, 0);
+      setCategoriesCosts(totalSum);
+    });
+    dispatch(
+      getTransactionsPreMonthForChart({
+        year,
+        month,
+        type: 'income',
+        userToken,
+      }),
+    ).then(response => {
+      const data = response.payload.data;
+      const totalSum = data.reduce((acc, item) => {
+        return acc + item.sum;
+      }, 0);
+      setCategoriesIncome(totalSum);
+    });
+  };
 
-                <Reports
-                    switchData={switchData}
-                    clickOnSwitch={clickOnSwitch}
-                />
-                
-                <ReportGraph>29. График</ReportGraph>
-            </ReportContainer>
-        </>
-    );
-}
+  const switchMonthLeft = () => {
+    setMonth(newDate.add(-1, 'month').format('MM'));
+    if (month === '01') {
+      setYear(newDate.add('year').format('YYYY'));
+    }
+  };
 
+  const switchMonthRight = () => {
+    setMonth(newDate.add(1, 'month').format('MM'));
+    if (month === '12') {
+      setYear(newDate.add('year').format('YYYY'));
+    }
+  };
+
+  const onClickSwitchType = () => {
+    if (type === 'costs') {
+      setType('income');
+    }
+    if (type !== 'costs') {
+      setType('costs');
+    }
+  };
+  // useState for Chart
+  const onClickGetChart = id => {
+    setChartsCategoryId(id);
+  };
+
+  return (
+    <>
+      <ReportContainer matches={matches}>
+        <Background matches={matches} />
+        <ReportHeader>
+          <ReportButton />
+          <Balance typeView="report" />
+          <MonthPicker
+            switchMonthLeft={switchMonthLeft}
+            switchMonthRight={switchMonthRight}
+            dateMonth={month}
+            dateYears={year}
+          />
+        </ReportHeader>
+        {/* {isTabletOrDesktop && <ModalOut />} */}
+        <ReportStatistic
+          categoriesCosts={categoriesCosts}
+          categoriesIncome={categoriesIncome}
+        />
+        <Reports
+          data={data}
+          type={type}
+          onClickSwitchType={onClickSwitchType}
+          onClickGetChart={onClickGetChart}
+        />
+        <Chart transactions={data} chartsCategoryId={chartsCategoryId} />
+
+        {isDesktop && (
+          <BgImg matches={matches} src={cabagesImg} alt="Много капусты" />
+        )}
+        {isTablet && (
+          <BgImg matches={matches} src={twoCabages} alt="Две капусты" />
+        )}
+      </ReportContainer>
+    </>
+  );
+};
+
+export default ReportView;

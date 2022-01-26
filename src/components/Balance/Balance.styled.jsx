@@ -8,20 +8,17 @@ export const BalanceWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   position: relative;
   background-color: var(--bg-color);
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
   @media (max-width: 768px) {
     padding: 40px 0px 40px 0px;
   }
-  @media (max-width: 468px) {
-    padding: 30px 25px 294px 25px;
+  @media (max-width: 767px) {
+    padding: 30px 25px 0px 25px;
     flex-direction: column;
   }
 `;
 
 export const BalanceText = styled.span`
-  font-family: 'Roboto';
   font-weight: 500;
   font-size: 12px;
   line-height: 14px;
@@ -42,19 +39,35 @@ export const BalanceInput = styled.input`
   border: 2px solid #ffffff;
   border-radius: 16px;
   padding: 15px 30px 15px 10px;
-  font-family: 'Roboto';
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-color);
   cursor: pointer;
+  &::placeholder {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: var(--text-color);
+  }
+  &:focus::placeholder {
+    color: transparent;
+    transition: text-indent 0.3s ease;
+  }
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   @media (max-width: 468px) {
     margin: 0;
-    border-radius: 22px 0px 0px 22px;
-    padding: 15px 19px 15px 17px;
+    border-radius: ${props => (!props.typeView ? '22px 0px 0px 22px' : '16px')};
+    padding: ${props =>
+      !props.typeView ? '15px 19px 15px 17px' : '15px 30px 15px 10px'};
   }
   @media (max-width: 320px) {
     padding: 15px 19px 15px 25px;
@@ -67,7 +80,6 @@ export const BalanceConfirm = styled.button`
   border: 2px solid #ffffff;
   background-color: var(--bg-color);
   border-radius: 16px;
-  font-family: 'Roboto';
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
@@ -83,6 +95,36 @@ export const BalanceConfirm = styled.button`
 
     color: white;
     background-color: var(--acent-color);
+  }
+  @media (max-width: 768px) {
+    margin-right: 110px;
+  }
+  @media (max-width: 468px) {
+    display: block;
+    margin: 0;
+    padding: 15px 19px 15px 17px;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 0px 22px 22px 0px;
+  }
+`;
+
+export const BalanceSet = styled.button`
+  padding: 15px 18px;
+  border: 2px solid #ffffff;
+  background-color: var(--bg-color);
+  border-radius: 16px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  margin-right: 205px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-color-2);
+  &:hover {
+    border: 2px solid #ffffff;
+    cursor: unset;
   }
   @media (max-width: 768px) {
     margin-right: 110px;
@@ -124,7 +166,6 @@ export const InputText = styled.span`
   position: absolute;
   top: 57px;
   right: 505px;
-  font-family: 'Roboto';
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;

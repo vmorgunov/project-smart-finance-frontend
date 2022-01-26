@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   BalanceWrapper,
   BalanceText,
@@ -9,21 +10,31 @@ import {
   ImgReport,
   LabelWrapper,
   InputText,
+  BalanceSet,
 } from './Balance.styled';
+
+import { BalanceInputText } from '../../views/ReportView/ReportView.styled';
 import report from '../../images/report.svg';
 import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
-import { incrementByAmount } from '../../redux/transactions/transactionSlice';
+import { getUserToken } from '../../redux/selectors/tokenSelector';
 import ModalWelcome from '../ModalWelcome/ModalWelcome';
-
-export const Balance = () => {
-  const [value, setValue] = useState('00.00');
-  const [defaultValue, setDefaultValue] = useState('00.00');
+import pushBalance from '../../redux/transactions/transactionOperations';
+import { fetchBalance } from '../../redux/transactions/transactionOperations';
+export const Balance = ({ typeView }) => {
+  const [value, setValue] = useState('');
+  const [defaultValue, setDefaultValue] = useState('');
   const dispatch = useDispatch();
   const balance = useSelector(getAllTransaction);
+  const userToken = useSelector(getUserToken);
+
   const onClick = e => {
     e.preventDefault();
-    dispatch(incrementByAmount(defaultValue));
+    dispatch(pushBalance({ defaultValue, userToken }));
   };
+
+  useEffect(() => {
+    dispatch(fetchBalance({ userToken }));
+  }, [dispatch, userToken]);
 
   useEffect(() => {
     setValue(balance);
@@ -35,49 +46,54 @@ export const Balance = () => {
 
   return (
     <>
-      {balance === 0 ? <ModalWelcome IsOpen={true} /> : !(<ModalWelcome />)}
+      {!balance ? <ModalWelcome IsOpen={true} /> : !(<ModalWelcome />)}
       <BalanceWrapper>
         <BalanceText>Баланс:</BalanceText>
         <LabelWrapper>
           {balance > 0 ? (
             <>
               <BalanceInput
-                type="text"
+                typeView={typeView}
+                type="number"
                 readOnly
                 value={value}
                 onChange={handleInputChange}
                 maxLength="20"
                 autoComplete="off"
               />
-              <InputText>UAH</InputText>
+              {!typeView && <InputText>UAH</InputText>}
+              {typeView && <BalanceInputText>UAH</BalanceInputText>}
             </>
           ) : (
             <>
               <BalanceInput
-                type="text"
+                type="number"
                 value={defaultValue}
                 onChange={handleInputChange}
+                placeholder="00.00"
                 maxLength="20"
                 autoComplete="off"
               />
-              <InputText>UAH</InputText>
+              {!typeView && <InputText>UAH</InputText>}
             </>
           )}
-          {balance > 0 ? (
-            <BalanceConfirm disabled="disabled">Подтвердить</BalanceConfirm>
-          ) : (
-            <BalanceConfirm onClick={onClick} type="submit">
-              Подтвердить
-            </BalanceConfirm>
-          )}
+          {balance > 0
+            ? !typeView && (
+                <BalanceSet disabled="disabled">Подтвердить</BalanceSet>
+              )
+            : !typeView && (
+                <BalanceConfirm onClick={onClick} type="submit">
+                  Подтвердить
+                </BalanceConfirm>
+              )}
         </LabelWrapper>
-        <BalanceNavLink to="/report">
-          Перейти к отчетам
-          <ImgReport src={report} alt="Отчеты" />
-        </BalanceNavLink>
+        {!typeView && (
+          <BalanceNavLink to="/report">
+            Перейти к отчетам
+            <ImgReport src={report} alt="Отчеты" />
+          </BalanceNavLink>
+        )}
       </BalanceWrapper>
     </>
   );
 };
-
-export default Balance;
