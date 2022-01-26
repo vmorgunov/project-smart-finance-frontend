@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import close from '../../images/close.svg'
+import close from '../../images/close.svg';
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -31,7 +31,7 @@ export const ContainerMobile = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
   width: 310px;
   height: 154px;
   border-radius: 30px;
@@ -55,11 +55,11 @@ export const CloseButton = styled.button`
   transition: all 0.1s ease-out;
   &:hover {
     border: 2px solid var(--acent-color);
-  }  
+  }
 `;
 
 export const Title = styled.h2`
-  padding: 0 0 20px;  
+  padding: 0 0 20px;
   font-weight: 500;
   font-size: 14px;
   line-height: 16, 41px;
@@ -69,9 +69,9 @@ export const Title = styled.h2`
 `;
 
 export const ButtonBox = styled.div`
-display: flex;
-justify-content: space-between;
-margin: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
 `;
 
 export const Button = styled.button`
@@ -114,4 +114,3 @@ export const ButtonMobile = styled.button`
     background-color: var(--acent-color);
   }
 `;
-
