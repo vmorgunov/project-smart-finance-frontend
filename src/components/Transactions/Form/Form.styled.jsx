@@ -78,7 +78,7 @@ export const InputWrrapDiv = styled.div`
 export const ConfirmationWrrapDiv = styled.div`
   margin: ${({ matches }) =>
     matches.isMobile
-      ? '60px 0 40px 0'
+      ? '51px 0 0 0'
       : matches.isTablet
       ? '30px 0 0 0'
       : matches.isDesctop && '0px'};
@@ -89,6 +89,22 @@ export const WrrapFieldForm = styled.div`
 `;
 
 export const WrrapErrorText = styled.p`
+  @keyframes myAnimation {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      display: none;
+      opacity: 0;
+    }
+  }
+  animation-name: myAnimation;
+  animation-duration: 3000ms;
+  animation-fill-mode: forwards;
+
   font-size: ${({ matches }) =>
     matches.isMobile
       ? '8px'

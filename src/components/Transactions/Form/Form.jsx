@@ -71,7 +71,15 @@ const Form = ({ dateFinder, type }) => {
   }, [selectedDate, dateFinder]);
 
   const handleChange = e => {
-    const { name, value } = e.currentTarget;
+    let name;
+    let value;
+    if (e.currentTarget) {
+      name = e.currentTarget.name;
+      value = e.currentTarget.value;
+    } else {
+      setCategoryDirty(e.label ? false : true);
+      setCategory(e.label);
+    }
     switch (name) {
       case 'description':
         setDescriptionDirty(value ? false : true);
@@ -97,6 +105,12 @@ const Form = ({ dateFinder, type }) => {
       month = '0' + month;
     }
 
+    setTimeout(function () {
+      setCategoryDirty(false);
+      setDescriptionDirty(false);
+      setSumDirty(false);
+    }, 3000);
+
     const newTransaction = {
       day,
       category,
@@ -107,7 +121,6 @@ const Form = ({ dateFinder, type }) => {
     };
 
     try {
-      resetForm();
       if (category && description && selectedDate && sum && !!userToken) {
         const transactionType = type;
         const defaultValue = type === 'costs' ? balance - sum : balance + sum;
@@ -122,7 +135,7 @@ const Form = ({ dateFinder, type }) => {
         );
 
         dispatch(pushBalance({ defaultValue, userToken }));
-
+        resetForm();
         toast.success(
           `Ваш ${transactionType === 'costs' ? 'расход' : 'доход'} внесен!`,
           { autoClose: 1500 },
@@ -219,7 +232,7 @@ const Form = ({ dateFinder, type }) => {
                 placeholder="Категория товара"
                 name="category"
                 selected={category}
-                onChange={caterory => setCategory(caterory.label)}
+                onChange={handleChange}
                 type={type}
               />
             </WrrapFieldForm>
@@ -273,7 +286,12 @@ const Form = ({ dateFinder, type }) => {
         <>
           <ConfirmationWrrapDiv matches={matches}>
             <Button type="submit" text={'Ввод'} marginButton={'0 15px 0 0'} />
-            <Button text={'Очистить'} marginButton={'0'} type="reset" />
+            <Button
+              type="reset"
+              onClick={() => resetForm()} //
+              text={'Очистить'}
+              marginButton={'0'}
+            />
           </ConfirmationWrrapDiv>
         </>
       )}

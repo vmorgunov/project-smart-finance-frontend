@@ -9,6 +9,7 @@ const Button = ({
   borderRadius,
   backgroundColor,
 
+  onClick,
   type,
 }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -23,6 +24,7 @@ const Button = ({
       borderRadius={borderRadius}
       backgroundColor={backgroundColor}
       type={type}
+      onClick={onClick} //
       matches={matches}
     >
       {text}

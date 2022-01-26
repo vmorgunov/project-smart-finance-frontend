@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import ButtonMobile from '../ButtonCostsIncomeMobile';
+import ButtonMobile from '../ButtonMobile';
 import Form from '../Form';
 import {
-  BalanseWrrap,
   BtnWrap,
   CategoryWrrap,
   DateWrrap,
@@ -77,7 +76,7 @@ const TransactionMobile = ({
         {isLoading && (
           <LoaderComponent height={40} width={400} padding={'30px 0 '} />
         )}
-        <SimpleBar style={{ maxHeight: 225 }}>
+        <SimpleBar style={{ maxHeight: 325 }}>
           <List>
             {transactions?.map(trans => (
               <Item key={trans._id}>
@@ -114,6 +113,8 @@ const TransactionMobile = ({
           backgroundColor="var(--bg-color)"
           handelToggleType={handelToggleType}
           lableForHandelToggleType={'costs'}
+          labelSend={type === 'costs' ? true : false}
+          // onClick
         />
         <ButtonMobile
           marginButton="0 3px 0 0"
@@ -123,6 +124,7 @@ const TransactionMobile = ({
           backgroundColor="var(--bg-color)"
           handelToggleType={handelToggleType}
           lableForHandelToggleType={'all'}
+          labelSend={type === 'all' ? true : false} //подсвечиваем кнопку при переходе с табл на мобал
         />
         <ButtonMobile
           text="доход"
@@ -133,6 +135,7 @@ const TransactionMobile = ({
           backgroundColor="var(--bg-color)"
           handelToggleType={handelToggleType}
           lableForHandelToggleType={'income'} //не меняется ти остается один
+          labelSend={type === 'income' ? true : false}
         />
       </BtnWrap>
     </>

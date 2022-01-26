@@ -1,6 +1,6 @@
 import { ButtonStyledMobile } from './ButtonMobile.styled';
 import { useMediaQuery } from 'react-responsive';
-import { Svg } from '../ButtonCostsIncomeMobile/ButtonMobile.styled';
+import { Svg } from '../ButtonMobile/ButtonMobile.styled';
 import allTransSVG from '../../../images/arrow-all.svg';
 
 const ButtonMobile = ({
@@ -10,6 +10,8 @@ const ButtonMobile = ({
   heightButton,
   borderRadius,
   backgroundColor,
+
+  labelSend,
 
   handelToggleType,
   lableForHandelToggleType,
@@ -26,6 +28,7 @@ const ButtonMobile = ({
       heightButton={heightButton}
       borderRadius={borderRadius}
       backgroundColor={backgroundColor}
+      labelSend={labelSend}
       type={type}
       matches={matches}
       onClick={() => {
