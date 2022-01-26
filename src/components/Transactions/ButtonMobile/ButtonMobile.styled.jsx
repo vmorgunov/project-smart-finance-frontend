@@ -15,8 +15,12 @@ export const ButtonStyledMobile = styled.button`
   border-color: ${({ borderColor = 'var(--bg-color)' }) => borderColor};
   transition: 0.3s ease-in-out;
   color: var(--text-color-3);
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor ? backgroundColor : 'transparent'};
+  background-color: ${({ backgroundColor, labelSend }) =>
+    backgroundColor && !labelSend
+      ? backgroundColor
+      : labelSend
+      ? 'var(--acent-color)'
+      : 'transparent'};
     
   outline: none;
 
@@ -36,6 +40,9 @@ export const Svg = styled.svg`
 
   color: var(--text-color-3);
   background-color: var(--bg-color);
+
+  background-color: ${({ labelSend }) =>
+    labelSend ? 'var(--acent-color)' : 'transparent'};
 
   &:hover {
     cursor: pointer;

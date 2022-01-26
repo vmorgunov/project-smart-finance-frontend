@@ -14,7 +14,7 @@ export const Item = styled.li`
 `;
 
 export const TransactionWrrap = styled.div`
-  height: 225px;
+  height: 325px;
 
   margin: 8px 0 53px 0;
 `;

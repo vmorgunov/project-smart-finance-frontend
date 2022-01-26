@@ -19,6 +19,7 @@ const SelectCategory = ({
   const categories = CATEGORIES.filter(category => category.type === type);
   return (
     <Select
+      controlShouldRenderValue={selected ? true : false} //
       styles={SelectStyles(matches)}
       options={categories}
       placeholder={placeholder}
