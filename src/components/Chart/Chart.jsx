@@ -88,7 +88,8 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
         label: '',
         data: indexAxisArr,
         backgroundColor: ['rgba(255, 117, 29, 1)', 'rgba(255, 218, 192, 1)'],
-        borderRadius: 20,
+        borderRadius: 10,
+        barThickness: isMobile ? 20 : 45,
       },
     ],
   };
