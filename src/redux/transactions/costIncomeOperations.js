@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as transactionsApi from '../../api/transactionAPI';
 
 import axios from 'axios';
 

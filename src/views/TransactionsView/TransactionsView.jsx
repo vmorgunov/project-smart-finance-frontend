@@ -1,10 +1,10 @@
 import { useMediaQuery } from 'react-responsive';
-import Container from '../../components/Transactions/Container';
-import ExpenseIncome from '../../components/Transactions/ExpenseIncome';
-import { Balance } from '../../components/Balance';
-
-import cabagesImg from '../../images/kapustaTransactionDesktop.svg';
-import twoCabages from '../../images/twoKapusta.svg';
+import Container from 'components/Transactions/Container';
+import ExpenseIncome from 'components/Transactions/ExpenseIncome';
+import { GoToReportsButton } from 'components/GoToReportsButton/GoToReportsButton';
+import { Balance } from 'components/UserBalance/Balance';
+import cabagesImg from 'images/kapustaTransactionDesktop.svg';
+import twoCabages from 'images/twoKapusta.svg';
 
 import { Background, BgImg, TransactionWrrap } from './TransactionsView.styled';
 import { useState } from 'react';
@@ -21,15 +21,19 @@ const TransactionsView = () => {
   return (
     <Container>
       <Background matches={matches} changeBackground={changeBackground} />
-      {/* {!isMobile && <Balance />} */}
       <Balance />
+      <GoToReportsButton />
       <TransactionWrrap matches={matches}>
         <ExpenseIncome
           changeBackgroundForFormModal={changeBackgroundForFormModal}
         />
       </TransactionWrrap>
-      {isDesktop && <BgImg matches={matches} src={cabagesImg} alt='Много капусты' />}
-      {isTablet && <BgImg matches={matches} src={twoCabages} alt='Две капусты' />}
+      {isDesktop && (
+        <BgImg matches={matches} src={cabagesImg} alt="Много капусты" />
+      )}
+      {isTablet && (
+        <BgImg matches={matches} src={twoCabages} alt="Две капусты" />
+      )}
     </Container>
   );
 };

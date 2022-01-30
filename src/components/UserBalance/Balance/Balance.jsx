@@ -3,23 +3,22 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   BalanceWrapper,
-  BalanceText,
   BalanceInput,
   BalanceConfirm,
-  BalanceNavLink,
-  ImgReport,
   LabelWrapper,
   InputText,
   BalanceSet,
 } from './Balance.styled';
 
-import { BalanceInputText } from '../../views/ReportView/ReportView.styled';
-import report from '../../images/report.svg';
-import { getAllTransaction } from '../../redux/transactions/transactionSelectors';
-import { getUserToken } from '../../redux/selectors/tokenSelector';
-import ModalWelcome from '../ModalWelcome/ModalWelcome';
-import pushBalance from '../../redux/transactions/transactionOperations';
-import { fetchBalance } from '../../redux/transactions/transactionOperations';
+// import { BalanceInputText } from 'views/ReportView/ReportView.styled';
+
+import { getAllTransaction } from 'redux/transactions/transactionSelectors';
+import { getUserToken } from 'redux/selectors/tokenSelector';
+import { ModalWelcome } from '..';
+import pushBalance from 'redux/transactions/transactionOperations';
+import { fetchBalance } from 'redux/transactions/transactionOperations';
+import { CommonText } from 'common';
+
 export const Balance = ({ typeView }) => {
   const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
@@ -40,15 +39,17 @@ export const Balance = ({ typeView }) => {
     setValue(balance);
   }, [balance]);
 
+  console.log(value, balance);
+
   const handleInputChange = event => {
     setDefaultValue(event.target.value);
   };
 
   return (
     <>
-      {!balance ? <ModalWelcome IsOpen={true} /> : !(<ModalWelcome />)}
+      {!balance && <ModalWelcome IsOpen={true} />}
       <BalanceWrapper>
-        <BalanceText>Баланс:</BalanceText>
+        <CommonText color="var(--text-color-2)">Баланс:</CommonText>
         <LabelWrapper>
           {balance > 0 ? (
             <>
@@ -56,13 +57,13 @@ export const Balance = ({ typeView }) => {
                 typeView={typeView}
                 type="number"
                 readOnly
-                value={value}
+                value={balance}
                 onChange={handleInputChange}
                 maxLength="20"
                 autoComplete="off"
               />
-              {!typeView && <InputText>UAH</InputText>}
-              {typeView && <BalanceInputText>UAH</BalanceInputText>}
+              {/* {!typeView && <InputText>UAH</InputText>}
+              {typeView && <BalanceInputText>UAH</BalanceInputText>} */}
             </>
           ) : (
             <>
@@ -87,12 +88,6 @@ export const Balance = ({ typeView }) => {
                 </BalanceConfirm>
               )}
         </LabelWrapper>
-        {!typeView && (
-          <BalanceNavLink to="/report">
-            Перейти к отчетам
-            <ImgReport src={report} alt="Отчеты" />
-          </BalanceNavLink>
-        )}
       </BalanceWrapper>
     </>
   );
