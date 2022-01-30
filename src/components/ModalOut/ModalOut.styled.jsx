@@ -62,8 +62,8 @@ export const Title = styled.h2`
   padding: 0 0 20px;
   font-weight: 500;
   font-size: 14px;
-  line-height: 16, 41px;
-  font-family: Roboto;
+  line-height: 14px;
+  font-family: 'Roboto', sans-serif;
   letter-spacing: 0.02em;
   color: var(--text-color-3);
 `;
