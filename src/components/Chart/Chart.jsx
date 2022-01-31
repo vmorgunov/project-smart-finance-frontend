@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -40,6 +39,7 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        display: false,
         position: 'right',
       },
       title: {
@@ -53,12 +53,13 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     responsive: true,
     plugins: {
       legend: {
+        display: false,
         position: 'top',
       },
-      title: {
-        display: true,
-        text: 'График',
-      },
+      // title: {
+      //   display: true,
+      //   text: 'График',
+      // },
     },
   };
 
@@ -71,7 +72,6 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     });
     setCategory(chartsCategoryId);
     getNumbersForIndexAxis(transactions);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, transactions, chartsCategoryId]);
 
   const getNumbersForIndexAxis = transactions => {
