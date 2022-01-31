@@ -67,7 +67,7 @@ export const SwitchData = styled.span`
   text-align: center;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-
+  color: var(--text-color-2);
   margin-left: 15px;
   margin-right: 15px;
 `;
