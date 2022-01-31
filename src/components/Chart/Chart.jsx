@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -70,6 +71,7 @@ export const Chart = ({ transactions, chartsCategoryId = 0 }) => {
     });
     setCategory(chartsCategoryId);
     getNumbersForIndexAxis(transactions);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, transactions, chartsCategoryId]);
 
   const getNumbersForIndexAxis = transactions => {

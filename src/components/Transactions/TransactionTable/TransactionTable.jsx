@@ -157,7 +157,6 @@ const TransactionTable = ({ type, transactions }) => {
                 return (
                   <Tr key={v4()} {...row.getRowProps()}>
                     {row.cells.map(cell => {
-                      console.log(cell.column.id);
                       return (
                         <Td
                           key={v4()}
@@ -173,7 +172,6 @@ const TransactionTable = ({ type, transactions }) => {
                           }
                         >
                           {/* вставляем картинку удалить и меняем сумму расходов и доходов /-123 грн/ 125 грн */}
-                          {console.log(cell.column.id)}
                           {cell.column.id !== 'type' &&
                             (cell.column.id === 'icon' &&
                             Object.keys(cell.row.original).length ? (

@@ -29,7 +29,7 @@ const customStyles = {
 
 Modal.setAppElement('#modal');
 
-const ModalWelcome = ({ IsOpen }) => {
+export const ModalWelcome = ({ IsOpen }) => {
   const [modalIsOpen, setIsOpen] = React.useState(IsOpen);
 
   const closeModal = () => {
@@ -53,12 +53,10 @@ const ModalWelcome = ({ IsOpen }) => {
             Привет! Для начала работы внеси текущий баланс своего счета!
           </FirstText>
           <SecondText>
-            Ты не можешь тратить деньги пока их у тебя нет :)
+            Ты не можешь тратить деньги пока их у тебя нет :&#41
           </SecondText>
         </div>
       </Modal>
     </div>
   );
 };
-
-export default ModalWelcome;

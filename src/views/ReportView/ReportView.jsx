@@ -2,22 +2,22 @@ import { React, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import {
-  ReportButton,
+  BackToMainButton,
   MonthPicker,
   Balance,
   Reports,
   ReportStatistic,
-} from '../../components';
+} from 'components';
 
-import { Chart } from '../../components/Chart';
-import { getUserToken } from '../../redux/selectors/tokenSelector';
-import { getTransactionsPreMonthForChart } from '../../redux/transactonsForChart/transactionOperations';
+import { Chart } from 'components/Chart';
+import { getUserToken } from 'redux/selectors/tokenSelector';
+import { getTransactionsPreMonthForChart } from 'redux/transactonsForChart/transactionOperations';
 
 import 'moment/locale/ru';
 import moment from 'moment';
 
-import cabagesImg from '../../images/kapustaReportDesktop.svg';
-import twoCabages from '../../images/twoKapustaReport.svg';
+import cabagesImg from 'images/kapustaReportDesktop.svg';
+import twoCabages from 'images/twoKapustaReport.svg';
 
 import {
   Background,
@@ -27,7 +27,7 @@ import {
 } from './ReportView.styled';
 
 const ReportView = () => {
-  const [newDate, setNewDate] = useState(moment(new Date()));
+  const [newDate] = useState(moment(new Date()));
   const [month, setMonth] = useState(moment(new Date()).format('MM'));
   const [year, setYear] = useState(moment(new Date()).format('YYYY'));
 
@@ -56,6 +56,7 @@ const ReportView = () => {
       });
       getTotalSumOfTransactions({ year, month, type, userToken });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year, dispatch, month, userToken, type]);
 
   const getTotalSumOfTransactions = ({ year, month, userToken }) => {
@@ -121,7 +122,7 @@ const ReportView = () => {
       <ReportContainer matches={matches}>
         <Background matches={matches} />
         <ReportHeader>
-          <ReportButton />
+          <BackToMainButton />
           <Balance typeView="report" />
           <MonthPicker
             switchMonthLeft={switchMonthLeft}
@@ -130,7 +131,6 @@ const ReportView = () => {
             dateYears={year}
           />
         </ReportHeader>
-        {/* {isTabletOrDesktop && <ModalOut />} */}
         <ReportStatistic
           categoriesCosts={categoriesCosts}
           categoriesIncome={categoriesIncome}

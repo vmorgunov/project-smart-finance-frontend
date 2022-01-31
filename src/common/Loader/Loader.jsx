@@ -1,4 +1,4 @@
-import { BallTriangle, Bars, Rings } from 'react-loader-spinner';
+import { Bars } from 'react-loader-spinner';
 import { LoaderWrrap } from './loader.styled';
 
 const LoaderComponent = ({ height, width, padding }) => {

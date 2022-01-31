@@ -9,7 +9,6 @@ import { useMediaQuery } from 'react-responsive';
 
 import TransactioInfo from '../TransactioInfo';
 import Form from '../Form';
-import BtnBackspace from '../BtnBackspace';
 import TransactionMobile from '../TransactionMobile';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
