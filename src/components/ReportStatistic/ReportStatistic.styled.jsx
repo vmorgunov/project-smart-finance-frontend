@@ -22,12 +22,12 @@ export const ContainerMobile = styled.div`
   margin-top: 30px;
   height: 85px;
   min-width: 282px;
-  box-shadow: 5px 10px 20px rgba(170, 178, 197, 0.4);
+  box-shadow: var(--box-shadow-mob-wrrap);
   border-radius: 20px;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: #ffffff;
+  background: var(--bg-text-color);
 `;
 
 export const Title = styled.p`
@@ -71,11 +71,11 @@ export const SpanRedMobile = styled.span`
 export const Line = styled.div`
   margin-right: 10px;
   height: 50px;
-  border-left: 1px solid #e0e5eb;
+  border-left: 1px solid var(--color-placeholder);
 `;
 
 export const LineMobile = styled.div`
   margin-right: 10px;
   height: 85px;
-  border-left: 1px solid #e0e5eb;
+  border-left: 1px solid var(--color-placeholder);
 `;

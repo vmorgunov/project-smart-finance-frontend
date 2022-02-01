@@ -14,7 +14,7 @@ export const NewTable = styled(Table)`
 export const NewTabCell = styled(TableCell)`
   display: flex;
   padding: 12px 20px;
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid var(--bg-text-color);
   align-items: center;
   justify-content: space-between;
   box-shadow: none;

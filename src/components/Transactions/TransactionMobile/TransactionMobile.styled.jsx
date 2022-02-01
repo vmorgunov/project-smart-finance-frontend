@@ -30,7 +30,7 @@ export const BtnWrap = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: white;
+  background-color: var(--bg-text-color);
 `;
 
 export const BalanseWrrap = styled.div`

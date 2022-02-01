@@ -2,7 +2,7 @@ import React, { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCurrentUser } from './redux/auth/authOperations.js';
+import { fetchCurrentUser } from './redux/auth/authOperations';
 import {
   getIsFetchingCurrent,
   getIsLoggedIn,
@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import AppBar from './components/AppBar';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { Container } from './App.styled.jsx';
+import { Container } from './App.styled';
 
 const AuthView = lazy(() =>
   import('./views/AuthView' /* webpackChunkName: 'AuthView' */),

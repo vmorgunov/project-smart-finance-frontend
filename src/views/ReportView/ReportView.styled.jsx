@@ -44,7 +44,6 @@ export const BalanceInputText = styled.span`
   position: absolute;
   top: 57px;
   right: 25px;
-  font-family: 'Roboto';
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
