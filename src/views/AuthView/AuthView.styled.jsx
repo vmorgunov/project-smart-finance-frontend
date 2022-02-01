@@ -27,6 +27,7 @@ export const TitlesContainer = styled.div`
 `;
 
 export const Title = styled.h1`
+  color: var(--text-color);
   position: relative;
   font-weight: 900;
   font-size: ${({ matches }) =>
@@ -51,7 +52,7 @@ export const Title = styled.h1`
   &::before {
     content: '';
     display: block;
-    background-color: #000;
+    background-color: var(--text-color);
     height: ${({ matches }) =>
       matches.isMobile
         ? '6.5px'
@@ -81,7 +82,7 @@ export const Title = styled.h1`
   &::after {
     content: '';
     display: block;
-    background-color: #000;
+    background-color: var(--text-color);
     height: ${({ matches }) =>
       matches.isMobile
         ? '6.5px'
@@ -137,7 +138,7 @@ export const UnderTitle = styled.h2`
       ? '0.18em'
       : matches.isDesktop && '0.18em'};
   text-transform: uppercase;
-  color: #52555f;
+  color: var(--text-color-3);
 `;
 
 export const Background = styled.div`
@@ -154,7 +155,7 @@ export const Background = styled.div`
       : matches.isTablet
       ? '768px'
       : matches.isDesktop && '1280px'};
-  background-color: #f5f6fb;
+  background-color: var(--bg-color);
   border-bottom-left-radius: 100px;
   z-index: -1;
   overflow: hidden;
