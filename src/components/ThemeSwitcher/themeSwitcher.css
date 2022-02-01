@@ -1,6 +1,4 @@
-@import './components/ThemeSwitcher/themeSwitcher.css';
-
-:root {
+html[data-theme='light'] {
   --bg-color: rgba(245, 246, 251, 1);
   --bg-text-color: rgba(255, 255, 255, 1);
   --text-color: rgba(0, 0, 0, 1);
@@ -20,43 +18,22 @@
   --color-icon: rgba(7, 31, 65, 1);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.04em;
-}
-
-img {
-  display: block;
-  height: auto;
-  max-width: 100%;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-a,
-button {
-  font-style: normal;
-  text-decoration: none;
-  cursor: pointer;
-}
-/* для скрола в таблице все трансакции */
-.simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
-  opacity: 1;
-  background-color: var(--acent-color);
-}
-
-.simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {
-  opacity: 1;
-}
-.simplebar-track.simplebar-horizontal {
-  width: 0;
+html[data-theme='dark'] {
+  --bg-color: rgb(48, 48, 48);
+  --bg-text-color: rgb(87, 87, 87);
+  --text-color: rgb(0, 199, 199);
+  --text-color-1: rgba(0, 199, 199);
+  --text-color-2: rgba(0, 199, 199);
+  --text-color-3: rgba(0, 199, 199);
+  --acent-color: rgba(255, 117, 29, 1);
+  --accent-color-2: rgb(17, 22, 87);
+  --accent-color-3: rgb(243, 51, 51);
+  --accent-color-4: rgb(7, 211, 27);
+  --modal-bg: rgba(29, 52, 106, 1);
+  --bg-tab-selected: rgba(254, 254, 254, 1);
+  --bg-tab: rgba(250, 251, 253, 1);
+  --box-shadow-tab-wrrap: 0px 10px 60px rgba(0, 62, 248, 0.2);
+  --box-shadow-mob-wrrap: 5px 10px 20px rgba(0, 63, 252, 0.4);
+  --color-placeholder: rgba(199, 204, 220, 1);
+  --color-icon: rgb(7, 127, 248);
 }
