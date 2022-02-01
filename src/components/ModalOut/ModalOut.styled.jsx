@@ -82,7 +82,7 @@ export const Button = styled.button`
   font-weight: 700;
   text-transform: uppercase;
   border-radius: 16px;
-  border: 2px solid #f5f6fb;
+  border: 2px solid var(--bg-color);
   transition: 0.2s ease-out;
   background-color: transparent;
 
@@ -102,7 +102,7 @@ export const ButtonMobile = styled.button`
   font-weight: 700;
   text-transform: uppercase;
   border-radius: 13px;
-  border: 2px solid #f5f6fb;
+  border: 2px solid var(--bg-color);
   transition: all 0.2s ease-out;
   background-color: transparent;
 

@@ -13,6 +13,7 @@
   --bg-tab-selected: rgba(254, 254, 254, 1);
   --bg-tab: rgba(250, 251, 253, 1);
   --box-shadow-tab-wrrap: 0px 10px 60px rgba(170, 178, 197, 0.2);
+  --box-shadow-mob-wrrap: 5px 10px 20px rgba(170, 178, 197, 0.4);
   --color-placeholder: rgba(199, 204, 220, 1);
   --color-icon: rgba(7, 31, 65, 1);
 }
@@ -32,6 +33,7 @@ html[data-theme='light'] {
   --bg-tab-selected: rgba(254, 254, 254, 1);
   --bg-tab: rgba(250, 251, 253, 1);
   --box-shadow-tab-wrrap: 0px 10px 60px rgba(170, 178, 197, 0.2);
+  --box-shadow-mob-wrrap: 5px 10px 20px rgba(170, 178, 197, 0.4);
   --color-placeholder: rgba(199, 204, 220, 1);
   --color-icon: rgba(7, 31, 65, 1);
 }
@@ -50,7 +52,8 @@ html[data-theme='light'] {
   --modal-bg: rgba(29, 52, 106, 1);
   --bg-tab-selected: rgba(254, 254, 254, 1);
   --bg-tab: rgba(250, 251, 253, 1);
-  --box-shadow-tab-wrrap: 0px 10px 60px rgba(170, 178, 197, 0.2);
+  --box-shadow-tab-wrrap: 0px 10px 60px rgba(0, 62, 248, 0.2);
+  --box-shadow-mob-wrrap: 5px 10px 20px rgba(0, 63, 252, 0.4);
   --color-placeholder: rgba(199, 204, 220, 1);
   --color-icon: rgb(7, 127, 248);
 }
