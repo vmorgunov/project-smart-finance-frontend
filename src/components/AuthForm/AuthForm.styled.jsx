@@ -25,7 +25,7 @@ export const Container = styled.div`
   flex-direction: column;
   box-shadow: ${({ matches }) =>
     matches.isMobile
-      ? '5px 10px 20px rgba(170, 178, 197, 0.4)'
+      ? 'var(--box-shadow-mob-wrrap)'
       : matches.isTablet
       ? 'var(--box-shadow-tab-wrrap)'
       : matches.isDesktop && 'var(--box-shadow-tab-wrrap)'};
@@ -193,7 +193,7 @@ export const ErrorValidation = styled.div`
   height: 12px;
   margin: 4px 0 14px 0;
   & > p {
-    color: rgba(235, 87, 87, 1);
+    color: var(--accent-color-3);
     font-size: 10px;
     line-height: 1.2;
     letter-spacing: 0.04em;

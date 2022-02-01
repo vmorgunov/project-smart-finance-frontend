@@ -67,8 +67,6 @@ html[data-theme='light'] {
 body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.04em;
-  transition: background 300ms linear;
-  transition: color 500ms linear;
 }
 
 img {

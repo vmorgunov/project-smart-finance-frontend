@@ -4,7 +4,6 @@ export const ReportContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  /* margin: 0 auto; */
   padding: ${({ matches }) =>
     matches.isMobile
       ? '50px 19px 50px 19px'
