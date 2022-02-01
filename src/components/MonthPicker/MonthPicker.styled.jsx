@@ -15,7 +15,6 @@ export const Title = styled.div`
 
 export const TitleMobile = styled.div`
   margin: 49px 0 5px;
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

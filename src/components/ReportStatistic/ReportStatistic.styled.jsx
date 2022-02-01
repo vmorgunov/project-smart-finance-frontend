@@ -33,8 +33,6 @@ export const ContainerMobile = styled.div`
 
 export const Title = styled.p`
   margin-right: 15px;
-
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;

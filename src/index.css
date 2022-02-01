@@ -44,9 +44,14 @@ ol {
 
 a,
 button {
+  font-family: inherit;
   font-style: normal;
   text-decoration: none;
   cursor: pointer;
+}
+
+input {
+  font-family: inherit;
 }
 /* для скрола в таблице все трансакции */
 .simplebar-scrollbar.simplebar-visible.simplebar-scrollbar::before {

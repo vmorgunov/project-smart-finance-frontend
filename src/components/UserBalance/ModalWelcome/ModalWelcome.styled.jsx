@@ -5,7 +5,6 @@ export const FirstText = styled.span`
   display: block;
   width: 230px;
   margin-bottom: 20px;
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -16,7 +15,6 @@ export const FirstText = styled.span`
 export const SecondText = styled.span`
   display: block;
   width: 230px;
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
