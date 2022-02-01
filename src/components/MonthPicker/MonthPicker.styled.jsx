@@ -1,33 +1,18 @@
 import styled from '@emotion/styled';
 
+export const MonthContainer = styled.div`
+  margin-bottom: 30px;
+  @media (min-width: 768px) {
+    margin: 0;
+  }
+`;
+
 export const Title = styled.div`
   margin-bottom: 5px;
-  font-style: normal;
-  font-weight: normal;
   font-size: 12px;
-  line-height: 1.2;
-
   text-align: center;
-  letter-spacing: 0.04em;
-
   color: var(--text-color-2);
 `;
-
-export const TitleMobile = styled.div`
-  margin: 49px 0 5px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 1.2;
-
-  text-align: center;
-  letter-spacing: 0.04em;
-
-  color: var(--text-color-2);
-`;
-
-export const Container = styled.div``;
 
 export const Switch = styled.div`
   display: flex;
@@ -57,17 +42,13 @@ export const ArrowIcon = styled.img`
 
 export const SwitchData = styled.span`
   width: 120px;
-  font-style: normal;
   font-weight: bold;
   font-size: 14px;
-  line-height: 1.14;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--text-color-2);
   margin-left: 15px;
   margin-right: 15px;
 `;

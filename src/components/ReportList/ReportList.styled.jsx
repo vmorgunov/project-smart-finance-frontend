@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { log } from 'react-modal/lib/helpers/ariaAppHider';
 
 export const List = styled.ul`
   display: flex;

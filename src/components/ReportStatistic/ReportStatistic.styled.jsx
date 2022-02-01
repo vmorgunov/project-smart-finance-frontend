@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  // z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 30px 0 40px;
+  margin: 0 0 40px;
   height: 50px;
   border-radius: 30px;
   box-shadow: var(--box-shadow-tab-wrrap);
@@ -33,14 +32,9 @@ export const ContainerMobile = styled.div`
 
 export const Title = styled.p`
   margin-right: 15px;
-
-  font-family: Roboto;
-  font-style: normal;
   font-weight: bold;
   font-size: 14px;
   line-height: 16px;
-  letter-spacing: 0.04em;
-
   color: var(--text-color-3);
 `;
 

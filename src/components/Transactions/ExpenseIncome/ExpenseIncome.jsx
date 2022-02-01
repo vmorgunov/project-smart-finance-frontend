@@ -13,13 +13,13 @@ import TransactionMobile from '../TransactionMobile';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getTransactionsByMonth } from '../../../redux/transactions/costIncomeOperations';
-import { getUserToken } from '../../../redux/selectors/tokenSelector';
-import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
+import { getTransactionsByMonth } from 'redux/transactions/costIncomeOperations';
+import { getUserToken } from 'redux/selectors/tokenSelector';
+import { getAllTransaction } from 'redux/transactions/transactionSelectors';
 import {
   fetchSummaryCosts,
   fetchSummaryIncome,
-} from '../../../redux/transactions/transactionOperations';
+} from 'redux/transactions/transactionOperations';
 
 const DEFAULT_CLASS = 'react-tabs__tab';
 const DEFAULT_SELECTED_CLASS = `${DEFAULT_CLASS}--selected`;

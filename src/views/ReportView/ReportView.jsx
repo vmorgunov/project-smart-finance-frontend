@@ -1,15 +1,10 @@
 import { React, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import {
-  BackToMainButton,
-  MonthPicker,
-  Balance,
-  Reports,
-  ReportStatistic,
-} from 'components';
+import { Reports, ReportStatistic } from 'components';
 
 import { Chart } from 'components/Chart';
+import { PageNav } from 'components/PageNav';
 import { getUserToken } from 'redux/selectors/tokenSelector';
 import { getTransactionsPreMonthForChart } from 'redux/transactonsForChart/transactionOperations';
 
@@ -19,15 +14,9 @@ import moment from 'moment';
 import cabagesImg from 'images/kapustaReportDesktop.svg';
 import twoCabages from 'images/twoKapustaReport.svg';
 
-import {
-  Background,
-  ReportContainer,
-  ReportHeader,
-  BgImg,
-} from './ReportView.styled';
+import { Background, ReportContainer, BgImg } from './ReportView.styled';
 
 const ReportView = () => {
-  const [newDate] = useState(moment(new Date()));
   const [month, setMonth] = useState(moment(new Date()).format('MM'));
   const [year, setYear] = useState(moment(new Date()).format('YYYY'));
 
@@ -90,20 +79,6 @@ const ReportView = () => {
     });
   };
 
-  const switchMonthLeft = () => {
-    setMonth(newDate.add(-1, 'month').format('MM'));
-    if (month === '01') {
-      setYear(newDate.add('year').format('YYYY'));
-    }
-  };
-
-  const switchMonthRight = () => {
-    setMonth(newDate.add(1, 'month').format('MM'));
-    if (month === '12') {
-      setYear(newDate.add('year').format('YYYY'));
-    }
-  };
-
   const onClickSwitchType = () => {
     if (type === 'costs') {
       setType('income');
@@ -121,16 +96,13 @@ const ReportView = () => {
     <>
       <ReportContainer matches={matches}>
         <Background matches={matches} />
-        <ReportHeader>
-          <BackToMainButton />
-          <Balance typeView="report" />
-          <MonthPicker
-            switchMonthLeft={switchMonthLeft}
-            switchMonthRight={switchMonthRight}
-            dateMonth={month}
-            dateYears={year}
-          />
-        </ReportHeader>
+        <PageNav
+          typeView="report"
+          setMonth={setMonth}
+          setYear={setYear}
+          month={month}
+          year={year}
+        />
         <ReportStatistic
           categoriesCosts={categoriesCosts}
           categoriesIncome={categoriesIncome}

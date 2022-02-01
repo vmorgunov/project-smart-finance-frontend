@@ -4,17 +4,12 @@ export const ReportContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  /* margin: 0 auto; */
   padding: ${({ matches }) =>
     matches.isMobile
-      ? '50px 19px 50px 19px'
+      ? '0 19px 50px 19px'
       : matches.isTablet
-      ? '40px 50px 76px 50px'
-      : matches.isDesktop && '40px 110px 74px 110px'};
-
-  @media (max-width: 766px) {
-    align-items: center;
-  }
+      ? '0 50px 76px 50px'
+      : matches.isDesktop && '0 110px 74px 110px'};
 `;
 
 export const Background = styled.div`
@@ -43,18 +38,6 @@ export const Background = styled.div`
       : matches.isTablet
       ? '527px'
       : matches.isDesktop && '527px'};
-`;
-
-export const ReportHeader = styled.div`
-  min-width: 1280;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-
-  @media (max-width: 766px) {
-    flex-direction: column-reverse;
-  }
 `;
 
 export const BalanceInputText = styled.span`

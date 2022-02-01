@@ -1,27 +1,45 @@
 import styled from '@emotion/styled';
+import { Text } from 'common/Text/Text.styled';
 
 export const BalanceWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  @media (min-width: 768px) {
+    display: inline-flex;
+    flex-direction: row;
+    margin-left: ${props => (props.typeView !== 'report' ? '80px' : '0')};
+  }
+  @media (min-width: 1280px) {
+    margin-left: ${props => (props.typeView !== 'report' ? '380px' : '0')};
+  }
+`;
+
+export const BalanceText = styled(Text)`
+  color: var(--text-color-2);
+  font-size: 12px;
+  @media (min-width: 768px) {
+    margin-right: 21px;
+  }
 `;
 
 export const LabelWrapper = styled.div`
-  @media (max-width: 468px) {
+  @media (max-width: 767px) {
+    margin-top: 6px;
     display: flex;
   }
 `;
 
 export const BalanceInput = styled.input`
+  padding: 15px 10px;
   width: 125px;
   background-color: inherit;
-  margin-left: 20px;
-  margin-right: 15px;
+  border-radius: ${props =>
+    props.typeView !== 'report' ? '22px 0px 0px 22px' : '22px'};
   border: 2px solid #ffffff;
-  border-radius: 16px;
-  padding: 15px 10px;
   font-weight: bold;
   font-size: 12px;
-  line-height: 14px;
   text-align: center;
   text-transform: uppercase;
   color: var(--text-color);
@@ -40,17 +58,11 @@ export const BalanceInput = styled.input`
   &[type='number']::-webkit-inner-spin-button,
   &[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
-    margin: 0;
   }
 
-  @media (max-width: 468px) {
-    margin: 0;
-    border-radius: ${props => (!props.typeView ? '22px 0px 0px 22px' : '16px')};
-    padding: ${props =>
-      !props.typeView ? '15px 19px 15px 17px' : '15px 30px 15px 10px'};
-  }
-  @media (max-width: 320px) {
-    padding: 15px 19px 15px 25px;
+  @media (min-width: 768px) {
+    margin-right: ${props => (props.typeView !== 'report' ? '15px' : '0')};
+    border-radius: 16px;
   }
 `;
 
@@ -69,10 +81,8 @@ export const BalanceConfirm = styled.button`
     color: white;
     background-color: var(--acent-color);
   }
-  @media (max-width: 768px) {
-    margin-right: 110px;
-  }
-  @media (max-width: 468px) {
+
+  @media (max-width: 767px) {
     display: block;
     margin: 0;
     padding: 15px 19px 15px 17px;
