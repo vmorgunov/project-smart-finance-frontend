@@ -23,6 +23,7 @@ export const Background = styled.div`
   z-index: -1;
 
   background-color: var(--bg-color);
+  transition: background-color 300ms linear;
 
   border-bottom-left-radius: ${({ matches }) =>
     matches.isMobile
