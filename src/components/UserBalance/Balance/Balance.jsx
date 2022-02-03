@@ -6,6 +6,7 @@ import {
   BalanceInput,
   BalanceConfirm,
   LabelWrapper,
+  BalanceText,
 } from './Balance.styled';
 
 import { getAllTransaction } from 'redux/transactions/transactionSelectors';
@@ -16,12 +17,11 @@ import { CommonText } from 'common';
 import { ModalWelcome } from '..';
 import { ModalOut } from '../../ModalOut/ModalOut';
 
-export const Balance = () => {
+export const Balance = ({ typeView }) => {
   const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-
   const balance = useSelector(getAllTransaction);
   const userToken = useSelector(getUserToken);
 
@@ -41,10 +41,11 @@ export const Balance = () => {
   return (
     <>
       {!balance && <ModalWelcome IsOpen={true} />}
-      <BalanceWrapper>
-        <CommonText color="var(--text-color-2)">Баланс:</CommonText>
+      <BalanceWrapper typeView={typeView}>
+        <BalanceText>Баланс:</BalanceText>
         <LabelWrapper>
           <BalanceInput
+            typeView={typeView}
             type="number"
             value={defaultValue}
             onChange={handleInputChange}
@@ -52,16 +53,18 @@ export const Balance = () => {
             maxLength="20"
             autoComplete="off"
           />
-          <BalanceConfirm
-            onClick={() => {
-              if (defaultValue.length > 0) {
-                setIsModalOpen(true);
-              }
-            }}
-            type="submit"
-          >
-            <CommonText color="var(--text-color-2)">Подтвердить</CommonText>
-          </BalanceConfirm>
+          {typeView !== 'report' && (
+            <BalanceConfirm
+              onClick={() => {
+                if (defaultValue.length > 0) {
+                  setIsModalOpen(true);
+                }
+              }}
+              type="submit"
+            >
+              <CommonText color="var(--text-color-2)">Подтвердить</CommonText>
+            </BalanceConfirm>
+          )}
         </LabelWrapper>
       </BalanceWrapper>
 

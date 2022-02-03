@@ -1,13 +1,12 @@
 import { useMediaQuery } from 'react-responsive';
 import Container from 'components/Transactions/Container';
 import ExpenseIncome from 'components/Transactions/ExpenseIncome';
-import { GoToReportsButton } from 'components/GoToReportsButton/GoToReportsButton';
-import { Balance } from 'components/UserBalance/Balance';
 import cabagesImg from 'images/kapustaTransactionDesktop.svg';
 import twoCabages from 'images/twoKapusta.svg';
 
 import { Background, BgImg, TransactionWrrap } from './TransactionsView.styled';
 import { useState } from 'react';
+import { PageNav } from 'components/PageNav';
 
 const TransactionsView = () => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
@@ -21,8 +20,7 @@ const TransactionsView = () => {
   return (
     <Container>
       <Background matches={matches} changeBackground={changeBackground} />
-      <Balance />
-      <GoToReportsButton />
+      <PageNav typeView="main" />
       <TransactionWrrap matches={matches}>
         <ExpenseIncome
           changeBackgroundForFormModal={changeBackgroundForFormModal}
