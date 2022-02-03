@@ -56,6 +56,7 @@ export const SvgBox = styled.div`
   border-radius: 20px;
   &:active {
     background-color: var(--accent-color-2);
+    box-shadow: var(--box-shadow-mob-wrrap);
     border-radius: 20px;
     margin-bottom: 7px;
   }

@@ -21,6 +21,7 @@ export const Container = styled.div`
       ? '50px 0 0 0'
       : matches.isDesktop && '0 0 0 127px'};
   background-color: var(--bg-text-color);
+  transition: background-color 300ms linear;
   display: flex;
   flex-direction: column;
   box-shadow: ${({ matches }) =>

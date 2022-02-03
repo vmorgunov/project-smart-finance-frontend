@@ -7,27 +7,28 @@ export const Background = styled.div`
   z-index: -1;
 
   background-color: var(--bg-color);
+  transition: background-color 300ms linear;
 
   border-bottom-left-radius: ${({ matches }) =>
     matches.isMobile
       ? '100px'
       : matches.isTablet
-        ? '100px'
-        : matches.isDesktop && '160px'};
+      ? '100px'
+      : matches.isDesktop && '160px'};
   width: ${({ matches }) =>
     matches.isMobile
       ? '320px'
       : matches.isTablet
-        ? '768px'
-        : matches.isDesktop && '1280px'};
+      ? '768px'
+      : matches.isDesktop && '1280px'};
   height: ${({ matches, changeBackground }) =>
     matches.isMobile
       ? changeBackground === 'all'
         ? '300px'
         : '440px'
       : matches.isTablet
-        ? '527px'
-        : matches.isDesktop && '527px'};
+      ? '527px'
+      : matches.isDesktop && '527px'};
 `;
 
 export const BgImg = styled.img`
@@ -36,32 +37,32 @@ export const BgImg = styled.img`
     matches.isMobile
       ? '0'
       : matches.isTablet
-        ? '88px'
-        : matches.isDesktop && '0'};
+      ? '88px'
+      : matches.isDesktop && '0'};
   bottom: ${({ matches }) =>
     matches.isMobile
       ? '0'
       : matches.isTablet
-        ? '64px'
-        : matches.isDesktop && '0'};
+      ? '64px'
+      : matches.isDesktop && '0'};
   height: ${({ matches }) =>
     matches.isMobile
       ? '0'
       : matches.isTablet
-        ? '142px'
-        : matches.isDesktop && '194px'};
+      ? '142px'
+      : matches.isDesktop && '194px'};
   width: ${({ matches }) =>
     matches.isMobile
       ? '0'
       : matches.isTablet
-        ? '183px'
-        : matches.isDesktop && '1270px'};
+      ? '183px'
+      : matches.isDesktop && '1270px'};
   z-index: ${({ matches }) =>
     matches.isMobile
       ? '0'
       : matches.isTablet
-        ? '2'
-        : matches.isDesktop && '-1'};
+      ? '2'
+      : matches.isDesktop && '-1'};
 `;
 
 export const TransactionWrrap = styled.div`

@@ -35,5 +35,5 @@ html[data-theme='dark'] {
   --box-shadow-tab-wrrap: 0px 10px 60px rgba(0, 62, 248, 0.2);
   --box-shadow-mob-wrrap: 5px 10px 20px rgba(0, 63, 252, 0.4);
   --color-placeholder: rgba(199, 204, 220, 1);
-  --color-icon: rgb(7, 127, 248);
+  --color-icon: rgb(0, 199, 199);
 }

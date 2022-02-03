@@ -156,6 +156,7 @@ export const Background = styled.div`
       ? '768px'
       : matches.isDesktop && '1280px'};
   background-color: var(--bg-color);
+  transition: background-color 300ms linear;
   border-bottom-left-radius: 100px;
   z-index: -1;
   overflow: hidden;

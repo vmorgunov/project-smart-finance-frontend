@@ -29,6 +29,8 @@
 body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.04em;
+  background-color: var(--bg-text-color);
+  transition: background-color 300ms linear;
 }
 
 img {
