@@ -33,10 +33,10 @@ export const ButtonSwitch = styled.button`
 export const ArrowIcon = styled.img`
   position: absolute;
   width: 4px;
-  height: 10px;
+  height: 12px;
   &:hover {
     width: 6px;
-    height: 12px;
+    height: 14px;
   }
 `;
 
@@ -51,4 +51,5 @@ export const SwitchData = styled.span`
   text-transform: uppercase;
   margin-left: 15px;
   margin-right: 15px;
+  color: var(--text-color);
 `;
