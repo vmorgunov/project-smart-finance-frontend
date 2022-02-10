@@ -15,11 +15,11 @@ export const FormStyle = styled.form`
     matches.isMobile ? 'transparent ' : 'var(--bg-text-color)'};
   margin-bottom: ${({ matches }) =>
     matches.isMobile
-      ? '0'
+      ? '23px'
       : matches.isTablet
       ? '48px'
       : matches.isDesctop && '59px'};
-  padding-top: ${({ matches }) => (matches.isMobile ? '25px' : '0px')};
+  padding-top: ${({ matches }) => (matches.isMobile ? '5px' : '0px')};
 `;
 
 export const DivCalc = styled.div`

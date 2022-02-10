@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 
+export const TransactionWrrap = styled.div`
+  border: ${({ matches }) =>
+    `${matches.isMobile ? '0px' : '2px'} solid var(--bg-color)`};
+  border-top-width: 0px;
+`;
+
 export const TableHeader = styled.table`
   font-style: normal;
   font-size: 12px;

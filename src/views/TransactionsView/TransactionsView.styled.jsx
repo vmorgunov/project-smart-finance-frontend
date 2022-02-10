@@ -7,7 +7,6 @@ export const Background = styled.div`
   z-index: -1;
 
   background-color: var(--bg-color);
-  transition: background-color 300ms linear;
 
   border-bottom-left-radius: ${({ matches }) =>
     matches.isMobile
@@ -21,9 +20,9 @@ export const Background = styled.div`
       : matches.isTablet
       ? '768px'
       : matches.isDesktop && '1280px'};
-  height: ${({ matches, changeBackground }) =>
+  height: ${({ matches, transactionType }) =>
     matches.isMobile
-      ? changeBackground === 'all'
+      ? transactionType === 'all'
         ? '300px'
         : '440px'
       : matches.isTablet
