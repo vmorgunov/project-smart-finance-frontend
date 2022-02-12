@@ -8,14 +8,24 @@ import {
 
 const initialState = {
   items: [],
-  sums: [],
+  transactions: [],
   error: null,
   isLoading: false,
+  type: 'costs',
 };
 
 const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
+  reducers: {
+    getTransactionType(state, { payload }) {
+      state.type = payload;
+    },
+    getTransaction(state, { payload }) {
+      console.log(payload);
+      state.transactions = payload;
+    },
+  },
   extraReducers: {
     [getTransactionsByMonth.pending]: (state, _) => {
       state.error = null;
@@ -24,7 +34,6 @@ const transactionsSlice = createSlice({
 
     [getTransactionsByMonth.fulfilled]: (state, { payload }) => {
       state.items = [payload?.data];
-      state.sums = payload?.sums;
       state.isLoading = false;
     },
 
@@ -64,5 +73,7 @@ const transactionsSlice = createSlice({
     },
   },
 });
+
+export const { getTransactionType, getTransaction } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

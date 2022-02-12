@@ -32,15 +32,18 @@ import srcCalendar from '../../../images/calendar.svg';
 import { addTransaction } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
 import pushBalance from '../../../redux/transactions/transactionOperations';
+import { getTransactionsType } from 'redux/transactions/costIncomeSelector';
 registerLocale('ru', ru); // register it with the name you want
 
-const Form = ({ dateFinder, type }) => {
+const Form = ({ dateFinder }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesctop };
 
   const dispatch = useDispatch();
+
+  const transactionType = useSelector(getTransactionsType);
   //все поля формы
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [description, setDescription] = useState('');
@@ -86,10 +89,15 @@ const Form = ({ dateFinder, type }) => {
         setDescription(value);
         break;
       case 'sum':
-        setSumDirty(value ? false : true);
-        setIsToggleColorCurrency(value ? true : false);
-        const valueNum = value ? parseFloat(value) : '';
-        setSum(valueNum);
+        const valueNum = value !== '' ? Number(value.replace(/\s+/g, '')) : '';
+        setSumDirty(valueNum || valueNum === '' ? false : true);
+        setIsToggleColorCurrency(valueNum === '' ? false : true);
+        valueNum || valueNum === ''
+          ? setSum(valueNum.toLocaleString())
+          : setSumError('Введите число!!!');
+        setTimeout(function () {
+          setSumDirty(false);
+        }, 3000);
         break;
       default:
         return;
@@ -98,11 +106,15 @@ const Form = ({ dateFinder, type }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const day = String(selectedDate?.getDate());
+    let day = String(selectedDate?.getDate());
     const year = String(selectedDate?.getFullYear());
-    let month = selectedDate.getUTCMonth() + 1;
-    if (month < 10) {
+    let month = String(selectedDate.getUTCMonth() + 1);
+
+    if (month.length < 2) {
       month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
     }
 
     setTimeout(function () {
@@ -122,8 +134,8 @@ const Form = ({ dateFinder, type }) => {
 
     try {
       if (category && description && selectedDate && sum && !!userToken) {
-        const transactionType = type;
-        const defaultValue = type === 'costs' ? balance - sum : balance + sum;
+        const defaultValue =
+          transactionType === 'costs' ? balance - sum : balance + sum;
         if (defaultValue < 0) {
           toast.warn(`Ваш баланс не может быть меньше 0 !!!`, {
             autoClose: 1500,
@@ -133,7 +145,6 @@ const Form = ({ dateFinder, type }) => {
         dispatch(
           addTransaction({ newTransaction, transactionType, userToken }),
         );
-
         dispatch(pushBalance({ defaultValue, userToken }));
         resetForm();
         toast.success(
@@ -164,12 +175,13 @@ const Form = ({ dateFinder, type }) => {
     setDescription('');
     setCategory('');
     setSum('');
+    setIsToggleColorCurrency(false);
   };
 
   return (
     <FormStyle matches={matches} autoComplete="off" onSubmit={handleSubmit}>
       <InputWrrapDiv matches={matches}>
-        <DateWrrap type={type} matches={matches}>
+        <DateWrrap type={transactionType} matches={matches}>
           <img src={srcCalendar} alt="Календарь" width={20} height={20} />
           <DateSend>
             <WrrapFieldForm>
@@ -189,7 +201,7 @@ const Form = ({ dateFinder, type }) => {
           </DateSend>
         </DateWrrap>
 
-        {type !== 'all' && (
+        {transactionType !== 'all' && (
           <>
             <WrrapFieldForm>
               {descriptionDirty && descriptionError && (
@@ -233,7 +245,6 @@ const Form = ({ dateFinder, type }) => {
                 name="category"
                 selected={category}
                 onChange={handleChange}
-                type={type}
               />
             </WrrapFieldForm>
             <TransactionValueWrrap matches={matches}>
@@ -252,7 +263,7 @@ const Form = ({ dateFinder, type }) => {
                 <Input
                   value={sum}
                   onChange={handleChange}
-                  type="number"
+                  type="text"
                   name="sum"
                   placeholder="00.00"
                   border={{
@@ -282,7 +293,7 @@ const Form = ({ dateFinder, type }) => {
           </>
         )}
       </InputWrrapDiv>
-      {type !== 'all' && (
+      {transactionType !== 'all' && (
         <>
           <ConfirmationWrrapDiv matches={matches}>
             <Button type="submit" text={'Ввод'} marginButton={'0 15px 0 0'} />

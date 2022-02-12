@@ -8,25 +8,30 @@ import {
 } from './TransactioInfo.styled';
 
 import SpanningTable from '../SummaryInfo/Summary';
+import { getTransactionsType } from 'redux/transactions/costIncomeSelector';
+import { useSelector } from 'react-redux';
 
-const TransactioInfo = ({ type, transactions, handleDelete }) => {
+const TransactioInfo = ({ transactions, handleDelete }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesctop };
 
+  const transactionType = useSelector(getTransactionsType);
+
   return (
     <TransactioInfoWrrap matches={matches}>
-      <TransactioDetailsWrrap matches={matches}>
-        <TransactionTable type={type} transactions={transactions} />
+      <TransactioDetailsWrrap
+        matches={matches}
+        transactionType={transactionType}
+      >
+        <TransactionTable />
       </TransactioDetailsWrrap>
-      <Summary matches={matches}>
-        <SpanningTable
-          type={type}
-          transactions={transactions}
-          // handleDelete={handleDelete}
-        />
-      </Summary>
+      {isDesctop && (
+        <Summary matches={matches}>
+          <SpanningTable />
+        </Summary>
+      )}
     </TransactioInfoWrrap>
   );
 };

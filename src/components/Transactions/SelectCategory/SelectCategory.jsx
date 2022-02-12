@@ -2,21 +2,20 @@ import Select from 'react-select';
 import { useMediaQuery } from 'react-responsive';
 import { SelectStyles } from './SelectCategory.styled';
 import { CATEGORIES } from '../../../common/options/categories';
+import { useSelector } from 'react-redux';
 
-const SelectCategory = ({
-  placeholder,
-  name,
-  selected,
-  onChange,
-  type,
-  onBlur,
-  tabindex,
-}) => {
+const SelectCategory = ({ placeholder, name, selected, onChange }) => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const matches = { isMobile, isTablet, isDesctop };
-  const categories = CATEGORIES.filter(category => category.type === type);
+
+  const transactionType = useSelector(state => state.transactions.type);
+
+  const categories = CATEGORIES.filter(
+    category => category.type === transactionType,
+  );
+
   return (
     <Select
       controlShouldRenderValue={selected ? true : false} //
@@ -26,8 +25,6 @@ const SelectCategory = ({
       name={name}
       selected={selected}
       onChange={onChange}
-      onBlur={onBlur}
-      tabindex={tabindex}
     />
   );
 };

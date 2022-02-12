@@ -27,10 +27,13 @@ export const Balance = ({ typeView }) => {
 
   useEffect(() => {
     dispatch(fetchBalance({ userToken }));
+  }, [dispatch, userToken]);
+
+  useEffect(() => {
     setValue(
       balance > 0 ? balance.toLocaleString('ru').concat(' UAH') : '00.00 UAH',
     );
-  }, [dispatch, userToken, balance]);
+  }, [balance]);
 
   const handleInputChange = event => {
     setDefaultValue(event.target.value);
