@@ -1,11 +1,8 @@
 import React from 'react';
+import { v4 } from 'uuid';
 import { useSelector } from 'react-redux';
-import {
-  getIncome,
-  getCosts,
-} from '../../../redux/transactions/transactionSelectors';
+import { getSummary } from '../../../redux/transactions/transactionSelectors';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -16,98 +13,44 @@ import {
   SummaryText,
   NewTableContainer,
 } from './Summary.styled.jsx';
+import { ThTabCell } from './Summary.styled';
 
 const SpanningTable = () => {
-  const income = useSelector(getIncome);
-  const costs = useSelector(getCosts);
-  const monthIncome = Object.keys(income);
-  const monthCosts = Object.keys(costs);
-  const sumIncome = Object.values(income);
-  const sumCosts = Object.values(costs);
+  const summary = useSelector(getSummary);
+
+  const listMonthSummary = Object.keys(summary);
+
   return (
     <>
-      {costs && (
-        <NewTableContainer component={Paper}>
-          <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" colSpan={3}>
-                  <SummaryText>Сводка</SummaryText>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <NewTabCell>
-                  <TableText>{monthCosts[0]}</TableText>
-                  <TableText>{sumCosts[0]} UAH</TableText>
+      <NewTableContainer component={Paper}>
+        <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
+          <TableHead>
+            <TableRow>
+              <ThTabCell align="center" colSpan={3}>
+                <SummaryText>Сводка</SummaryText>
+              </ThTabCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              {listMonthSummary.map(month => (
+                <NewTabCell key={v4()}>
+                  {summary[month] ? (
+                    <>
+                      <TableText>{month}</TableText>
+                      <TableText>{`${summary[
+                        month
+                      ].toLocaleString()}.00 UAH`}</TableText>
+                    </>
+                  ) : (
+                    ''
+                  )}
                 </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthCosts[1]}</TableText>
-                  <TableText>{sumCosts[1]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthCosts[2]}</TableText>
-                  <TableText>{sumCosts[2]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthCosts[3]}</TableText>
-                  <TableText>{sumCosts[3]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthCosts[4]}</TableText>
-                  <TableText>{sumCosts[4]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthCosts[5]}</TableText>
-                  <TableText>{sumCosts[5]} UAH</TableText>
-                </NewTabCell>
-              </TableRow>
-            </TableBody>
-          </NewTable>
-        </NewTableContainer>
-      )}
-      {income && (
-        <NewTableContainer component={Paper}>
-          <NewTable sx={{ minWidth: 220 }} aria-label="spanning table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" colSpan={3}>
-                  <SummaryText>Сводка</SummaryText>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <NewTabCell>
-                  <TableText>{monthIncome[0]}</TableText>
-                  <TableText>{sumIncome[0]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthIncome[1]}</TableText>
-                  <TableText>{sumIncome[1]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthIncome[2]}</TableText>
-                  <TableText>{sumIncome[2]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthIncome[3]}</TableText>
-                  <TableText>{sumIncome[3]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthIncome[4]}</TableText>
-                  <TableText>{sumIncome[4]} UAH</TableText>
-                </NewTabCell>
-                <NewTabCell>
-                  <TableText>{monthIncome[5]}</TableText>
-                  <TableText>{sumIncome[5]} UAH</TableText>
-                </NewTabCell>
-              </TableRow>
-            </TableBody>
-          </NewTable>
-        </NewTableContainer>
-      )}
+              ))}
+            </TableRow>
+          </TableBody>
+        </NewTable>
+      </NewTableContainer>
     </>
   );
 };

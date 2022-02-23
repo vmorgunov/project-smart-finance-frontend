@@ -1,15 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import pushBalance from './transactionOperations';
-import {
+import pushBalance, {
+  fetchSummary,
   fetchBalance,
-  fetchSummaryCosts,
-  fetchSummaryIncome,
 } from './transactionOperations';
 
 const initialState = {
   balance: 0,
-  income: {},
-  costs: {},
+  summary: {},
   error: null,
   isLoading: false,
 };
@@ -42,29 +39,15 @@ const totaBalanceSlice = createSlice({
       state.error = action.error.message;
       state.isLoading = false;
     },
-    [fetchSummaryCosts.pending]: (state, _) => {
+    [fetchSummary.pending]: (state, _) => {
       state.error = null;
       state.isLoading = true;
     },
-    [fetchSummaryCosts.fulfilled]: (state, { payload }) => {
-      state.costs = payload.data;
-      state.isLoading = true;
-      state.income = false;
-    },
-    [fetchSummaryCosts.rejected]: (state, action) => {
-      state.error = action.error.message;
-      state.isLoading = false;
-    },
-    [fetchSummaryIncome.pending]: (state, _) => {
-      state.error = null;
+    [fetchSummary.fulfilled]: (state, { payload }) => {
+      state.summary = payload.data;
       state.isLoading = true;
     },
-    [fetchSummaryIncome.fulfilled]: (state, { payload }) => {
-      state.income = payload.data;
-      state.isLoading = true;
-      state.costs = false;
-    },
-    [fetchSummaryIncome.rejected]: (state, action) => {
+    [fetchSummary.rejected]: (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
     },

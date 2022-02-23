@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 import {
   getTransactionsByMonth,
@@ -12,6 +13,7 @@ const initialState = {
   error: null,
   isLoading: false,
   type: 'costs',
+  date: Date.parse(new Date()),
 };
 
 const transactionsSlice = createSlice({
@@ -22,8 +24,10 @@ const transactionsSlice = createSlice({
       state.type = payload;
     },
     getTransaction(state, { payload }) {
-      console.log(payload);
       state.transactions = payload;
+    },
+    setTransactionDate(state, { payload }) {
+      state.date = payload;
     },
   },
   extraReducers: {
@@ -74,6 +78,7 @@ const transactionsSlice = createSlice({
   },
 });
 
-export const { getTransactionType, getTransaction } = transactionsSlice.actions;
+export const { getTransactionType, getTransaction, setTransactionDate } =
+  transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

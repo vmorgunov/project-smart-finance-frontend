@@ -78,10 +78,14 @@ const TransactionTable = () => {
         />
       )}
       {!isMobile && <ListHeader />}
-      <TransactionWrrap matches={matches}>
-        {isLoading ? (
-          <LoaderComponent height={50} width={400} padding={'30px 0 '} />
-        ) : (
+
+      {isLoading ? (
+        <LoaderComponent height={50} width={400} padding={'30px 0 '} />
+      ) : (
+        // {/* {isLoading && (
+        //   <LoaderComponent height={50} width={400} matches={matches} />
+        // )} */}
+        <TransactionWrrap matches={matches}>
           <SimpleBar
             style={{
               maxHeight: isMobile
@@ -93,8 +97,8 @@ const TransactionTable = () => {
           >
             <ListBody handelToggleModal={handelToggleModal} />
           </SimpleBar>
-        )}
-      </TransactionWrrap>
+        </TransactionWrrap>
+      )}
     </>
   );
 };

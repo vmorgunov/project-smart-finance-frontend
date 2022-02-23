@@ -36,29 +36,17 @@ export const fetchBalance = createAsyncThunk(
   },
 );
 
-export const fetchSummaryCosts = createAsyncThunk(
+export const fetchSummary = createAsyncThunk(
   'user/cost',
-  async ({ userToken }, thunkAPI) => {
+  async ({ userToken, transactionType }, thunkAPI) => {
     const AuthStr = 'Bearer '.concat(userToken);
     try {
-      const { data } = await axios.get(`/transactions/costs/total`, {
-        headers: { Authorization: AuthStr },
-      });
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  },
-);
-
-export const fetchSummaryIncome = createAsyncThunk(
-  'user/income',
-  async ({ userToken }, thunkAPI) => {
-    const AuthStr = 'Bearer '.concat(userToken);
-    try {
-      const { data } = await axios.get(`/transactions/income/total`, {
-        headers: { Authorization: AuthStr },
-      });
+      const { data } = await axios.get(
+        `/transactions/${transactionType}/total`,
+        {
+          headers: { Authorization: AuthStr },
+        },
+      );
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
