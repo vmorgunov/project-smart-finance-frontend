@@ -32,10 +32,15 @@ import srcCalendar from '../../../images/calendar.svg';
 import { addTransaction } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
 import pushBalance from '../../../redux/transactions/transactionOperations';
-import { getTransactionsType } from 'redux/transactions/costIncomeSelector';
+import {
+  getTransactionsType,
+  getTransactionsDate,
+} from 'redux/transactions/costIncomeSelector';
+import moment from 'moment';
+import { setTransactionDate } from 'redux/transactions/costIncomeSlice';
 registerLocale('ru', ru); // register it with the name you want
 
-const Form = ({ dateFinder }) => {
+const Form = () => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
   const isDesctop = useMediaQuery({ minWidth: 1280 });
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -45,7 +50,7 @@ const Form = ({ dateFinder }) => {
 
   const transactionType = useSelector(getTransactionsType);
   //все поля формы
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const transactionDate = useSelector(getTransactionsDate);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [sum, setSum] = useState('');
@@ -68,10 +73,6 @@ const Form = ({ dateFinder }) => {
 
   const userToken = useSelector(getUserToken);
   const balance = useSelector(getAllTransaction);
-
-  useEffect(() => {
-    dateFinder(selectedDate);
-  }, [selectedDate, dateFinder]);
 
   const handleChange = e => {
     let name;
@@ -106,16 +107,9 @@ const Form = ({ dateFinder }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    let day = String(selectedDate?.getDate());
-    const year = String(selectedDate?.getFullYear());
-    let month = String(selectedDate.getUTCMonth() + 1);
-
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (day.length < 2) {
-      day = '0' + day;
-    }
+    let day = moment(transactionDate).format('DD');
+    const year = moment(transactionDate).format('YYYY');
+    let month = moment(transactionDate).format('MM');
 
     setTimeout(function () {
       setCategoryDirty(false);
@@ -129,13 +123,16 @@ const Form = ({ dateFinder }) => {
       description,
       month,
       year,
-      sum,
+      sum: Number(sum.replace(/\s+/g, '')),
     };
 
     try {
-      if (category && description && selectedDate && sum && !!userToken) {
+      if (category && description && transactionDate && sum && !!userToken) {
+        const sumNumber = Number(sum.replace(/\s+/g, ''));
         const defaultValue =
-          transactionType === 'costs' ? balance - sum : balance + sum;
+          transactionType === 'costs'
+            ? balance - sumNumber
+            : balance + sumNumber;
         if (defaultValue < 0) {
           toast.warn(`Ваш баланс не может быть меньше 0 !!!`, {
             autoClose: 1500,
@@ -156,7 +153,7 @@ const Form = ({ dateFinder }) => {
         if (!category) {
           setCategoryDirty(true);
         }
-        if (!selectedDate) {
+        if (!transactionDate) {
           setDateDirty(true);
         }
         if (!sum) {
@@ -192,8 +189,11 @@ const Form = ({ dateFinder }) => {
               )}
               <DatePicker
                 locale="ru"
-                selected={selectedDate}
-                onChange={date => setSelectedDate(date)}
+                selected={transactionDate}
+                // onChange={date => setSelectedDate(date)}
+                onChange={date =>
+                  dispatch(setTransactionDate(Date.parse(date)))
+                }
                 dateFormat="dd.MM.yyyy"
                 width="400"
               />

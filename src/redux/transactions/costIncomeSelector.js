@@ -5,11 +5,13 @@ export const getLoading = state => state.transactions.isLoading;
 
 export const getTransactionsType = state => state.transactions.type;
 export const getTransactions = state => state.transactions.transactions;
+export const getTransactionsDate = state => state.transactions.date;
 
 export const getTransactionsList = createSelector(
   [getTransactions],
   transactions => {
-    const transactionsSort = [...transactions];
+    const transactionsSort = transactions ? [...transactions] : [];
+
     const result = transactionsSort.sort(
       (b, a) =>
         Number(a.day) - Number(b.day) ||

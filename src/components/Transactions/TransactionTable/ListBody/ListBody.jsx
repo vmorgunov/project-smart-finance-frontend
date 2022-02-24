@@ -71,8 +71,8 @@ const ListBody = ({ handelToggleModal }) => {
                 colorTextSum={transaction.type === 'costs' ? 'red' : 'green'}
               >
                 {transaction?.type === 'costs'
-                  ? `-${transaction.sum} грн`
-                  : `${transaction.sum} грн`}
+                  ? `-${transaction.sum.toLocaleString()} грн`
+                  : `${transaction.sum.toLocaleString()} грн`}
               </SumWrrap>
               <ImgDelWrrap matches={matches}>
                 <ImgDel

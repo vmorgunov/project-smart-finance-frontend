@@ -7,22 +7,23 @@ import { tab, tabSelected, tabList, tabPanel } from './ExpenseIncome.styled';
 
 import TransactioInfo from '../TransactioInfo';
 import Form from '../Form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getTransactionsByMonth } from '../../../redux/transactions/costIncomeOperations';
 import { getUserToken } from '../../../redux/selectors/tokenSelector';
 import { getAllTransaction } from '../../../redux/transactions/transactionSelectors';
-import {
-  fetchSummaryCosts,
-  fetchSummaryIncome,
-} from '../../../redux/transactions/transactionOperations';
+import { fetchSummary } from '../../../redux/transactions/transactionOperations';
 import {
   getTransactionType,
   getTransaction,
 } from '../../../redux/transactions/costIncomeSlice';
-import { getTransactionsType } from '../../../redux/transactions/costIncomeSelector';
+import {
+  getTransactionsType,
+  getTransactionsDate,
+} from '../../../redux/transactions/costIncomeSelector';
 import { tabs } from './ExpenseIncome.styled';
+import moment from 'moment';
 
 const DEFAULT_CLASS = 'react-tabs__tab';
 const DEFAULT_SELECTED_CLASS = `${DEFAULT_CLASS}--selected`;
@@ -38,19 +39,14 @@ const CustomTab = ({ className, selectedClassName, ...props }) => (
 CustomTab.tabsRole = 'Tab';
 
 const ExpenseIncome = () => {
-  const [calendar, setCalendar] = useState(new Date());
-
   const transactionType = useSelector(getTransactionsType);
   const balance = useSelector(getAllTransaction);
   const userToken = useSelector(getUserToken);
+  const transactionDate = useSelector(getTransactionsDate);
 
   const dispatch = useDispatch();
-
-  let month = calendar.getUTCMonth() + 1;
-  if (month < 10) {
-    month = '0' + month;
-  }
-  const year = calendar.getFullYear();
+  const year = moment(transactionDate).format('YYYY');
+  const month = moment(transactionDate).format('MM');
 
   useEffect(() => {
     if (!!userToken) {
@@ -62,12 +58,7 @@ const ExpenseIncome = () => {
     }
   }, [dispatch, month, transactionType, userToken, year, balance]);
 
-  const getDate = newdata => {
-    setCalendar(newdata);
-  };
-  transactionType === 'costs'
-    ? dispatch(fetchSummaryCosts({ userToken }))
-    : dispatch(fetchSummaryIncome({ userToken }));
+  dispatch(fetchSummary({ userToken, transactionType }));
 
   return (
     <>
@@ -107,15 +98,15 @@ const ExpenseIncome = () => {
           </Tab>
         </TabList>
         <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
-          <Form dateFinder={getDate} />
+          <Form />
           <TransactioInfo />
         </TabPanel>
         <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
-          <Form dateFinder={getDate} />
+          <Form />
           <TransactioInfo />
         </TabPanel>
         <TabPanel className={cx(tabPanel, 'react-tabs__tab-panel')}>
-          <Form dateFinder={getDate} />
+          <Form />
           <TransactioInfo />
         </TabPanel>
       </Tabs>
